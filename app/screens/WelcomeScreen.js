@@ -38,6 +38,8 @@ const styles = StyleSheet.create({
     color: colors.dark,
     top: 50,
     fontWeight: "bold",
+    textShadowColor: colors.dark,
+    textShadowRadius: 5,
   },
   btns: {
     position: "absolute",
