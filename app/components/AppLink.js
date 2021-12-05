@@ -16,7 +16,7 @@ export default function AppLink({ text: title, link }) {
   return (
     <TouchableOpacity
       onPress={() => {
-        // Linking.openURL(link);
+        Linking.openURL(link);
         // zoomIconReference.current.startAnimation();
       }}
       style={styles.container}
@@ -35,6 +35,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: colors.primary,
     padding: 10,
+    alignItems: "center",
+    marginHorizontal: 10,
   },
   title: {
     color: "white",

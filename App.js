@@ -13,12 +13,13 @@ import Screen from "./app/components/Screen";
 import AppCard from "./app/components/AppCard";
 import AnnouncementScreen from "./app/screens/AnnouncementScreen";
 import AppLink from "./app/components/AppLink";
+import AppText from "./app/components/AppText";
 
 export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <Screen>
-        <AppLink text="ClickMe" link={"https://www.flipkart.com/"} />
+        <AnnouncementScreen />
       </Screen>
     </ApplicationProvider>
   );
