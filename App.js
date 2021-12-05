@@ -14,12 +14,14 @@ import AppCard from "./app/components/AppCard";
 import AnnouncementScreen from "./app/screens/AnnouncementScreen";
 import AppLink from "./app/components/AppLink";
 import AppText from "./app/components/AppText";
+import AnnouncementEditScreen from "./app/screens/AnnouncementEditScreen";
+import WelcomeScreen from "./app/screens/WelcomeScreen";
 
 export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <Screen>
-        <AnnouncementScreen />
+        <WelcomeScreen />
       </Screen>
     </ApplicationProvider>
   );
