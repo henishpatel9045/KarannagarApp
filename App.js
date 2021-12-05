@@ -1,21 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Image } from "react-native";
+import {
+  ApplicationProvider,
+  Button,
+  Layout,
+  Text,
+  Divider,
+} from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
+
+import Screen from "./app/components/Screen";
+import AppCard from "./app/components/AppCard";
+import AnnouncementScreen from "./app/screens/AnnouncementScreen";
+import AppLink from "./app/components/AppLink";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <Screen>
+        <AppLink text="ClickMe" link={"https://www.flipkart.com/"} />
+      </Screen>
+    </ApplicationProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
