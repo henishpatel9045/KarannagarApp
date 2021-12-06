@@ -52,7 +52,7 @@ export default function PollEditScreen() {
           color={colors.primary}
           radius={10}
           onPress={() => {
-            setoptions(totalOptions + 1);
+            totalOptions < 10 ? setoptions(totalOptions + 1) : null;
           }}
           width="30%"
         />
