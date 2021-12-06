@@ -1,0 +1,90 @@
+import { Input, Layout, Select } from "@ui-kitten/components";
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import AppButton from "../components/AppButton";
+import AppPollOptionEdit from "../components/AppPollOptionEdit";
+import AppForm from "../components/forms/AppForm";
+import AppFormButton from "../components/forms/AppFormButton";
+import AppInput from "../components/forms/AppInput";
+import AppSelece from "../components/forms/AppSelece";
+import colors from "../configs/colors";
+
+const areaName = ["Vadipati", "Khadki", "Tichudiyu", "ThakorVas"];
+
+export default function PollEditScreen() {
+  const [totalOptions, setoptions] = useState(0);
+
+  let optionsComponent = [];
+  for (let i = 0; i < totalOptions; i++) {
+    optionsComponent.push(
+      <AppPollOptionEdit
+        style={styles.option}
+        name="options"
+        optionNum={i}
+        key={i}
+      />
+    );
+  }
+
+  return (
+    <AppForm
+      values={{ receiver: "", question: "", options: [] }}
+      style={styles.container}
+      onSubmit={(values) => console.log(values)}
+    >
+      <AppSelece
+        data={areaName}
+        size="large"
+        name="receiver"
+        style={styles.receiver}
+      />
+      <AppInput
+        label="Question"
+        placeholder
+        name="question"
+        width="90%"
+        style={styles.question}
+      />
+      {optionsComponent}
+      <View style={styles.footer}>
+        <AppButton
+          title="AddOption"
+          color={colors.primary}
+          radius={10}
+          onPress={() => {
+            setoptions(totalOptions + 1);
+          }}
+          width="30%"
+        />
+        <AppFormButton
+          title="Post"
+          color={colors.primary}
+          radius={10}
+          width="30%"
+        />
+      </View>
+    </AppForm>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+  },
+  receiver: {
+    width: "40%",
+    marginVertical: 20,
+  },
+  question: {},
+  option: {
+    width: "65%",
+    marginVertical: 5,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "90%",
+    marginTop: 20,
+    zIndex: -2,
+  },
+});
