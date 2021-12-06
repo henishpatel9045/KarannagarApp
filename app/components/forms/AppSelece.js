@@ -4,16 +4,18 @@ import React from "react";
 import { View, Text } from "react-native";
 import AppErrorMessage from "./AppErrorMessage";
 
-export default function AppSelece({ data, name }) {
+export default function AppSelece({ data, name = "", style, size }) {
   const { setFieldValue, values, setFieldTouched, touched, errors } =
     useFormikContext();
   return (
-    <View>
+    <View style={style}>
       <Select
         selectedIndex={values[name]}
         onSelect={(index) => setFieldValue(name, index)}
-        value={data[values[name].row]}
+        value={data[values.row]}
+        placeholder={name.toUpperCase()}
         onBlur={() => setFieldTouched(name)}
+        size={size}
         // value={data[values["area"].rows]}
       >
         {data.map((item) => (
