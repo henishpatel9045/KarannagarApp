@@ -21,7 +21,7 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <Screen>
-        <WelcomeScreen />
+        <AnnouncementEditScreen />
       </Screen>
     </ApplicationProvider>
   );

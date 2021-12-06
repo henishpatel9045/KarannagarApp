@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    elevation: 10,
   },
   title: {
     color: "white",
