@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
 
-    width: "15%",
+    padding: 15,
   },
   title: {
     color: "white",
