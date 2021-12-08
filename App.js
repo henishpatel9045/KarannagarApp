@@ -11,7 +11,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <ApplicationProvider {...eva} theme={eva.light}>
-        <AuthNavigation />
+        <Screen>
+          <AuthNavigation />
+        </Screen>
       </ApplicationProvider>
     </NavigationContainer>
   );
