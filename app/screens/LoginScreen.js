@@ -11,6 +11,7 @@ import AppFormButton from "../components/forms/AppFormButton";
 import colors from "../configs/colors";
 import SocialMediaIcon from "../components/SocialMediaIcon";
 import Screen from "../components/Screen";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 export default function LoginScreen() {
   const [passwordVisible, setpasswordVisible] = useState(false);
@@ -23,17 +24,20 @@ export default function LoginScreen() {
   });
   const icon = (name) => <Ionicons name={name} size={20} color={colors.dark} />;
   const passicon = () => (
-    <TouchableWithoutFeedback
+    <TouchableHighlight
       onPress={() => setpasswordVisible(!passwordVisible)}
+      underlayColor={"#ededed"}
+      style={{ padding: 3, borderRadius: 20 }}
     >
       {passwordVisible ? icon("eye-off") : icon("eye")}
-    </TouchableWithoutFeedback>
+    </TouchableHighlight>
   );
   return (
     <ImageBackground
-      source={require("../assets/logn.jpg")}
+      source={require("../assets/blue0.jpg")}
       resizeMode="cover"
       style={styles.imagebg}
+      blurRadius={3}
     >
       <Screen style={styles.container}>
         <AppForm
@@ -46,23 +50,26 @@ export default function LoginScreen() {
             style={{ marginBottom: 20 }}
             name="username"
             label="Username"
-            rightComponent={() => icon("person")}
+            leftComponent={() => icon("person")}
             placeholder
+            width="100%"
           />
           <AppInput
             rightComponent={passicon}
+            leftComponent={() => icon("key")}
             name="password"
             label="Password"
             placeholder
+            width="100%"
             secureTextEntry={passwordVisible}
           />
           <TouchableOpacity style={{ alignSelf: "flex-end", marginTop: 20 }}>
-            <Text style={{ color: "white" }}>Forgot Password?</Text>
+            <Text style={{ color: colors.primary }}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{ alignSelf: "flex-end", marginTop: 10, marginBottom: 20 }}
           >
-            <Text style={{ color: "white" }}>
+            <Text style={{ color: colors.primary }}>
               Not a user? Register yourself.
             </Text>
           </TouchableOpacity>
@@ -88,17 +95,16 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   loginform: {
+    alignItems: "center",
     width: "95%",
     // position: "absolute",
     marginTop: 170,
-    elevation: 25,
+    elevation: 35,
     padding: 15,
-    backgroundColor: "#6af3f0",
+    backgroundColor: "white",
     borderRadius: 15,
   },
-  username: {
-    width: "95%",
-  },
+  username: {},
   directLoginbtn: {
     flexDirection: "row",
     marginTop: 120,

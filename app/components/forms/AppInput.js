@@ -9,6 +9,7 @@ export default function AppInput({
   name,
   placeholder,
   rightComponent,
+  leftComponent,
   width,
   ...otherProps
 }) {
@@ -20,6 +21,7 @@ export default function AppInput({
         label={placeholder ? "" : label}
         placeholder={placeholder ? label : " "}
         accessoryRight={rightComponent}
+        accessoryLeft={leftComponent}
         onChangeText={handleChange(name)}
         caption={() => (
           <AppErrorMessage error={errors[name]} visible={touched[name]} />
