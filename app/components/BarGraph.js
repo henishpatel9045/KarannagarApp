@@ -16,45 +16,20 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 };
 
-export default function BarGraph({ data }) {
+export default function BarGraph({ data, style }) {
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          color: "white",
-          fontSize: 22,
-          fontWeight: "bold",
-          margin: 10,
-          marginVertical: 25,
-          textShadowColor: colors.primary,
-          textShadowRadius: 1,
-        }}
-      >
-        What's your name?
-      </Text>
       <BarChart
-        style={styles.graphStyle}
+        style={[styles.graphStyle, style]}
         data={data}
         height={280}
-        width={Dimensions.get("window").width}
+        width={Dimensions.get("window").width * 0.95}
         yAxisLabel="$"
         showValuesOnTopOfBars={true}
         withInnerLines={false}
         chartConfig={chartConfig}
         verticalLabelRotation={0}
       />
-      <View style={styles.statDesc}>
-        <View>
-          <Text style={styles.deschead}>Total People Responded</Text>
-          <Text style={styles.deschead}>Receiver Area</Text>
-          <Text style={styles.deschead}>Majority Answer</Text>
-        </View>
-        <View>
-          <Text style={styles.descdesc}>232</Text>
-          <Text style={styles.descdesc}>Vaiparti</Text>
-          <Text style={styles.descdesc}>Henish</Text>
-        </View>
-      </View>
     </View>
   );
 }
@@ -62,8 +37,12 @@ export default function BarGraph({ data }) {
 const styles = StyleSheet.create({
   container: {
     height: 290,
+    borderRadius: 10,
+    alignItems: "center",
   },
-  graphStyle: {},
+  graphStyle: {
+    borderRadius: 10,
+  },
   statDesc: {
     alignSelf: "center",
     backgroundColor: "white",
