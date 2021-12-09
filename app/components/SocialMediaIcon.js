@@ -1,25 +1,24 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import colors from "../configs/colors";
+import { TouchableOpacity } from "react-native";
+import { SocialIcon } from "react-native-elements";
 
-export default function SocialMediaIcon({ name, ...otherProps }) {
+export default function SocialMediaIcon({
+  name,
+  title,
+  onPress,
+  ...otherProps
+}) {
   return (
-    <TouchableOpacity style={[styles.container, otherProps.style]}>
-      <MaterialCommunityIcons name={name} size={25} color={colors.medium} />
-    </TouchableOpacity>
+    <SocialIcon
+      type={name}
+      raised={true}
+      title={title}
+      button={true}
+      onPress={onPress}
+      fontStyle={{ fontSize: 18 }}
+      fontFamily="Roboto"
+      Component={TouchableOpacity}
+      {...otherProps}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: 50,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: colors.medium,
-    borderWidth: 3,
-    backgroundColor: colors.gray,
-    borderRadius: 10,
-  },
-});

@@ -1,13 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
-import { ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
-import { Text, Layout } from "@ui-kitten/components";
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from "react-native";
 import React, { useState } from "react";
-import { TouchableWithoutFeedback } from "@ui-kitten/components/devsupport";
 import * as Yup from "yup";
 
-import AppForm from "../components/forms/AppForm";
-import AppInput from "../components/forms/AppInput";
-import AppFormButton from "../components/forms/AppFormButton";
 import colors from "../configs/colors";
 import SocialMediaIcon from "../components/SocialMediaIcon";
 import Screen from "../components/Screen";
@@ -33,80 +34,82 @@ export default function LoginScreen() {
     </TouchableHighlight>
   );
   return (
-    <ImageBackground
-      source={require("../assets/blue0.jpg")}
-      resizeMode="cover"
-      style={styles.imagebg}
-      blurRadius={3}
-    >
-      <Screen style={styles.container}>
-        <AppForm
-          values={{ username: "", password: "" }}
-          validationSchema={validationSchema}
-          onSubmit={(values) => console.log(values)}
-          style={styles.loginform}
-        >
-          <AppInput
-            style={{ marginBottom: 20 }}
-            name="username"
-            placeholder="Username"
-            leftComponent={icon("person")}
-            width="100%"
-          />
-          <AppInput
-            rightComponent={passicon()}
-            leftComponent={icon("key")}
-            name="password"
-            placeholder="Password"
-            width="100%"
-            secureTextEntry={passwordVisible}
-          />
-          <TouchableOpacity style={{ alignSelf: "flex-end", marginTop: 20 }}>
-            <Text style={{ color: colors.primary }}>Forgot Password?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ alignSelf: "flex-end", marginTop: 10, marginBottom: 20 }}
-          >
-            <Text style={{ color: colors.primary }}>
-              Not a user? Register yourself.
-            </Text>
-          </TouchableOpacity>
-          <AppFormButton
-            title="LogIn"
-            width="100%"
-            color={colors.primary}
-            size={15}
-            radius={50}
-          />
-        </AppForm>
-      </Screen>
-    </ImageBackground>
+    <Screen style={styles.container}>
+      <Image
+        source={require("../assets/login.png")}
+        width={100}
+        height={100}
+        style={styles.imagebg}
+      />
+      <SocialMediaIcon
+        name={"google"}
+        style={styles.google}
+        title={"Google LogIn"}
+        onPress={() => console.log()}
+      />
+      <SocialMediaIcon
+        name={"facebook"}
+        style={styles.google}
+        title="Facebook LogIn"
+        onPress={() => console.log()}
+      />
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
+    flex: 1,
   },
   imagebg: {
-    flex: 1,
-    width: "100%",
+    alignSelf: "center",
+    height: 300,
+    marginTop: 50,
+    width: Dimensions.get("screen").width - 10,
   },
-  loginform: {
-    alignItems: "center",
-    width: "95%",
-    // position: "absolute",
-    marginTop: 170,
-    elevation: 35,
-    padding: 15,
-    backgroundColor: "white",
-    borderRadius: 15,
-  },
-  username: {},
-  directLoginbtn: {
-    flexDirection: "row",
-    marginTop: 120,
+  google: {
+    alignSelf: "center",
     width: "80%",
-    justifyContent: "space-evenly",
   },
 });
+
+// // Old Form Pattern
+// <AppForm
+//   values={{ username: "", password: "" }}
+//   validationSchema={validationSchema}
+//   onSubmit={(values) => console.log(values)}
+//   style={styles.loginform}
+// >
+//   <AppInput
+//     style={{ marginBottom: 20 }}
+//     name="username"
+//     placeholder="Username"
+//     leftComponent={icon("person")}
+//     width="100%"
+//   />
+//   <AppInput
+//     rightComponent={passicon()}
+//     leftComponent={icon("key")}
+//     name="password"
+//     placeholder="Password"
+//     width="100%"
+//     secureTextEntry={passwordVisible}
+//   />
+//   <TouchableOpacity style={{ alignSelf: "flex-end", marginTop: 20 }}>
+//     <Text style={{ color: colors.primary }}>Forgot Password?</Text>
+//   </TouchableOpacity>
+//   <TouchableOpacity
+//     style={{ alignSelf: "flex-end", marginTop: 10, marginBottom: 20 }}
+//   >
+//     <Text style={{ color: colors.primary }}>
+//       Not a user? Register yourself.
+//     </Text>
+//   </TouchableOpacity>
+//   <AppFormButton
+//     title="LogIn"
+//     width="100%"
+//     color={colors.primary}
+//     size={15}
+//     radius={50}
+//   />
+// </AppForm>;
