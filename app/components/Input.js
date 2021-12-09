@@ -11,22 +11,31 @@ export default function Input({
   secureTextEntry,
   leftComponent,
   rightComponent,
+  onChangeText,
+  onBlur,
+  caption,
+  color,
   ...otherProps
 }) {
   return (
-    <View
-      style={[
-        styles.container,
-        { width: width, borderRadius: radius ? radius : 200 },
-      ]}
-    >
-      {leftComponent}
-      <TextInput
-        style={[style, styles.textBox]}
-        secureTextEntry={secureTextEntry}
-        placeholder={placeholder}
-      />
-      {rightComponent}
+    <View style={{ width: width }}>
+      <View style={[styles.container, { borderRadius: radius ? radius : 200 }]}>
+        {leftComponent}
+        <TextInput
+          style={[style, styles.textBox]}
+          secureTextEntry={secureTextEntry}
+          placeholder={placeholder}
+          onChangeText={onChangeText}
+          onBlur={onBlur}
+          {...otherProps}
+        />
+        {rightComponent}
+      </View>
+      {caption && (
+        <Text style={[{ color: color ? color : "red" }, styles.caption]}>
+          {caption}
+        </Text>
+      )}
     </View>
   );
 }
@@ -44,5 +53,9 @@ const styles = StyleSheet.create({
   textBox: {
     flex: 1,
     marginHorizontal: 10,
+  },
+  caption: {
+    alignSelf: "flex-start",
+    marginLeft: 15,
   },
 });
