@@ -1,11 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-} from "react-native";
+import { Text, StyleSheet, Image, Dimensions } from "react-native";
 import React, { useState } from "react";
 import * as Yup from "yup";
 
@@ -35,6 +29,7 @@ export default function LoginScreen() {
   );
   return (
     <Screen style={styles.container}>
+      <Text style={styles.heading}>Login</Text>
       <Image
         source={require("../assets/login.png")}
         width={100}
@@ -59,57 +54,29 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     flex: 1,
+  },
+  heading: {
+    color: colors.dark,
+    fontSize: 38,
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    left: 20,
+    top: 10,
+    textShadowColor: colors.dark,
+    textShadowRadius: 3,
   },
   imagebg: {
     alignSelf: "center",
     height: 300,
-    marginTop: 50,
+    marginTop: 80,
+    marginBottom: 80,
     width: Dimensions.get("screen").width - 10,
   },
   google: {
     alignSelf: "center",
+
     width: "80%",
   },
 });
-
-// // Old Form Pattern
-// <AppForm
-//   values={{ username: "", password: "" }}
-//   validationSchema={validationSchema}
-//   onSubmit={(values) => console.log(values)}
-//   style={styles.loginform}
-// >
-//   <AppInput
-//     style={{ marginBottom: 20 }}
-//     name="username"
-//     placeholder="Username"
-//     leftComponent={icon("person")}
-//     width="100%"
-//   />
-//   <AppInput
-//     rightComponent={passicon()}
-//     leftComponent={icon("key")}
-//     name="password"
-//     placeholder="Password"
-//     width="100%"
-//     secureTextEntry={passwordVisible}
-//   />
-//   <TouchableOpacity style={{ alignSelf: "flex-end", marginTop: 20 }}>
-//     <Text style={{ color: colors.primary }}>Forgot Password?</Text>
-//   </TouchableOpacity>
-//   <TouchableOpacity
-//     style={{ alignSelf: "flex-end", marginTop: 10, marginBottom: 20 }}
-//   >
-//     <Text style={{ color: colors.primary }}>
-//       Not a user? Register yourself.
-//     </Text>
-//   </TouchableOpacity>
-//   <AppFormButton
-//     title="LogIn"
-//     width="100%"
-//     color={colors.primary}
-//     size={15}
-//     radius={50}
-//   />
-// </AppForm>;

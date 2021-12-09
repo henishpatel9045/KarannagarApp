@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Image,
-  View,
-  ImageBackground,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, View, Image, Dimensions } from "react-native";
 import { Button, Layout, Text } from "@ui-kitten/components";
 
 import Screen from "../components/Screen";
@@ -14,34 +8,36 @@ import colors from "../configs/colors";
 
 export default function WelcomeScreen({ navigation }) {
   return (
-    <ImageBackground
-      source={require("../assets/welcome.png")}
-      style={styles.bgImage}
-    >
-      <View style={styles.container}>
-        <Text style={styles.text}>KarannagarApp</Text>
+    <View style={styles.container}>
+      <Image
+        source={require("../assets/welcome.png")}
+        width={100}
+        height={100}
+        style={styles.bgImage}
+      />
 
-        <Layout level="2" style={styles.btns}>
-          <AppButton
-            title="LogIn"
-            width="100%"
-            size={22}
-            style={styles.loginBtn}
-            color="tomato"
-            onPress={() => navigation.navigate("Login")}
-            radius={50}
-          />
-          <AppButton
-            title="Register"
-            width="100%"
-            size={22}
-            color={colors.primary}
-            onPress={() => navigation.navigate("Register")}
-            radius={50}
-          />
-        </Layout>
-      </View>
-    </ImageBackground>
+      <Text style={styles.text}>KarannagarApp</Text>
+
+      <Layout level="2" style={styles.btns}>
+        <AppButton
+          title="LogIn"
+          width="100%"
+          size={22}
+          style={styles.loginBtn}
+          color="tomato"
+          onPress={() => navigation.navigate("Login")}
+          radius={50}
+        />
+        <AppButton
+          title="Register"
+          width="100%"
+          size={22}
+          color={colors.primary}
+          onPress={() => navigation.navigate("Register")}
+          radius={50}
+        />
+      </Layout>
+    </View>
   );
 }
 
@@ -50,22 +46,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "rgba(255, 99, 71, 0.15)",
+    backgroundColor: "white",
   },
   bgImage: {
-    flex: 1,
-    resizeMode: "contain",
+    position: "absolute",
+    top: 130,
+    height: 300,
     width: Dimensions.get("screen").width,
-    zIndex: -2,
+    zIndex: -5,
   },
   text: {
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: "bold",
     color: "tomato",
     marginHorizontal: 8,
     position: "absolute",
-    textShadowColor: "white",
-    textShadowRadius: 2,
+    textShadowColor: "tomato",
+    textShadowRadius: 3,
     top: 70,
   },
   btns: {
