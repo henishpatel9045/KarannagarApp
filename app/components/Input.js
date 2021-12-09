@@ -31,11 +31,7 @@ export default function Input({
         />
         {rightComponent}
       </View>
-      {caption && (
-        <Text style={[{ color: color ? color : "red" }, styles.caption]}>
-          {caption}
-        </Text>
-      )}
+      {caption && <View style={[styles.caption]}>{caption}</View>}
     </View>
   );
 }

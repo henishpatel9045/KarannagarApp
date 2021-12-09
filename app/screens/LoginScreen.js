@@ -49,17 +49,15 @@ export default function LoginScreen() {
           <AppInput
             style={{ marginBottom: 20 }}
             name="username"
-            label="Username"
-            leftComponent={() => icon("person")}
-            placeholder
+            placeholder="Username"
+            leftComponent={icon("person")}
             width="100%"
           />
           <AppInput
-            rightComponent={passicon}
-            leftComponent={() => icon("key")}
+            rightComponent={passicon()}
+            leftComponent={icon("key")}
             name="password"
-            label="Password"
-            placeholder
+            placeholder="Password"
             width="100%"
             secureTextEntry={passwordVisible}
           />
@@ -78,7 +76,7 @@ export default function LoginScreen() {
             width="100%"
             color={colors.primary}
             size={15}
-            radius={5}
+            radius={50}
           />
         </AppForm>
       </Screen>

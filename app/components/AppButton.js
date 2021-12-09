@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import colors from "../configs/colors";
 
 export default function AppButton({
@@ -19,7 +19,7 @@ export default function AppButton({
       style={[
         styles.container,
         {
-          width: width,
+          width: width ? width : "100%",
           backgroundColor: color ? color : colors.primary,
           borderRadius: radius && radius,
         },
@@ -27,23 +27,29 @@ export default function AppButton({
       ]}
     >
       {children}
-      <Text
-        style={[
-          styles.title,
-          { fontSize: size, color: txtColor ? txtColor : "white" },
-        ]}
-      >
-        {title}
-      </Text>
+      <View style={{ width: "100%" }}>
+        <Text
+          style={[
+            styles.title,
+
+            {
+              alignSelf: "center",
+              fontSize: size,
+              color: txtColor ? txtColor : "white",
+            },
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "tomato",
     padding: 10,
-    flexDirection: "row",
+
     alignItems: "center",
     justifyContent: "center",
     elevation: 10,

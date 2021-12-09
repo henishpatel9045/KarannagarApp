@@ -1,7 +1,7 @@
 import { Select, SelectItem } from "@ui-kitten/components";
 import { useFormikContext } from "formik";
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import AppErrorMessage from "./AppErrorMessage";
 
 export default function AppSelece({ data, name = "", style, size }) {

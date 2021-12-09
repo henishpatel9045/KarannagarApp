@@ -1,6 +1,6 @@
 import { useFormikContext } from "formik";
-import React, { useState } from "react";
-import { View, Text } from "react-native";
+import React from "react";
+
 import AppButton from "../AppButton";
 
 export default function AppFormButton({ title, width, size, color, radius }) {
@@ -16,8 +16,6 @@ export default function AppFormButton({ title, width, size, color, radius }) {
       radius={radius}
       size={size}
       color={color}
-    >
-      {spinner && <Spinner status="danger" style={{ marginRight: 8 }} />}
-    </AppButton>
+    ></AppButton>
   );
 }

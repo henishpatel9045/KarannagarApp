@@ -1,16 +1,16 @@
 import { IndexPath, Layout, Text } from "@ui-kitten/components";
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
 import * as Yup from "yup";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 import AppForm from "../components/forms/AppForm";
 import AppFormButton from "../components/forms/AppFormButton";
@@ -33,11 +33,25 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function RegisterScreen() {
+  const [passwordVisible, setpasswordVisible] = useState(false);
+
+  const icon = (name) => <Ionicons name={name} size={20} color={colors.dark} />;
+  const passicon = () => (
+    <TouchableHighlight
+      onPress={() => setpasswordVisible(!passwordVisible)}
+      underlayColor={"#ededed"}
+      style={{ padding: 3, borderRadius: 20 }}
+    >
+      {passwordVisible ? icon("eye-off") : icon("eye")}
+    </TouchableHighlight>
+  );
+
   return (
     <ImageBackground
-      source={require("../assets/login.jpg")}
+      source={require("../assets/blue0.jpg")}
       resizeMode="cover"
       style={styles.imagebg}
+      blurRadius={3}
     >
       <Screen style={{ alignItems: "center" }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -68,18 +82,17 @@ export default function RegisterScreen() {
                   style={{
                     flexDirection: "row",
                     width: "100%",
+                    alignSelf: "center",
                   }}
                 >
                   <AppInput
-                    label="FirstName"
-                    placeholder
+                    placeholder="FirstName"
                     name="firstname"
                     width="50%"
                     style={styles.nameInput}
                   />
                   <AppInput
-                    label="LastName"
-                    placeholder
+                    placeholder="LastName"
                     name="lastname"
                     width="50%"
                     style={styles.nameInput}
@@ -98,20 +111,22 @@ export default function RegisterScreen() {
               ))}
             </Select> */}
                 <AppInput
-                  label="Email/Username"
-                  placeholder
+                  placeholder="Email/Username"
                   name="username"
                   width="100%"
                   style={styles.inputs}
+                  leftComponent={icon("person")}
                 />
                 <AppInput
-                  label="Password"
-                  placeholder
+                  placeholder="Password"
                   name="password"
                   width="100%"
                   style={styles.inputs}
+                  leftComponent={icon("key")}
+                  rightComponent={passicon()}
+                  secureTextEntry={passwordVisible}
                 />
-                <AppFormButton title="Register" size={18} radius={5} />
+                <AppFormButton title="Register" size={20} radius={50} />
               </AppForm>
             </Layout>
             <TouchableOpacity
