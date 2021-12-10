@@ -1,5 +1,4 @@
 import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
-
 import React, { useState } from "react";
 import {
   Text,
@@ -55,6 +54,9 @@ export default function RegisterScreen({ navigation }) {
                   text: "Ok",
                 },
               ]);
+            // else {
+            //   registration();
+            // }
           }}
         />
         <SocialMediaIcon

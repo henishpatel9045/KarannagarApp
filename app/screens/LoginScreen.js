@@ -8,25 +8,7 @@ import SocialMediaIcon from "../components/SocialMediaIcon";
 import Screen from "../components/Screen";
 import { TouchableHighlight } from "react-native-gesture-handler";
 
-export default function LoginScreen() {
-  const [passwordVisible, setpasswordVisible] = useState(false);
-
-  const validationSchema = Yup.object().shape({
-    username: Yup.string().required().label("Username"),
-    password: Yup.string()
-      .required()
-      .min(4, "Password must be longer than four charachters."),
-  });
-  const icon = (name) => <Ionicons name={name} size={20} color={colors.dark} />;
-  const passicon = () => (
-    <TouchableHighlight
-      onPress={() => setpasswordVisible(!passwordVisible)}
-      underlayColor={"#ededed"}
-      style={{ padding: 3, borderRadius: 20 }}
-    >
-      {passwordVisible ? icon("eye-off") : icon("eye")}
-    </TouchableHighlight>
-  );
+export default function LoginScreen({ navigation }) {
   return (
     <Screen style={styles.container}>
       <Text style={styles.heading}>Login</Text>
@@ -40,7 +22,7 @@ export default function LoginScreen() {
         name={"google"}
         style={styles.google}
         title={"Google LogIn"}
-        onPress={() => console.log()}
+        onPress={() => navigation.navigate("Loading")}
       />
       <SocialMediaIcon
         name={"facebook"}
