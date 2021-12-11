@@ -4,16 +4,13 @@ import React, { useState } from "react";
 import * as eva from "@eva-design/eva";
 
 import Screen from "./app/components/Screen";
-import MapScreen from "./app/screens/MapScreen";
-import AnnouncementScreen from "./app/screens/AnnouncementScreen";
-import DashboardScreen from "./app/screens/DashboardScreen";
-import AccountScreen from "./app/screens/AccountScreen";
+import AnnouncementsDeleteScreen from "./app/screens/AnnouncementsDeleteScreen";
 
 export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <Screen>
-        <AccountScreen />
+        <AnnouncementsDeleteScreen />
       </Screen>
     </ApplicationProvider>
   );

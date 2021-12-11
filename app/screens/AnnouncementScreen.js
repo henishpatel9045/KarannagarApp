@@ -41,7 +41,7 @@ const messages = [
     type: "link",
     sender: "SPG",
     reciever: "Vadipati",
-    text: "Flipkart",
+    message: "Flipkart",
     url: "https://www.flipkart.com/",
     dateTIme: new Date().toLocaleString(),
   },
@@ -60,7 +60,7 @@ const messages = [
     sender: "SPG",
     reciever: "Vadipati",
     type: "text",
-    text: "Hey man just testing the app.",
+    message: "Hey man just testing the app.",
     dateTIme: new Date().toLocaleString(),
   },
   {
@@ -68,7 +68,7 @@ const messages = [
     type: "text",
     sender: "SPG",
     reciever: "Vadipati",
-    text: "Its working fine.",
+    message: "Its working fine.",
     dateTIme: new Date().toLocaleString(),
   },
   {
@@ -76,7 +76,7 @@ const messages = [
     sender: "SPG",
     reciever: "Vadipati",
     type: "text",
-    text: "Now i have found a bug.",
+    message: "Now i have found a bug.",
     dateTIme: new Date().toLocaleString(),
   },
   {
@@ -93,7 +93,7 @@ const messages = [
     type: "text",
     sender: "SPG",
     reciever: "Vadipati",
-    text: "હેનીશ પટેલ",
+    message: "હેનીશ પટેલ",
     dateTIme: new Date().toLocaleString(),
   },
   {
@@ -160,7 +160,7 @@ export default function AnnouncementScreen() {
           if (item.type === "link")
             return (
               <>
-                <AppLink text={item.text} link={item.url} />
+                <AppLink text={item.message} link={item.url} />
                 <View
                   style={{
                     flexDirection: "row",
@@ -193,7 +193,7 @@ export default function AnnouncementScreen() {
           if (item.type === "text")
             return (
               <>
-                <AppText>{item.text}</AppText>
+                <AppText>{item.message}</AppText>
                 <View
                   style={{
                     flexDirection: "row",
