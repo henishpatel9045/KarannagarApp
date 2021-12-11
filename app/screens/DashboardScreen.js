@@ -279,7 +279,6 @@ const styles = StyleSheet.create({
     padding: 15,
     marginHorizontal: 15,
     // elevation: 50,
-    height: 150,
   },
 
   section: {

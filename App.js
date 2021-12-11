@@ -7,12 +7,13 @@ import Screen from "./app/components/Screen";
 import MapScreen from "./app/screens/MapScreen";
 import AnnouncementScreen from "./app/screens/AnnouncementScreen";
 import DashboardScreen from "./app/screens/DashboardScreen";
+import AccountScreen from "./app/screens/AccountScreen";
 
 export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <Screen>
-        <DashboardScreen />
+        <AccountScreen />
       </Screen>
     </ApplicationProvider>
   );
