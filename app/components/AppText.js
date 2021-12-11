@@ -5,7 +5,9 @@ import { Text } from "@ui-kitten/components";
 export default function AppText({ children }) {
   return (
     <View style={styles.container}>
-      <Text category="h6">{children}</Text>
+      <Text category="h6" style={{ fontFamily: "Roboto" }}>
+        {children}
+      </Text>
     </View>
   );
 }
