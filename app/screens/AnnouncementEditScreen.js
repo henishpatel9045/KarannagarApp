@@ -50,10 +50,10 @@ export default function AnnouncementEditScreen() {
           style={styles.form}
         >
           <AppInput
-            label="Title"
-            placeholder
+            placeholder="Title"
             width="93%"
             name="title"
+            radius={50}
             size="large"
             style={{ marginBottom: 15 }}
           />
@@ -65,8 +65,8 @@ export default function AnnouncementEditScreen() {
           />
 
           <AppInput
-            label="Message"
-            placeholder
+            placeholder="Message"
+            radius={50}
             multiline={true}
             width="93%"
             name="message"
@@ -113,8 +113,8 @@ export default function AnnouncementEditScreen() {
           style={styles.form}
         >
           <AppInput
-            label="Title"
-            placeholder
+            placeholder="Title"
+            radius={50}
             width="93%"
             name="title"
             size="large"
@@ -128,8 +128,8 @@ export default function AnnouncementEditScreen() {
             style={{ marginBottom: 15, width: "93%" }}
           />
           <AppInput
-            label="URL"
-            placeholder
+            placeholder="URL"
+            radius={50}
             width="93%"
             name="message"
             size="large"
@@ -180,8 +180,8 @@ export default function AnnouncementEditScreen() {
             style={{ marginBottom: 15, width: "93%" }}
           />
           <AppInput
-            label="Message"
-            placeholder
+            placeholder="Message"
+            radius={50}
             multiline={true}
             width="93%"
             name="message"

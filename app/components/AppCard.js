@@ -32,9 +32,9 @@ export default function AppCard({
       <Text category="h3" style={styles.headertxt}>
         {title}
       </Text>
-      <Text category="h6" style={styles.headertxt}>
+      {/* <Text category="h6" style={styles.headertxt}>
         From: {sender} To: {reciever}
-      </Text>
+      </Text> */}
     </ImageBackground>
   );
 
@@ -48,7 +48,7 @@ export default function AppCard({
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <Card header={header} footer={footer} style={styles.container}>
+      <Card header={header} style={styles.container}>
         <Text>{message}</Text>
       </Card>
     </TouchableOpacity>

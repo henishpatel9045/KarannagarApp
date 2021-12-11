@@ -1,8 +1,10 @@
+import { Divider } from "@ui-kitten/components";
 import React, { useState } from "react";
 import { View, Text, FlatList } from "react-native";
 import AppCard from "../components/AppCard";
 import AppLink from "../components/AppLink";
 import AppText from "../components/AppText";
+import colors from "../configs/colors";
 
 const messages = [
   {
@@ -37,8 +39,11 @@ const messages = [
   {
     id: 7,
     type: "link",
+    sender: "SPG",
+    reciever: "Vadipati",
     text: "Flipkart",
     url: "https://www.flipkart.com/",
+    dateTIme: new Date().toLocaleString(),
   },
   {
     id: 4,
@@ -52,18 +57,27 @@ const messages = [
   },
   {
     id: 8,
+    sender: "SPG",
+    reciever: "Vadipati",
     type: "text",
     text: "Hey man just testing the app.",
+    dateTIme: new Date().toLocaleString(),
   },
   {
     id: 9,
     type: "text",
+    sender: "SPG",
+    reciever: "Vadipati",
     text: "Its working fine.",
+    dateTIme: new Date().toLocaleString(),
   },
   {
     id: 10,
+    sender: "SPG",
+    reciever: "Vadipati",
     type: "text",
     text: "Now i have found a bug.",
+    dateTIme: new Date().toLocaleString(),
   },
   {
     id: 5,
@@ -77,7 +91,10 @@ const messages = [
   {
     id: 11,
     type: "text",
+    sender: "SPG",
+    reciever: "Vadipati",
     text: "હેનીશ પટેલ",
+    dateTIme: new Date().toLocaleString(),
   },
   {
     id: 6,
@@ -93,6 +110,7 @@ const messages = [
 
 export default function AnnouncementScreen() {
   const [data, setdata] = useState(messages);
+  const [refreshing, setrefreshing] = useState(false);
   return (
     <View>
       <FlatList
@@ -101,20 +119,124 @@ export default function AnnouncementScreen() {
         renderItem={({ item }) => {
           if (item.type === "card")
             return (
-              <AppCard
-                title={item.title}
-                sender={item.sender}
-                reciever={item.reciever}
-                message={item.message}
-                dateTime={item.dateTIme}
-                image={item.image}
-              />
+              <>
+                <AppCard
+                  title={item.title}
+                  sender={item.sender}
+                  reciever={item.reciever}
+                  message={item.message}
+                  dateTime={item.dateTIme}
+                  image={item.image}
+                />
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginHorizontal: 15,
+                    justifyContent: "space-between",
+                    width: "95%",
+                  }}
+                >
+                  <Text
+                    style={{
+                      alignSelf: "flex-start",
+                      color: colors.dark,
+                      marginRight: 15,
+                    }}
+                  >
+                    {item.sender} : {item.reciever}
+                  </Text>
+                  <Text
+                    style={{
+                      alignSelf: "flex-end",
+                      color: colors.dark,
+                      marginRight: 15,
+                    }}
+                  >
+                    {item.dateTIme}
+                  </Text>
+                </View>
+              </>
             );
           if (item.type === "link")
-            return <AppLink text={item.text} link={item.url} />;
-          if (item.type === "text") return <AppText>{item.text}</AppText>;
+            return (
+              <>
+                <AppLink text={item.text} link={item.url} />
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginHorizontal: 15,
+                    justifyContent: "space-between",
+                    width: "95%",
+                  }}
+                >
+                  <Text
+                    style={{
+                      alignSelf: "flex-start",
+                      color: colors.dark,
+                      marginRight: 15,
+                    }}
+                  >
+                    {item.sender} : {item.reciever}
+                  </Text>
+                  <Text
+                    style={{
+                      alignSelf: "flex-end",
+                      color: colors.dark,
+                      marginRight: 15,
+                    }}
+                  >
+                    {item.dateTIme}
+                  </Text>
+                </View>
+              </>
+            );
+          if (item.type === "text")
+            return (
+              <>
+                <AppText>{item.text}</AppText>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginHorizontal: 15,
+                    justifyContent: "space-between",
+                    width: "95%",
+                  }}
+                >
+                  <Text
+                    style={{
+                      alignSelf: "flex-start",
+                      color: colors.dark,
+                    }}
+                  >
+                    {item.sender} : {item.reciever}
+                  </Text>
+                  <Text
+                    style={{
+                      alignSelf: "flex-end",
+                      color: colors.dark,
+                    }}
+                  >
+                    {item.dateTIme}
+                  </Text>
+                </View>
+              </>
+            );
         }}
-        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+        ItemSeparatorComponent={() => (
+          <View
+            style={{
+              alignItems: "center",
+              alignSelf: "center",
+              borderTopColor: colors.gray,
+              borderWidth: 1,
+              marginVertical: 15,
+              justifyContent: "center",
+              width: "90%",
+            }}
+          />
+        )}
+        refreshing={refreshing}
+        onRefresh={() => setdata([messages[1]])}
       />
     </View>
   );

@@ -39,8 +39,7 @@ export default function PollEditScreen() {
         style={styles.receiver}
       />
       <AppInput
-        label="Question"
-        placeholder
+        placeholder="Question"
         name="question"
         width="90%"
         style={styles.question}

@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     elevation: 3,
     marginHorizontal: 10,
+    overflow: "hidden",
     padding: 10,
     width: "100%",
   },

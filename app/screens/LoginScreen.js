@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Text, StyleSheet, Image, Dimensions } from "react-native";
 import React, { useState } from "react";
 import * as Yup from "yup";
+import * as Google from "expo-google-app-auth";
 
 import colors from "../configs/colors";
 import SocialMediaIcon from "../components/SocialMediaIcon";
@@ -9,6 +10,27 @@ import Screen from "../components/Screen";
 import { TouchableHighlight } from "react-native-gesture-handler";
 
 export default function LoginScreen({ navigation }) {
+  const signInWithGoogleAsync = async () => {
+    try {
+      const result = await Google.logInAsync({
+        androidClientId:
+          "451510403937-lkhkffu80dskj6ts9koa67pus9kvq9e7.apps.googleusercontent.com",
+        behavior: "web",
+        //   iosClientId: YOUR_CLIENT_ID_HERE,
+        scopes: ["profile", "email"],
+      });
+
+      if (result.type === "success") {
+        return result.accessToken;
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      console.log(e);
+      return { error: true };
+    }
+  };
+
   return (
     <Screen style={styles.container}>
       <Text style={styles.heading}>Login</Text>
