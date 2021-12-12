@@ -1,22 +1,19 @@
-import * as firebase from "firebase";
+import { initializeApp } from "firebase/app";
 import "firebase/firestore";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { useState } from "react";
+import { collection, getDoc, getFirestore } from "firebase/firestore";
+import firebaseConfig from "../configs/firebaseConfig";
 
-const registration = async () => {
-  const [user, setuser] = useState({});
-  const auth = getAuth();
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const user = collection(db, "users");
 
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const credentials = GoogleAuthProvider.credentialFromResult(result);
-      const token = credentials.accessToken;
-      const user = result.user;
-      console.log(user);
-    })
-    .catch((error) => {
-      const errorMessage = error.message;
-      const emailerror = error.email;
-      alert("Error happened " + errorMessage);
-    });
+export default getUser = async () => {
+  const usersSnapshot = await getDoc(user);
+  if (usersSnapshot.exists) {
+    usersSnapshot.forEach((doc) => console.log(`${doc.id} ==> ${doc.data()}`));
+  } else {
+    console.log("Error getting Promise.");
+  }
 };
+
+// export default { getUser };
