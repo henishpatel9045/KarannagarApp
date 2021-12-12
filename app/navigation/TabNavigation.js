@@ -6,17 +6,64 @@ import AnnouncementScreen from "../screens/AnnouncementScreen";
 import EmergencyScreen from "../screens/EmergencyScreen";
 import PollScreen from "../screens/PollScreen";
 import AccountScreen from "../screens/AccountScreen";
+import { MaterialCommunityIcons, Entypo, Ionicons } from "@expo/vector-icons";
+import colors from "../configs/colors";
 
 export default function TabNavigation() {
   const Tab = createMaterialBottomTabNavigator();
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Dashboard" component={DashboardScreen} />
-      <Tab.Screen name="Emergencies" component={EmergencyScreen} />
-      <Tab.Screen name="Announcements" component={AnnouncementScreen} />
-      <Tab.Screen name="Polls" component={PollScreen} />
-      <Tab.Screen name="Account" component={AccountScreen} />
+    <Tab.Navigator shifting>
+      <Tab.Screen
+        name="Dashboard"
+        component={DashboardScreen}
+        options={{
+          tabBarColor: "tomato",
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="home" color={color} size={20} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Emergencies"
+        component={EmergencyScreen}
+        options={{
+          tabBarColor: colors.primary,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="fire" color={color} size={20} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Announcements"
+        component={AnnouncementScreen}
+        options={{
+          tabBarColor: "rgba(250, 0, 0, 0.8)",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="message" color={color} size={20} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Polls"
+        component={PollScreen}
+        options={{
+          tabBarColor: "rgb(0, 100, 180)",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="poll" color={color} size={20} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Account"
+        component={AccountScreen}
+        options={{
+          tabBarColor: "rgba(0,0,250, 0.8)",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" color={color} size={20} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }

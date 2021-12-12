@@ -20,7 +20,7 @@ const PollCard = ({
       styles.card,
       {
         backgroundColor: "rgba(0, 150, 40, 0.8)",
-        shadowColor: "rgba(0, 150, 40, 0.8)",
+        shadowColor: "rgb(0, 150, 40)",
       },
     ]}
   >
@@ -185,7 +185,7 @@ export default function DashboardScreen() {
     <View style={styles.container}>
       <View style={styles.section}>
         <Text style={styles.sectionHeader}>Emergencies</Text>
-        <ScrollView horizontal>
+        <ScrollView horizontal contentContainerStyle={styles.scrollStyle}>
           <EmergencyCard
             title="Fire"
             type={"fire"}
@@ -214,7 +214,10 @@ export default function DashboardScreen() {
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionHeader}>Announcements</Text>
-        <ScrollView horizontal>
+        <ScrollView
+          horizontal
+          contentContainerStyle={{ elevation: 100, paddingVertical: 20 }}
+        >
           <AnnouncementCard
             title={"Water Department"}
             sender={"Saepanch"}
@@ -256,7 +259,10 @@ export default function DashboardScreen() {
 
       <View style={styles.section}>
         <Text style={styles.sectionHeader}>Polls</Text>
-        <ScrollView horizontal>
+        <ScrollView
+          horizontal
+          contentContainerStyle={[styles.scrollStyle, { paddingBottom: 35 }]}
+        >
           <PollCard sender={"Sarpanch"} question={"What's your name?"} />
           <PollCard sender={"Sarpanch"} question={"What's your name?"} />
           <PollCard sender={"Sarpanch"} question={"What's your name?"} />
@@ -278,12 +284,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     marginHorizontal: 15,
-    // elevation: 50,
+    elevation: 500,
   },
 
   section: {
     width: "100%",
-    marginBottom: 20,
+    marginBottom: 0,
   },
   cardHeader: {
     flexDirection: "row",
@@ -308,4 +314,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "Roboto",
   },
+  scrollStyle: { elevation: 100, paddingVertical: 20 },
 });

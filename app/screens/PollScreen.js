@@ -71,7 +71,7 @@ export default function PollScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: "rgb(0, 100, 180)",
   },
   pollPrompt: {
     alignItems: "center",
