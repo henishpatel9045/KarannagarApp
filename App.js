@@ -12,6 +12,7 @@ import NetworkError from "./app/components/NetworkError";
 import AnnouncementEditScreen from "./app/screens/AnnouncementEditScreen";
 import AnnouncementScreen from "./app/screens/AnnouncementScreen";
 import PollDeleteScreen from "./app/screens/PollDeleteScreen";
+import EmergencieDeleteScreen from "./app/screens/EmergencieDeleteScreen";
 
 export default function App() {
   const netInfo = useNetInfo();
@@ -28,7 +29,7 @@ export default function App() {
         <NetworkError />
       ) : (
         <Screen>
-          <PollDeleteScreen />
+          <EmergencieDeleteScreen />
         </Screen>
       )}
     </ApplicationProvider>
