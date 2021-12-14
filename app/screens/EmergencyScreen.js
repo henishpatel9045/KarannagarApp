@@ -1,5 +1,5 @@
 import { Divider, Layout, List } from "@ui-kitten/components";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   TouchableHighlight,
@@ -13,57 +13,37 @@ import colors from "../configs/colors";
 import IconDetail from "../components/IconDetail";
 import EmergencyMessage from "../components/EmergencyMessage";
 import { ErrorMessage } from "formik";
+import useApiRef from "../hooks/useApiRef";
+import { getEmergencies } from "../api/firebase";
+import moment from "moment";
+import { FlatList } from "react-native-gesture-handler";
 
-const data = [
-  {
-    id: 1,
-    Pack: MaterialCommunityIcons,
-    iconName: "police-badge",
-    title: "Police",
-    sender: "Sarpanch",
-  },
-  {
-    id: 2,
-    Pack: MaterialCommunityIcons,
-    iconName: "fire",
-    title: "Fire",
-    sender: "Sarpanch",
-  },
-  {
-    id: 3,
-    Pack: MaterialCommunityIcons,
-    iconName: "car",
-    title: "Accident",
-    sender: "Sarpanch",
-  },
-  {
-    id: 4,
-    Pack: MaterialCommunityIcons,
-    iconName: "robber",
-    title: "Robbery",
-    sender: "Sarpanch",
-  },
-  {
-    id: 5,
-    Pack: MaterialCommunityIcons,
-    iconName: "fire",
-    title: "Fire",
-    sender: "Sarpanch",
-  },
-];
+const iconsList = {
+  Robbery: "robber",
+  Fire: "fire",
+  Police: "police-badge",
+  Accident: "car",
+  SOS: "alert-circle",
+};
 
 export default function EmergencyScreen({ onPress }) {
+  const { data, request } = useApiRef(getEmergencies);
+
+  useEffect(() => {
+    request();
+  }, []);
+
   const renderItem = (info) => {
     console.log(info);
     return (
       <EmergencyMessage
-        Pack={info.Pack}
-        iconName={info.iconName}
+        Pack={MaterialCommunityIcons}
+        iconName={iconsList[info.title]}
         title={info.title}
-        sender={info.sender}
-        dateTime={info.dateTime}
+        sender={`${info.sender.firstName} ${info.sender.lastName}`}
+        dateTime={moment(info.dateCreated.seconds).format("DD-MM, hh:mm:ss")}
         location={info.location}
-        pnno={info.pnno}
+        pnno={info.sender.phoneNo}
       />
     );
   };
@@ -131,8 +111,9 @@ export default function EmergencyScreen({ onPress }) {
       <View style={styles.emergenctMessageList}>
         <Text style={styles.emergenctMessageListTitle}>Emergency Messages</Text>
         <Divider style={{ marginTop: 30 }} />
-        <List
+        <FlatList
           data={data}
+          keyExtractor={(item) => item.dateCreated.seconds}
           renderItem={({ item }) => renderItem(item)}
           ItemSeparatorComponent={Divider}
         />

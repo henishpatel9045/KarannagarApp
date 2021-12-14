@@ -11,6 +11,7 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import NetworkError from "./app/components/NetworkError";
 import EmergencieDeleteScreen from "./app/screens/EmergencieDeleteScreen";
 import AnnouncementScreen from "./app/screens/AnnouncementScreen";
+import EmergencyScreen from "./app/screens/EmergencyScreen";
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);
@@ -27,7 +28,7 @@ export default function App() {
         </Screen>
       )} */}
       <Screen>
-        <AnnouncementScreen />
+        <EmergencyScreen />
       </Screen>
     </ApplicationProvider>
   );
