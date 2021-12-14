@@ -1,92 +1,67 @@
-import { initializeApp } from "firebase/app";
-import { collection, getDoc, getDocs, getFirestore } from "firebase/firestore";
+import { initializeApp } from "@firebase/app";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
 import firebaseConfig from "../configs/firebaseConfig";
+
+const db = getFirestore(initializeApp(firebaseConfig));
 
 const getUserRef = async (ref) => {
   const snapshot = await getDoc(ref);
-  return {
-    uid: snapshot.data().uid,
-    area: snapshot.data().area,
-    designation: snapshot.data().designation,
-    firstName: snapshot.data().firstName,
-    lastName: snapshot.data().lastName,
-    lastKnownLocation: snapshot.data().lastKnownLocation,
-    lastLogin: snapshot.data().lastLogin,
-    phoneNo: snapshot.data().phoneNo,
-    totalAnnouncements: snapshot.data().totalAnnouncements,
-    totalEmergencies: snapshot.data().totalEmergencies,
-    totalContribution: snapshot.data().totalContribution,
-  };
+  return snapshot.data();
 };
 
-const getUsers = async (db) => {
+const getUsers = async () => {
   const users = await getDocs(collection(db, "users"));
   let usersList = [];
-  users.forEach((snapshot) =>
-    usersList.push({
-      uid: snapshot.data().uid,
-      area: snapshot.data().area,
-      designation: snapshot.data().designation,
-      firstName: snapshot.data().firstName,
-      lastName: snapshot.data().lastName,
-      lastKnownLocation: snapshot.data().lastKnownLocation,
-      lastLogin: snapshot.data().lastLogin,
-      phoneNo: snapshot.data().phoneNo,
-      totalAnnouncements: snapshot.data().totalAnnouncements,
-      totalEmergencies: snapshot.data().totalEmergencies,
-      totalContribution: snapshot.data().totalContribution,
-    })
-  );
+  users.forEach((snapshot) => usersList.push(snapshot.data()));
   return usersList;
 };
 
-const getPolls = async (db) => {
+const getPolls = async () => {
   const polls = await getDocs(collection(db, "polls"));
   let pollsList = [];
-  polls.forEach((snapshot) =>
-    pollsList.push({
-      dateCreated: snapshot.data().dateCreated,
-      endTime: snapshot.data().endTime,
-      question: snapshot.data().question,
-      options: snapshot.data().options,
-      sender: getUserRef(snapshot.data().sender),
-      receiver: snapshot.data().receiver,
-      userResponded: snapshot.data().userResponded,
-    })
-  );
+  polls.forEach((snapshot) => pollsList.push(snapshot.data()));
   return pollsList;
 };
 
-const getAnnouncements = async (db) => {
+const getAnnouncements = async () => {
   const announcements = await getDocs(collection(db, "announcements"));
   let anouncementsList = [];
-  announcements.forEach((snapshot) =>
-    anouncementsList.push({
-      dateCreated: snapshot.data().dateCreated,
-      type: snapshot.data().type,
-      title: snapshot.data().title,
-      image: snapshot.data().image,
-      message: snapshot.data().message,
-      options: snapshot.data().options,
-      sender: getUserRef(snapshot.data().sender),
-      receiver: snapshot.data().receiver,
-    })
-  );
+  announcements.forEach((snapshot) => anouncementsList.push(snapshot.data()));
   return anouncementsList;
 };
 
-const getEmergencies = async (db) => {
+const getEmergencies = async () => {
   const emergencies = await getDocs(collection(db, "emergencies"));
   let emergenciesList = [];
-  emergencies.forEach((snapshot) =>
-    emergenciesList.push({
-      dateCreated: snapshot.data().dateCreated,
-      type: snapshot.data().type,
-      sender: getUserRef(snapshot.data().sender),
-      location: snapshot.data().location,
-    })
-  );
+  emergencies.forEach((snapshot) => emergenciesList.push(snapshot.data()));
   return emergenciesList;
 };
 
-export { getUserRef, getUsers, getAnnouncements, getEmergencies, getPolls };
+const setUsers = async (user) => {
+  await setDoc(doc(db, "users", user.uid), user);
+};
+const setAnnouncements = async (announcement) => {
+  await setDoc(doc(db, "announcements", announcement.uid), announcement);
+};
+const setEmergencies = async (emergencie) => {
+  await setDoc(doc(db, "emergencies", emergencie.uid), emergencie);
+};
+const setPolls = async (poll) => {
+  await setDoc(doc(db, "polls", poll.uid), poll);
+};
+
+export {
+  getUserRef,
+  getUsers,
+  getAnnouncements,
+  getEmergencies,
+  getPolls,
+  setUsers,
+};

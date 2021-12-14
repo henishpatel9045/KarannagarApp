@@ -1,115 +1,15 @@
-import { Divider } from "@ui-kitten/components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
+import { getAnnouncements } from "../api/firebase";
 import AppCard from "../components/AppCard";
 import AppLink from "../components/AppLink";
 import AppText from "../components/AppText";
 import colors from "../configs/colors";
-
-const messages = [
-  {
-    id: 1,
-    type: "card",
-    title: "WaterDepartment",
-    sender: "Sarpanch",
-    reciever: "Vadipati",
-    message: "Only for two hours",
-    dateTIme: new Date().toLocaleString(),
-    image: require("../assets/logn.jpg"),
-  },
-  {
-    id: 2,
-    type: "card",
-    title: "ElectricityRelated",
-    sender: "HenishPatel",
-    reciever: "Khadki",
-    message: "Light CutDown",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 3,
-    type: "card",
-    title: "Event",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "Need 25 mens on 12th December",
-    dateTIme: new Date().toLocaleString(),
-    image: require("../assets/logn.jpg"),
-  },
-  {
-    id: 7,
-    type: "link",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "Flipkart",
-    url: "https://www.flipkart.com/",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 4,
-    type: "card",
-    title: "WaterDepartment",
-    sender: "Sarpanch",
-    reciever: "Vadipati",
-    message: "Only for two hours",
-    dateTIme: new Date().toLocaleString(),
-    image: require("../assets/logn.jpg"),
-  },
-  {
-    id: 8,
-    sender: "SPG",
-    reciever: "Vadipati",
-    type: "text",
-    message: "Hey man just testing the app.",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 9,
-    type: "text",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "Its working fine.",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 10,
-    sender: "SPG",
-    reciever: "Vadipati",
-    type: "text",
-    message: "Now i have found a bug.",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 5,
-    type: "card",
-    title: "ElectricityRelated",
-    sender: "HenishPatel",
-    reciever: "Khadki",
-    message: "Light CutDown",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 11,
-    type: "text",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "હેનીશ પટેલ",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 6,
-    type: "card",
-    title: "Event",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "Need 25 mens on 12th December",
-    dateTIme: new Date().toLocaleString(),
-    image: require("../assets/logn.jpg"),
-  },
-];
+import useApiRef from "../hooks/useApiRef";
 
 export default function AnnouncementScreen() {
-  const [data, setdata] = useState(messages);
+  const [data, setdata] = useState([]);
+
   const [refreshing, setrefreshing] = useState(false);
   return (
     <View>
@@ -126,7 +26,7 @@ export default function AnnouncementScreen() {
                   reciever={item.reciever}
                   message={item.message}
                   dateTime={item.dateTIme}
-                  image={item.image}
+                  image={item.image ? item.image : null}
                 />
                 <View
                   style={{
