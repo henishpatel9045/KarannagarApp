@@ -102,26 +102,26 @@ const menuList = [
     icon: "android-messages",
     title: "Announcements",
     subTitle: 0,
-    onPress: () => console.log(),
+    navName: "UserAnn",
     color: "#f09009",
   },
   {
     icon: "medical-bag",
     title: "Emergencies",
     subTitle: 0,
-    onPress: () => console.log(),
+    navName: "UserEmer",
     color: "tomato",
   },
   {
     icon: "poll",
     title: "Polls",
     subTitle: 0,
-    onPress: () => console.log(),
+    navName: "UserPolls",
     color: "#03c860",
   },
 ];
 
-export default function AccountScreen() {
+export default function AccountScreen({ navigation }) {
   const [data, setdata] = useState(menuList);
   return (
     <View style={styles.container}>
@@ -140,7 +140,7 @@ export default function AccountScreen() {
             name={item.icon}
             title={item.title}
             subTitle={item.subTitle}
-            onPress={item.onPress}
+            onPress={() => navigation.navigate(item.navName)}
             color={"white"}
             bgColor={item.color}
           />

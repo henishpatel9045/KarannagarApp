@@ -12,6 +12,10 @@ import NetworkError from "./app/components/NetworkError";
 import EmergencieDeleteScreen from "./app/screens/EmergencieDeleteScreen";
 import AnnouncementScreen from "./app/screens/AnnouncementScreen";
 import EmergencyScreen from "./app/screens/EmergencyScreen";
+import PollListScreen from "./app/screens/PollListScreen";
+import TabNavigation from "./app/navigation/TabNavigation";
+import { NavigationContainer } from "@react-navigation/native";
+import AccountStackNavigator from "./app/navigation/AccountStackNavigator";
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);
@@ -28,7 +32,9 @@ export default function App() {
         </Screen>
       )} */}
       <Screen>
-        <EmergencyScreen />
+        <NavigationContainer>
+          <TabNavigation />
+        </NavigationContainer>
       </Screen>
     </ApplicationProvider>
   );

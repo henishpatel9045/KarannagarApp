@@ -8,6 +8,8 @@ import PollScreen from "../screens/PollScreen";
 import AccountScreen from "../screens/AccountScreen";
 import { MaterialCommunityIcons, Entypo, Ionicons } from "@expo/vector-icons";
 import colors from "../configs/colors";
+import PollListScreen from "../screens/PollListScreen";
+import AccountStackNavigator from "./AccountStackNavigator";
 
 export default function TabNavigation() {
   const Tab = createMaterialBottomTabNavigator();
@@ -46,7 +48,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Polls"
-        component={PollScreen}
+        component={PollListScreen}
         options={{
           tabBarColor: "rgb(0, 100, 180)",
           tabBarIcon: ({ color, size }) => (
@@ -56,7 +58,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Account"
-        component={AccountScreen}
+        component={AccountStackNavigator}
         options={{
           tabBarColor: "rgba(0,0,250, 0.8)",
           tabBarIcon: ({ color, size }) => (

@@ -1,6 +1,6 @@
 import moment from "moment";
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { getAnnouncements } from "../api/firebase";
 import AppCard from "../components/AppCard";
 import AppLink from "../components/AppLink";
@@ -18,12 +18,13 @@ export default function AnnouncementScreen() {
 
   const [refreshing, setrefreshing] = useState(false);
   return (
-    <View>
+    <View style={styles.container}>
       {loading ? (
         <LoadingSceen />
       ) : (
         <FlatList
           data={data}
+          style={{ flex: 1, width: "100%" }}
           keyExtractor={(item) => item.aid.toString()}
           renderItem={({ item }) => {
             if (item.type === "card")
@@ -105,14 +106,7 @@ export default function AnnouncementScreen() {
               return (
                 <>
                   <AppText>{item.message}</AppText>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginHorizontal: 15,
-                      justifyContent: "space-between",
-                      width: "95%",
-                    }}
-                  >
+                  <View style={styles.footer}>
                     <Text
                       style={{
                         alignSelf: "flex-start",
@@ -133,19 +127,7 @@ export default function AnnouncementScreen() {
                 </>
               );
           }}
-          ItemSeparatorComponent={() => (
-            <View
-              style={{
-                alignItems: "center",
-                alignSelf: "center",
-                borderTopColor: colors.gray,
-                borderWidth: 1,
-                marginVertical: 15,
-                justifyContent: "center",
-                width: "90%",
-              }}
-            />
-          )}
+          ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
           refreshing={refreshing}
           onRefresh={() => request()}
         />
@@ -153,3 +135,25 @@ export default function AnnouncementScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.gray,
+    flex: 1,
+  },
+  itemSeperator: {
+    alignItems: "center",
+    alignSelf: "center",
+    borderTopColor: colors.gray,
+    borderWidth: 1,
+    marginVertical: 15,
+    justifyContent: "center",
+    width: "90%",
+  },
+  footer: {
+    flexDirection: "row",
+    marginHorizontal: 15,
+    justifyContent: "space-between",
+    width: "95%",
+  },
+});
