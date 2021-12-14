@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-export default (apiRef) => {
-  const [usersList, setusersList] = useState([]);
-  const setUser = async () => {
-    const users = await apiRef();
-    setusersList(users);
+export default useApiRef = (apiRef) => {
+  const [data, setData] = useState([]);
+  const [loading, setloading] = useState(false);
+  const request = async () => {
+    setloading(true);
+    const dataObj = await apiRef();
+    setloading(false);
+
+    setData(dataObj);
   };
-  useEffect(() => {
-    setUser();
-  }, []);
-  return usersList;
+  return { data, loading, request };
 };

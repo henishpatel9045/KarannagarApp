@@ -19,28 +19,36 @@ const getUserRef = async (ref) => {
 const getUsers = async () => {
   const users = await getDocs(collection(db, "users"));
   let usersList = [];
-  users.forEach((snapshot) => usersList.push(snapshot.data()));
+  users.forEach((snapshot) => {
+    usersList.push(snapshot.data());
+  });
   return usersList;
 };
 
 const getPolls = async () => {
   const polls = await getDocs(collection(db, "polls"));
   let pollsList = [];
-  polls.forEach((snapshot) => pollsList.push(snapshot.data()));
+  polls.forEach((snapshot) => {
+    pollsList.push(snapshot.data());
+  });
   return pollsList;
 };
 
 const getAnnouncements = async () => {
   const announcements = await getDocs(collection(db, "announcements"));
   let anouncementsList = [];
-  announcements.forEach((snapshot) => anouncementsList.push(snapshot.data()));
+  announcements.forEach((snapshot) => {
+    anouncementsList.push(snapshot.data());
+  });
   return anouncementsList;
 };
 
 const getEmergencies = async () => {
   const emergencies = await getDocs(collection(db, "emergencies"));
   let emergenciesList = [];
-  emergencies.forEach((snapshot) => emergenciesList.push(snapshot.data()));
+  emergencies.forEach((snapshot) => {
+    emergenciesList.push(snapshot.data());
+  });
   return emergenciesList;
 };
 

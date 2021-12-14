@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableHighlight, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../configs/colors";
-import { Divider } from "react-native-elements";
+import DateTagMessage from "../components/DateTagMessage";
 
 const data = [
   {
@@ -18,7 +18,7 @@ const data = [
     iconName: "fire",
     title: "Fire",
     sender: "Sarpanch",
-    dateTime: Date.now(),
+    dateTime: 1456456554464,
   },
   {
     id: 3,
@@ -71,6 +71,13 @@ const ListCardComponent = ({ title, iconName, sender, dateTime, onPress }) => (
 );
 
 export default function EmergencieDeleteScreen() {
+  let currDate = "";
+  console.log("curDate: " + currDate);
+  const toDate = (date) => new Date(date).toDateString();
+  const setCurrDate = (date) => {
+    currDate = toDate(date);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -78,13 +85,19 @@ export default function EmergencieDeleteScreen() {
         data={data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <ListCardComponent
-            title={item.title}
-            sender={item.sender}
-            iconName={item.iconName}
-            dateTime={item.dateTime}
-            onPress={() => console.log()}
-          />
+          <>
+            {currDate !== toDate(item.dateTime) && (
+              <DateTagMessage date={item.dateTime} />
+            )}
+            {() => setCurrDate(toDate(item.dateTime))}
+            <ListCardComponent
+              title={item.title}
+              sender={item.sender}
+              iconName={item.iconName}
+              dateTime={item.dateTime}
+              onPress={() => console.log()}
+            />
+          </>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
       />

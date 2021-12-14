@@ -1,7 +1,6 @@
 import { Divider, Layout, List } from "@ui-kitten/components";
 import React from "react";
 import {
-  FlatList,
   StyleSheet,
   TouchableHighlight,
   TouchableOpacity,
