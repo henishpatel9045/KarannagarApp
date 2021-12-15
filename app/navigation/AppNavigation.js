@@ -18,6 +18,7 @@ export default function AppNavigation() {
         name="DashboardTab"
         component={DashboardNavigation}
         options={{
+          title: "Dashboard",
           tabBarColor: "tomato",
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" color={color} size={20} />

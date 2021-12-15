@@ -199,6 +199,9 @@ const EmergencyCard = ({
 
 export default function DashboardScreen({ navigation }) {
   const [open, setopen] = useState(false);
+  const [EmerRefreshing, setEmerRefreshing] = useState(false);
+  const [AnnRefreshing, setAnnRefreshing] = useState(false);
+  const [PollRefreshing, setPollRefreshing] = useState(false);
 
   const {
     data: announcements,
@@ -255,6 +258,8 @@ export default function DashboardScreen({ navigation }) {
                 )}
               />
             )}
+            refreshing={EmerRefreshing}
+            onRefresh={() => loademergency()}
           />
         )}
       </View>
@@ -280,6 +285,8 @@ export default function DashboardScreen({ navigation }) {
                 )}
               />
             )}
+            refreshing={AnnRefreshing}
+            onRefresh={() => loadAnnouncements()}
           />
         )}
       </View>
@@ -304,6 +311,8 @@ export default function DashboardScreen({ navigation }) {
             )}
             horizontal
             contentContainerStyle={[styles.scrollStyle, { paddingBottom: 35 }]}
+            refreshing={PollRefreshing}
+            onRefresh={() => loadPolls()}
           />
         )}
       </View>
