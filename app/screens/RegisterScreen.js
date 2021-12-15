@@ -8,15 +8,32 @@ import {
   Dimensions,
   Alert,
   StatusBar,
+  KeyboardAvoidingView,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import AppInput from "../components/forms/AppInput";
 import SocialMediaIcon from "../components/SocialMediaIcon";
 import colors from "../configs/colors";
+import staticAppData from "../configs/staticAppData";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Input from "../components/Input";
 
-const areas = ["Vadiparti", "Khadki", "Thakor Vas"];
+const areas = staticAppData.area;
 
 export default function RegisterScreen({ navigation }) {
-  const [selectedArea, setselectedArea] = useState(false);
+  const [selectedArea, setselectedArea] = useState([]);
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [errors, setErrors] = useState([false, false]);
+  const displayOptions = selectedArea.map((index) => {
+    return areas[index.row];
+  });
+  const checkError = () => {
+    setErrors([selectedArea.length === 0, mobileNumber.length != 10]);
+  };
+  const handleSubmit = () => {
+    let area = [];
+    selectedArea.forEach((item) => area.push(areas[item.row]));
+  };
 
   return (
     <View style={styles.container}>
@@ -30,8 +47,9 @@ export default function RegisterScreen({ navigation }) {
       />
       <Select
         selectedIndex={selectedArea}
-        value={areas[selectedArea.row]}
+        value={displayOptions.join(", ")}
         placeholder={"Select Area"}
+        multiSelect={true}
         style={styles.areaSelector}
         onSelect={(index) => {
           setselectedArea(index);
@@ -42,24 +60,45 @@ export default function RegisterScreen({ navigation }) {
           <SelectItem title={item} key={item} style={{ zIndex: 5 }} />
         ))}
       </Select>
-      <View style={{ zIndex: -2 }}>
+      {errors[0] && (
+        <Text style={{ color: "red", top: -5 }}>
+          Please select at least one area.
+        </Text>
+      )}
+      <Input
+        maxLength={10}
+        placeholder={"Mobile Number"}
+        name={"mobileNo"}
+        onChangeText={setMobileNumber}
+        keyboardType="number-pad"
+        leftComponent={
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <MaterialCommunityIcons
+              name="phone"
+              size={25}
+              color={colors.dark}
+            />
+            <Text style={{ color: colors.dark }}>+91</Text>
+          </View>
+        }
+        width={"80%"}
+      />
+      {errors[1] && (
+        <Text style={{ color: "red" }}>Please enter your Mobile Number.</Text>
+      )}
+      <View style={{ zIndex: -2, marginTop: 20 }}>
         <SocialMediaIcon
           name={"google"}
           style={styles.google}
           title={"Register With Google"}
           onPress={() => {
-            if (!selectedArea)
-              return Alert.alert("Alert", "Please select area first", [
-                {
-                  text: "Ok",
-                },
-              ]);
+            checkError();
             // else {
             //   registration();
             // }
           }}
         />
-        <SocialMediaIcon
+        {/* <SocialMediaIcon
           name={"facebook"}
           style={styles.google}
           title="Register With Facebook"
@@ -71,7 +110,7 @@ export default function RegisterScreen({ navigation }) {
                 },
               ]);
           }}
-        />
+        /> */}
       </View>
       <TouchableOpacity
         style={styles.footer}
@@ -107,9 +146,8 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   areaSelector: {
-    minWidth: "50%",
-
-    marginBottom: 20,
+    minWidth: "80%",
+    marginBottom: 5,
   },
   google: {
     minWidth: "80%",

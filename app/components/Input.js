@@ -15,6 +15,7 @@ export default function Input({
   onBlur,
   caption,
   color,
+  maxLength,
   ...otherProps
 }) {
   return (
@@ -22,6 +23,7 @@ export default function Input({
       <View style={[styles.container, { borderRadius: radius ? radius : 200 }]}>
         {leftComponent}
         <TextInput
+          maxLength={maxLength}
           style={[style, styles.textBox]}
           secureTextEntry={secureTextEntry}
           placeholder={placeholder}

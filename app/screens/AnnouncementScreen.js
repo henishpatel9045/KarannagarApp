@@ -2,6 +2,7 @@ import moment from "moment";
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { getAnnouncements } from "../api/firebase";
+import AppButton from "../components/AppButton";
 import AppCard from "../components/AppCard";
 import AppLink from "../components/AppLink";
 import AppText from "../components/AppText";
@@ -21,9 +22,14 @@ export default function AnnouncementScreen() {
     <View style={styles.container}>
       {loading ? (
         <LoadingSceen />
+      ) : data.error !== false ? (
+        <View>
+          <Text>Couldn't fetch data from server.</Text>
+          <AppButton title={"Retry"} onPress={() => request()} />
+        </View>
       ) : (
         <FlatList
-          data={data}
+          data={data.data}
           style={{ flex: 1, width: "100%" }}
           keyExtractor={(item) => item.aid.toString()}
           renderItem={({ item }) => {

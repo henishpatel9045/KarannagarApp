@@ -17,14 +17,9 @@ import useApiRef from "../hooks/useApiRef";
 import { getEmergencies } from "../api/firebase";
 import moment from "moment";
 import { FlatList } from "react-native-gesture-handler";
+import staticAppData from "../configs/staticAppData";
 
-const iconsList = {
-  Robbery: "robber",
-  Fire: "fire",
-  Police: "police-badge",
-  Accident: "car",
-  SOS: "alert-circle",
-};
+const iconsList = staticAppData.emerIconList;
 
 export default function EmergencyScreen({ onPress }) {
   const { data, request } = useApiRef(getEmergencies);
@@ -112,7 +107,7 @@ export default function EmergencyScreen({ onPress }) {
         <Text style={styles.emergenctMessageListTitle}>Emergency Messages</Text>
         <Divider style={{ marginTop: 30 }} />
         <FlatList
-          data={data}
+          data={data.data}
           keyExtractor={(item) => item.dateCreated.seconds}
           renderItem={({ item }) => renderItem(item)}
           ItemSeparatorComponent={Divider}

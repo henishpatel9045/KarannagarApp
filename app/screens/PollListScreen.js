@@ -62,7 +62,7 @@ export default function PollListScreen() {
         <LoadingSceen />
       ) : (
         <FlatList
-          data={data}
+          data={data.data}
           style={styles.list}
           keyExtractor={(item) => item.dateCreated.seconds.toString()}
           renderItem={({ item }) => renderItem(item)}

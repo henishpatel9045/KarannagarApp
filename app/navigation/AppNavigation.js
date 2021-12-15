@@ -1,24 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import DashboardScreen from "../screens/DashboardScreen";
 import AnnouncementScreen from "../screens/AnnouncementScreen";
 import EmergencyScreen from "../screens/EmergencyScreen";
-import PollScreen from "../screens/PollScreen";
-import AccountScreen from "../screens/AccountScreen";
 import { MaterialCommunityIcons, Entypo, Ionicons } from "@expo/vector-icons";
 import colors from "../configs/colors";
 import PollListScreen from "../screens/PollListScreen";
 import AccountStackNavigator from "./AccountStackNavigator";
+import DashboardNavigation from "./DashboardNavigation";
 
-export default function TabNavigation() {
+export default function AppNavigation() {
   const Tab = createMaterialBottomTabNavigator();
 
   return (
     <Tab.Navigator shifting>
       <Tab.Screen
-        name="Dashboard"
-        component={DashboardScreen}
+        name="DashboardTab"
+        component={DashboardNavigation}
         options={{
           tabBarColor: "tomato",
           tabBarIcon: ({ color, size }) => (

@@ -1,4 +1,5 @@
 import { initializeApp } from "@firebase/app";
+
 import {
   collection,
   doc,
@@ -17,39 +18,59 @@ const getUserRef = async (ref) => {
 };
 
 const getUsers = async () => {
-  const users = await getDocs(collection(db, "users"));
+  let error = false;
   let usersList = [];
-  users.forEach((snapshot) => {
-    usersList.push(snapshot.data());
-  });
-  return usersList;
+  try {
+    const users = await getDocs(collection(db, "users"));
+    users.forEach((snapshot) => {
+      usersList.push(snapshot.data());
+    });
+  } catch (e) {
+    error = e;
+  }
+  return { data: usersList, error: error };
 };
 
 const getPolls = async () => {
-  const polls = await getDocs(collection(db, "polls"));
+  let error = false;
   let pollsList = [];
-  polls.forEach((snapshot) => {
-    pollsList.push(snapshot.data());
-  });
-  return pollsList;
+  try {
+    const polls = await getDocs(collection(db, "polls"));
+    polls.forEach((snapshot) => {
+      pollsList.push(snapshot.data());
+    });
+  } catch (e) {
+    error = e;
+  }
+  return { data: pollsList, error: error };
 };
 
 const getAnnouncements = async () => {
-  const announcements = await getDocs(collection(db, "announcements"));
+  let error = false;
   let anouncementsList = [];
-  announcements.forEach((snapshot) => {
-    anouncementsList.push(snapshot.data());
-  });
-  return anouncementsList;
+  try {
+    const announcements = await getDocs(collection(db, "announcements"));
+    announcements.forEach((snapshot) => {
+      anouncementsList.push(snapshot.data());
+    });
+  } catch (e) {
+    error = e;
+  }
+  return { data: anouncementsList, error: error };
 };
 
 const getEmergencies = async () => {
-  const emergencies = await getDocs(collection(db, "emergencies"));
   let emergenciesList = [];
-  emergencies.forEach((snapshot) => {
-    emergenciesList.push(snapshot.data());
-  });
-  return emergenciesList;
+  let error = false;
+  try {
+    const emergencies = await getDocs(collection(db, "emergencies"));
+    emergencies.forEach((snapshot) => {
+      emergenciesList.push(snapshot.data());
+    });
+  } catch (e) {
+    error = e;
+  }
+  return { data: emergenciesList, error: error };
 };
 
 const setUsers = async (user) => {

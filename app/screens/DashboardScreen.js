@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
+  FlatList,
   ScrollView,
   TouchableHighlight,
   TouchableOpacity,
 } from "react-native-gesture-handler";
 import colors from "../configs/colors";
+import useApiRef from "../hooks/useApiRef";
+import { getAnnouncements, getEmergencies, getPolls } from "../api/firebase";
+import moment from "moment";
+import { SpeedDial } from "react-native-elements";
+import staticAppData from "../configs/staticAppData";
+import LottieView from "lottie-react-native";
 
+const remainingTime = (time) => {
+  const remainingTime = moment(time).diff(moment(Date.now()), "seconds");
+  // if (remainingTime <= 0) return "00:00:00";
+  return moment(remainingTime).format("hh:mm:ss");
+};
 const PollCard = ({
   question,
   sender,
@@ -26,7 +38,7 @@ const PollCard = ({
   >
     <View style={styles.cardHeader}>
       <Text style={styles.cardHeader}>Poll</Text>
-      <Text style={styles.sender}>
+      <Text style={styles.sender} numberOfLines={1}>
         {sender} : {receiver}
       </Text>
     </View>
@@ -54,18 +66,18 @@ const PollCard = ({
         >
           <MaterialCommunityIcons name="vote" size={30} color={"white"} />
         </TouchableHighlight>
-        <Text
-          style={{
-            fontSize: 12,
-            marginTop: 5,
-            alignSelf: "flex-end",
-            color: "white",
-          }}
-        >
-          {remainingTime}
-        </Text>
       </View>
     </View>
+    <Text
+      style={{
+        fontSize: 12,
+        marginTop: 5,
+        alignSelf: "flex-end",
+        color: "white",
+      }}
+    >
+      Remaining Time: {remainingTime}
+    </Text>
   </View>
 );
 
@@ -87,7 +99,7 @@ const AnnouncementCard = ({
   >
     <View style={styles.cardHeader}>
       <Text style={styles.cardHeader}>{title}</Text>
-      <Text style={styles.sender}>
+      <Text style={styles.sender} numberOfLines={1}>
         {sender} : {receiver}
       </Text>
     </View>
@@ -122,6 +134,7 @@ const AnnouncementCard = ({
   </View>
 );
 
+const iconsList = staticAppData.emerIconList;
 const EmergencyCard = ({
   title = "Emergency",
   sender,
@@ -149,7 +162,11 @@ const EmergencyCard = ({
         alignItems: "baseline",
       }}
     >
-      <MaterialCommunityIcons name={type} size={60} color={"white"} />
+      <MaterialCommunityIcons
+        name={iconsList[title]}
+        size={60}
+        color={"white"}
+      />
       <View style={{ flexDirection: "row" }}>
         <TouchableHighlight
           underlayColor={"rgba(255,255,255,0.5)"}
@@ -180,95 +197,134 @@ const EmergencyCard = ({
   </View>
 );
 
-export default function DashboardScreen() {
+export default function DashboardScreen({ navigation }) {
+  const [open, setopen] = useState(false);
+
+  const {
+    data: announcements,
+    loading: lan,
+    request: loadAnnouncements,
+  } = useApiRef(getAnnouncements);
+  const {
+    data: emergencies,
+    loading: lem,
+    request: loademergency,
+  } = useApiRef(getEmergencies);
+  const {
+    data: polls,
+    loading: lpoll,
+    request: loadPolls,
+  } = useApiRef(getPolls);
+
+  useEffect(() => {
+    loademergency();
+    loadAnnouncements();
+    loadPolls();
+  }, []);
+
+  const Loading = () => (
+    <LottieView
+      source={require("../assets/animations/loadingCircle.json")}
+      loop
+      autoPlay
+      style={{ height: 200, width: "100%", alignSelf: "center" }}
+    />
+  );
+
   return (
     <View style={styles.container}>
-      <View style={styles.section}>
+      <View style={[styles.section, { minHeight: 200 }]}>
         <Text style={styles.sectionHeader}>Emergencies</Text>
-        <ScrollView horizontal contentContainerStyle={styles.scrollStyle}>
-          <EmergencyCard
-            title="Fire"
-            type={"fire"}
-            sender={"Henish Patel"}
-            dateTime={new Date().toLocaleString()}
+        {lem ? (
+          <Loading />
+        ) : (
+          <FlatList
+            horizontal
+            contentContainerStyle={styles.scrollStyle}
+            data={emergencies.data}
+            keyExtractor={(item) => item.dateCreated.toString()}
+            renderItem={({ item }) => (
+              <EmergencyCard
+                title={item.title}
+                type={item.type}
+                sender={`${item.sender.firstName} ${
+                  item.sender.lastName ? item.sender.lastName : ""
+                }`.trimEnd()}
+                dateTime={moment(item.dateCreated.toDate()).format(
+                  "DD-MM-YYYY, hh:mm:ss"
+                )}
+              />
+            )}
           />
-          <EmergencyCard
-            title="Fire"
-            type={"fire"}
-            sender={"Henish Patel"}
-            dateTime={new Date().toLocaleString()}
-          />
-          <EmergencyCard
-            title="Fire"
-            type={"fire"}
-            sender={"Henish Patel"}
-            dateTime={new Date().toLocaleString()}
-          />
-          <EmergencyCard
-            title="Fire"
-            type={"fire"}
-            sender={"Henish Patel"}
-            dateTime={new Date().toLocaleString()}
-          />
-        </ScrollView>
+        )}
       </View>
-      <View style={styles.section}>
+      <View style={[styles.section, { minHeight: 200 }]}>
         <Text style={styles.sectionHeader}>Announcements</Text>
-        <ScrollView
-          horizontal
-          contentContainerStyle={{ elevation: 100, paddingVertical: 20 }}
-        >
-          <AnnouncementCard
-            title={"Water Department"}
-            sender={"Saepanch"}
-            receiver={"Vadiparti"}
-            message={
-              "Announcement for vadiparti that today water is gonna run late because of pump malfunction."
-            }
-            dateTime={new Date().toLocaleString()}
+        {lan ? (
+          <Loading />
+        ) : (
+          <FlatList
+            data={announcements.data}
+            keyExtractor={(item) => item.dateCreated.toString()}
+            horizontal
+            renderItem={({ item }) => (
+              <AnnouncementCard
+                title={item.title}
+                sender={`${item.sender.firstName} ${
+                  item.sender.lastName ? item.sender.lastName : ""
+                }`.trimEnd()}
+                receiver={item.receiver.join(", ")}
+                message={item.message}
+                dateTime={moment(item.dateCreated.toDate()).format(
+                  "DD-MM-YYYY, hh:mm"
+                )}
+              />
+            )}
           />
-          <AnnouncementCard
-            title={"Water Department"}
-            sender={"Saepanch"}
-            receiver={"Vadiparti"}
-            message={
-              "Announcement for vadiparti that today water is gonna run late because of pump malfunction."
-            }
-            dateTime={new Date().toLocaleString()}
-          />
-          <AnnouncementCard
-            title={"Water Department"}
-            sender={"Saepanch"}
-            receiver={"Vadiparti"}
-            message={
-              "Announcement for vadiparti that today water is gonna run late because of pump malfunction."
-            }
-            dateTime={new Date().toLocaleString()}
-          />
-          <AnnouncementCard
-            title={"Water Department"}
-            sender={"Saepanch"}
-            receiver={"Vadiparti"}
-            message={
-              "Announcement for vadiparti that today water is gonna run late because of pump malfunction."
-            }
-            dateTime={new Date().toLocaleString()}
-          />
-        </ScrollView>
+        )}
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionHeader}>Polls</Text>
-        <ScrollView
-          horizontal
-          contentContainerStyle={[styles.scrollStyle, { paddingBottom: 35 }]}
-        >
-          <PollCard sender={"Sarpanch"} question={"What's your name?"} />
-          <PollCard sender={"Sarpanch"} question={"What's your name?"} />
-          <PollCard sender={"Sarpanch"} question={"What's your name?"} />
-          <PollCard sender={"Sarpanch"} question={"What's your name?"} />
-        </ScrollView>
+        {lpoll ? (
+          <Loading />
+        ) : (
+          <FlatList
+            data={polls.data}
+            keyExtractor={(item) => item.dateCreated.toString()}
+            renderItem={({ item }) => (
+              <PollCard
+                sender={`${item.sender.firstName} ${
+                  item.sender.lastName ? item.sender.lastName : ""
+                }`.trimEnd()}
+                question={item.question}
+                receiver={item.receiver}
+                remainingTime={remainingTime(item.endTime.toDate())}
+              />
+            )}
+            horizontal
+            contentContainerStyle={[styles.scrollStyle, { paddingBottom: 35 }]}
+          />
+        )}
       </View>
+      <SpeedDial
+        isOpen={open}
+        icon={{ name: "add", color: "#fff" }}
+        openIcon={{ name: "close", color: "#fff" }}
+        onOpen={() => setopen(!open)}
+        onClose={() => setopen(!open)}
+      >
+        <SpeedDial.Action
+          icon={{ name: "message", color: "#fff" }}
+          title="Create Announcement"
+          onPress={() => navigation.navigate("AddAnnouncement")}
+        />
+        <SpeedDial.Action
+          icon={{ name: "poll", color: "#fff" }}
+          title="Create Poll"
+          onPress={() => navigation.navigate("AddPoll")}
+        />
+      </SpeedDial>
     </View>
   );
 }

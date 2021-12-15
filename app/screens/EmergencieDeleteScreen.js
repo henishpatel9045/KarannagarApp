@@ -3,7 +3,6 @@ import { StyleSheet, TouchableHighlight, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../configs/colors";
-import DateTagMessage from "../components/DateTagMessage";
 
 const data = [
   {
@@ -71,13 +70,6 @@ const ListCardComponent = ({ title, iconName, sender, dateTime, onPress }) => (
 );
 
 export default function EmergencieDeleteScreen() {
-  let currDate = "";
-  console.log("curDate: " + currDate);
-  const toDate = (date) => new Date(date).toDateString();
-  const setCurrDate = (date) => {
-    currDate = toDate(date);
-  };
-
   return (
     <View style={styles.container}>
       <FlatList
@@ -86,10 +78,6 @@ export default function EmergencieDeleteScreen() {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <>
-            {currDate !== toDate(item.dateTime) && (
-              <DateTagMessage date={item.dateTime} />
-            )}
-            {() => setCurrDate(toDate(item.dateTime))}
             <ListCardComponent
               title={item.title}
               sender={item.sender}
