@@ -40,6 +40,8 @@ const iconsList = {
   Police: "police-badge",
   Accident: "car",
   SOS: "alert-circle",
+  Ambulance: "ambulance",
+  CanalAccident: "swim",
 };
 
 export default {

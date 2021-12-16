@@ -8,6 +8,7 @@ import colors from "../configs/colors";
 import PollListScreen from "../screens/PollListScreen";
 import AccountStackNavigator from "./AccountStackNavigator";
 import DashboardNavigation from "./DashboardNavigation";
+import PollNavigation from "./PollNavigation";
 
 export default function AppNavigation() {
   const Tab = createMaterialBottomTabNavigator();
@@ -47,7 +48,7 @@ export default function AppNavigation() {
       />
       <Tab.Screen
         name="Polls"
-        component={PollListScreen}
+        component={PollNavigation}
         options={{
           tabBarColor: "rgb(0, 100, 180)",
           tabBarIcon: ({ color, size }) => (

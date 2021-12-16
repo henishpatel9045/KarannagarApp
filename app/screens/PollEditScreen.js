@@ -8,8 +8,9 @@ import AppFormButton from "../components/forms/AppFormButton";
 import AppInput from "../components/forms/AppInput";
 import AppSelece from "../components/forms/AppSelece";
 import colors from "../configs/colors";
+import staticAppData from "../configs/staticAppData";
 
-const areaName = ["Vadipati", "Khadki", "Tichudiyu", "ThakorVas"];
+const areaName = staticAppData.area;
 
 export default function PollEditScreen() {
   const [totalOptions, setoptions] = useState(0);
@@ -28,12 +29,13 @@ export default function PollEditScreen() {
 
   return (
     <AppForm
-      values={{ receiver: "", question: "", options: [] }}
+      values={{ receiver: [], question: "", options: [] }}
       style={styles.container}
       onSubmit={(values) => console.log(values)}
     >
       <AppSelece
         data={areaName}
+        multiselect
         size="large"
         name="receiver"
         style={styles.receiver}
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   receiver: {
-    width: "40%",
+    width: "80%",
     marginVertical: 20,
   },
   question: {},

@@ -7,10 +7,11 @@ import colors from "../configs/colors";
 
 const options = ["Henish", "Sarjil", "Om", "Divya", "Devin"];
 
-export default function PollScreen() {
+export default function PollScreen({ route }) {
   const [res, setRes] = useState("");
   const fadeAnim1 = useRef(new Animated.Value(1)).current;
   const fadeAnim2 = useRef(new Animated.Value(0)).current;
+  const data = route.data;
 
   const fadeIn = (ref) => {
     Animated.timing(ref, {
@@ -43,13 +44,13 @@ export default function PollScreen() {
     />
   );
   const optionsComponent = [];
-  for (let index = 0; index < options.length; index++) {
-    optionsComponent.push(renderOptions(options[index]));
+  for (let index = 0; index < data.options.length; index++) {
+    optionsComponent.push(renderOptions(data.options[index]));
   }
   return (
     <Layout style={styles.container}>
       <View style={styles.pollPrompt}>
-        <Text style={styles.question}>What's your name?</Text>
+        <Text style={styles.question}>{data.question}</Text>
       </View>
 
       <Animated.View style={[styles.options, { opacity: fadeAnim1 }]}>

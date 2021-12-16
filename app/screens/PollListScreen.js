@@ -8,7 +8,7 @@ import LoadingSceen from "./LoadingSceen";
 import moment from "moment";
 import colors from "../configs/colors";
 
-export default function PollListScreen() {
+export default function PollListScreen({ navigation }) {
   const { data, loading, request } = useApiRef(getPolls);
   const [refreshing, setrefreshing] = useState(false);
 
@@ -39,7 +39,12 @@ export default function PollListScreen() {
         </View>
         <TouchableHighlight
           underlayColor={"rgba(255,255,255,0.5)"}
-          onPress={() => console.log()}
+          onPress={() =>
+            navigation.navigate("PollResponse", {
+              data: info,
+              pollScreen: true,
+            })
+          }
           style={styles.right}
         >
           <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -65,7 +70,10 @@ export default function PollListScreen() {
           data={data.data}
           style={styles.list}
           keyExtractor={(item) => item.dateCreated.seconds.toString()}
-          renderItem={({ item }) => renderItem(item)}
+          renderItem={({ item }) => {
+            console.log(item.options);
+            return renderItem(item);
+          }}
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
           refreshing={refreshing}
           onRefresh={() => request()}

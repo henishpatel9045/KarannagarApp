@@ -18,63 +18,71 @@ const getUserRef = async (ref) => {
 };
 
 const getUsers = async () => {
-  let error = false;
+  let response = {};
   let usersList = [];
   try {
     const users = await getDocs(collection(db, "users"));
     users.forEach((snapshot) => {
       usersList.push(snapshot.data());
     });
+    response = { data: usersList, error: false };
   } catch (e) {
-    error = e;
+    response = { data: usersList, error: e };
   }
-  return { data: usersList, error: error };
+  return response;
 };
 
 const getPolls = async () => {
-  let error = false;
+  let response = {};
   let pollsList = [];
   try {
     const polls = await getDocs(collection(db, "polls"));
     polls.forEach((snapshot) => {
       pollsList.push(snapshot.data());
     });
+    response = { data: pollsList, error: false };
   } catch (e) {
-    error = e;
+    response = { data: pollsList, error: e };
   }
-  return { data: pollsList, error: error };
+  return response;
 };
 
 const getAnnouncements = async () => {
-  let error = false;
   let anouncementsList = [];
+  let response = {};
   try {
     const announcements = await getDocs(collection(db, "announcements"));
     announcements.forEach((snapshot) => {
       anouncementsList.push(snapshot.data());
     });
+    response = { data: anouncementsList, error: false };
   } catch (e) {
-    error = e;
+    response = { data: anouncementsList, error: e };
   }
-  return { data: anouncementsList, error: error };
+  return response;
 };
 
 const getEmergencies = async () => {
   let emergenciesList = [];
-  let error = false;
+  let response = {};
   try {
     const emergencies = await getDocs(collection(db, "emergencies"));
+
     emergencies.forEach((snapshot) => {
       emergenciesList.push(snapshot.data());
     });
+    if (!emergencies.ok()) {
+      return console.log("Emergency Api Failed to get the data");
+    }
+    response = { date: emergenciesList, error: false };
   } catch (e) {
-    error = e;
+    response = { data: emergenciesList, error: e };
   }
-  return { data: emergenciesList, error: error };
+  return response;
 };
 
 const setUsers = async (user) => {
-  await setDoc(doc(db, "users", user.uid), user);
+  // await setDoc(doc(db, "users", user.uid), {...user, dateCreated: ""});
 };
 const setAnnouncements = async (announcement) => {
   await setDoc(doc(db, "announcements", announcement.uid), announcement);

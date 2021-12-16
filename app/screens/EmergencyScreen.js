@@ -1,6 +1,7 @@
 import { Divider, Layout, List } from "@ui-kitten/components";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Alert,
   StyleSheet,
   TouchableHighlight,
   TouchableOpacity,
@@ -8,6 +9,7 @@ import {
 } from "react-native";
 import { Text } from "@ui-kitten/components";
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
+import * as Linking from "expo-linking";
 
 import colors from "../configs/colors";
 import IconDetail from "../components/IconDetail";
@@ -18,18 +20,55 @@ import { getEmergencies } from "../api/firebase";
 import moment from "moment";
 import { FlatList } from "react-native-gesture-handler";
 import staticAppData from "../configs/staticAppData";
+import { Overlay } from "react-native-elements";
+import AppButton from "../components/AppButton";
 
 const iconsList = staticAppData.emerIconList;
+const emergencies = ["Fire", "Robbery", "Police", "Accident", "CanalAccident"];
 
 export default function EmergencyScreen({ onPress }) {
   const { data, request } = useApiRef(getEmergencies);
+  const [overlayVisible, setOverlayVisible] = useState(false);
 
   useEffect(() => {
     request();
   }, []);
 
+  const handleSubmit = (item) => {
+    console.log(item);
+  };
+
+  const CallOverLay = () => (
+    <Overlay
+      isVisible={overlayVisible}
+      onBackdropPress={() => setOverlayVisible(false)}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <AppButton
+          style={{ width: "45%" }}
+          title={"108"}
+          txtColor={colors.dark}
+          color={"white"}
+          size={50}
+          onPress={() => Linking.openURL("tel:108")}
+        />
+        <AppButton
+          style={{ width: "45%" }}
+          txtColor={colors.dark}
+          size={30}
+          color={"white"}
+          title={"Local"}
+          onPress={() => Linking.openURL("tel:+919925320460")}
+        />
+      </View>
+    </Overlay>
+  );
   const renderItem = (info) => {
-    console.log(info);
     return (
       <EmergencyMessage
         Pack={MaterialCommunityIcons}
@@ -50,57 +89,58 @@ export default function EmergencyScreen({ onPress }) {
         </TouchableOpacity>
       </View>
       <View style={styles.emergencyChooser}>
+        {emergencies.map((emerType) => (
+          <TouchableHighlight
+            key={emerType}
+            onPress={() => {
+              Alert.alert("Alert", "Are you sure?", [
+                { text: "Ok", onPress: () => handleSubmit(true) },
+                {
+                  text: "Cancle",
+                  onPress: () => {
+                    return;
+                  },
+                },
+              ]);
+            }}
+            style={styles.emergencyIcons}
+            underlayColor="rgba(61, 104, 255, 0.5)"
+          >
+            <IconDetail
+              Pack={MaterialCommunityIcons}
+              name={iconsList[emerType]}
+              size={25}
+              color={colors.primary}
+              text={emerType}
+            />
+          </TouchableHighlight>
+        ))}
         <TouchableHighlight
-          onPress={() => console.log()}
+          onPress={() => {
+            Alert.alert("Alert", "Are you sure?", [
+              { text: "Ok", onPress: () => setOverlayVisible(true) },
+              {
+                text: "Cancle",
+                onPress: () => {
+                  return;
+                },
+              },
+            ]);
+          }}
           style={styles.emergencyIcons}
           underlayColor="rgba(61, 104, 255, 0.5)"
         >
-          <IconDetail
-            Pack={MaterialCommunityIcons}
-            name="fire"
-            size={25}
-            color={colors.primary}
-            text={"Fire"}
-          />
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => console.log()}
-          style={styles.emergencyIcons}
-          underlayColor="rgba(61, 104, 255, 0.5)"
-        >
-          <IconDetail
-            Pack={MaterialCommunityIcons}
-            name="robber"
-            size={25}
-            color={colors.primary}
-            text={"Robbery"}
-          />
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => console.log()}
-          style={styles.emergencyIcons}
-          underlayColor="rgba(61, 104, 255, 0.5)"
-        >
-          <IconDetail
-            Pack={MaterialCommunityIcons}
-            name="car"
-            size={25}
-            color={colors.primary}
-            text={"Accident"}
-          />
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => console.log()}
-          style={styles.emergencyIcons}
-          underlayColor="rgba(61, 104, 255, 0.5)"
-        >
-          <IconDetail
-            Pack={MaterialCommunityIcons}
-            name="police-badge"
-            size={25}
-            color={colors.primary}
-            text={"Police"}
-          />
+          <>
+            <IconDetail
+              Pack={MaterialCommunityIcons}
+              name={iconsList["Ambulance"]}
+              size={25}
+              color={colors.primary}
+              text={"Ambulance"}
+            />
+
+            <CallOverLay />
+          </>
         </TouchableHighlight>
       </View>
       <View style={styles.emergenctMessageList}>
@@ -158,6 +198,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     padding: 15,
     top: 55,
+
     width: "90%",
   },
   emergencyIcons: {
@@ -174,7 +215,7 @@ const styles = StyleSheet.create({
     width: "90%",
     position: "absolute",
     bottom: -10,
-    height: 330,
+    height: 300,
   },
   emergenctMessageListTitle: {
     position: "absolute",

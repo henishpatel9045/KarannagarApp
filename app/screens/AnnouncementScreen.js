@@ -22,11 +22,6 @@ export default function AnnouncementScreen() {
     <View style={styles.container}>
       {loading ? (
         <LoadingSceen />
-      ) : data.error !== false ? (
-        <View>
-          <Text>Couldn't fetch data from server.</Text>
-          <AppButton title={"Retry"} onPress={() => request()} />
-        </View>
       ) : (
         <FlatList
           data={data.data}
@@ -39,7 +34,7 @@ export default function AnnouncementScreen() {
                   <AppCard
                     title={item.title}
                     sender={item.sender.firstName}
-                    reciever={item.reciever}
+                    reciever={item.reciever.Join(", ")}
                     message={item.message}
                     image={item.image ? item.image : null}
                   />

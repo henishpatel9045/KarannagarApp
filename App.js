@@ -12,6 +12,7 @@ import DashboardScreen from "./app/screens/DashboardScreen";
 import AnnouncementScreen from "./app/screens/AnnouncementScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import AppNavigation from "./app/navigation/AppNavigation";
+import NetworkError from "./app/components/NetworkError";
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);
@@ -20,18 +21,15 @@ export default function App() {
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-      {/* {netInfo.isInternetReachable === false ? (
+      {netInfo.isInternetReachable === false ? (
         <NetworkError />
       ) : (
         <Screen>
-          <EmergencieDeleteScreen />
+          <NavigationContainer>
+            <AppNavigation />
+          </NavigationContainer>
         </Screen>
-      )} */}
-      <Screen>
-        <NavigationContainer>
-          <AppNavigation />
-        </NavigationContainer>
-      </Screen>
+      )}
     </ApplicationProvider>
   );
 }

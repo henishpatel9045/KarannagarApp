@@ -14,6 +14,7 @@ import moment from "moment";
 import { SpeedDial } from "react-native-elements";
 import staticAppData from "../configs/staticAppData";
 import LottieView from "lottie-react-native";
+import AppButton from "../components/AppButton";
 
 const remainingTime = (time) => {
   const remainingTime = moment(time).diff(moment(Date.now()), "seconds");

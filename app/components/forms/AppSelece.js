@@ -4,15 +4,26 @@ import React from "react";
 import { View } from "react-native";
 import AppErrorMessage from "./AppErrorMessage";
 
-export default function AppSelece({ data, name = "", style, size }) {
+export default function AppSelece({
+  data,
+  name = "",
+  style,
+  size,
+  multiselect,
+}) {
   const { setFieldValue, values, setFieldTouched, touched, errors } =
     useFormikContext();
+  const displayOptions = values[name].map((index) => {
+    return data[index.row];
+  });
   return (
     <View style={style}>
       <Select
+        multiSelect={multiselect}
+        style={{ width: "100%" }}
         selectedIndex={values[name]}
         onSelect={(index) => setFieldValue(name, index)}
-        value={data[values.row]}
+        value={displayOptions.join(", ")}
         placeholder={name.toUpperCase()}
         onBlur={() => setFieldTouched(name)}
         size={size}

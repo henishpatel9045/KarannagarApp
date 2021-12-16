@@ -14,12 +14,13 @@ import AppInput from "../components/forms/AppInput";
 import colors from "../configs/colors";
 import AppButton from "../components/AppButton";
 import AppFormButton from "../components/forms/AppFormButton";
+import staticAppData from "../configs/staticAppData";
 
 const choices = ["card", "link", "text"];
-const areaName = ["Vadipati", "Khadki", "Tichudiyu", "ThakorVas"];
+const areaName = staticAppData.area;
 
 export default function AnnouncementEditScreen() {
-  const [choice, setchoice] = useState("");
+  const [choice, setchoice] = useState([]);
 
   return (
     <Layout style={styles.container}>
@@ -40,7 +41,7 @@ export default function AnnouncementEditScreen() {
         <AppForm
           values={{
             title: "",
-            receiver: "",
+            receiver: [],
             message: "",
             date: "",
           }}
@@ -52,12 +53,14 @@ export default function AnnouncementEditScreen() {
           <AppInput
             placeholder="Title"
             width="93%"
+            multiselect
             name="title"
             radius={50}
             size="large"
             style={{ marginBottom: 15 }}
           />
           <AppSelece
+            multiselect={true}
             data={areaName}
             name="receiver"
             size="large"
@@ -102,8 +105,7 @@ export default function AnnouncementEditScreen() {
         <AppForm
           values={{
             title: "",
-
-            receiver: "",
+            receiver: [],
             url: "",
             date: "",
           }}
@@ -124,6 +126,7 @@ export default function AnnouncementEditScreen() {
           <AppSelece
             data={areaName}
             name="receiver"
+            multiselect={true}
             size="large"
             style={{ marginBottom: 15, width: "93%" }}
           />
@@ -163,8 +166,7 @@ export default function AnnouncementEditScreen() {
         <AppForm
           values={{
             title: "",
-
-            receiver: "",
+            receiver: [],
             message: "",
             date: "",
           }}
@@ -174,6 +176,7 @@ export default function AnnouncementEditScreen() {
           style={styles.form}
         >
           <AppSelece
+            multiselect={true}
             data={areaName}
             name="receiver"
             size="large"
