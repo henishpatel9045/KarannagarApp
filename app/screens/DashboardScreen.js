@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
-    width: Dimensions.get("screen").width * 0.55,
+    width: 200,
     borderRadius: 10,
     padding: 15,
     marginHorizontal: 15,
