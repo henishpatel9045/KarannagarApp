@@ -34,7 +34,7 @@ export default function AnnouncementScreen() {
                   <AppCard
                     title={item.title}
                     sender={item.sender.firstName}
-                    reciever={item.reciever.Join(", ")}
+                    reciever={item.receiver.join(", ")}
                     message={item.message}
                     image={item.image ? item.image : null}
                   />

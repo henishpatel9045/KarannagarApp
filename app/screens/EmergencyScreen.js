@@ -117,15 +117,7 @@ export default function EmergencyScreen({ onPress }) {
         ))}
         <TouchableHighlight
           onPress={() => {
-            Alert.alert("Alert", "Are you sure?", [
-              { text: "Ok", onPress: () => setOverlayVisible(true) },
-              {
-                text: "Cancle",
-                onPress: () => {
-                  return;
-                },
-              },
-            ]);
+            setOverlayVisible(true);
           }}
           style={styles.emergencyIcons}
           underlayColor="rgba(61, 104, 255, 0.5)"
