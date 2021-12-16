@@ -1,14 +1,16 @@
 import { initializeApp } from "@firebase/app";
-
 import {
+  Timestamp,
   collection,
   doc,
   getDoc,
   getDocs,
   getFirestore,
   setDoc,
+  addDoc,
 } from "firebase/firestore";
 import firebaseConfig from "../configs/firebaseConfig";
+import staticAppData from "../configs/staticAppData";
 
 const db = getFirestore(initializeApp(firebaseConfig));
 
@@ -81,17 +83,54 @@ const getEmergencies = async () => {
   return response;
 };
 
+let user = staticAppData.user;
+
 const setUsers = async (user) => {
-  // await setDoc(doc(db, "users", user.uid), {...user, dateCreated: ""});
+  try {
+    const response = await addDoc(collection(db, "users", user.uid), {
+      ...user,
+      dateCreated: Timestamp.fromDate(new Date().getTime()),
+    });
+    return true;
+  } catch (error) {
+    return error;
+  }
 };
 const setAnnouncements = async (announcement) => {
-  await setDoc(doc(db, "announcements", announcement.uid), announcement);
+  try {
+    const docRef = await addDoc(collection(db, "announcements"), {
+      ...announcement,
+      dateCreated: Timestamp.fromDate(new Date()),
+      sender: user,
+    });
+    console.log("Announcement successully written with id: ", docRef.id);
+  } catch (error) {
+    console.log(error);
+  }
 };
 const setEmergencies = async (emergencie) => {
-  await setDoc(doc(db, "emergencies", emergencie.uid), emergencie);
+  try {
+    const docRef = await addDoc(collection(db, "emergencies"), {
+      ...emergencie,
+      dateCreated: Timestamp.fromDate(new Date()),
+      sender: user,
+    });
+    console.log("Emergency successully written with id: ", docRef.id);
+  } catch (error) {
+    console.log(error);
+  }
 };
 const setPolls = async (poll) => {
-  await setDoc(doc(db, "polls", poll.uid), poll);
+  try {
+    const docRef = await addDoc(collection(db, "polls"), {
+      ...poll,
+      dateCreated: Timestamp.fromDate(new Date()),
+      sender: user,
+    });
+    console.log("Poll successully written with id: ", docRef.id);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export {
@@ -101,4 +140,7 @@ export {
   getEmergencies,
   getPolls,
   setUsers,
+  setAnnouncements,
+  setEmergencies,
+  setPolls,
 };

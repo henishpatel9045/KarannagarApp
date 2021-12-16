@@ -1,6 +1,7 @@
 import { Input, Layout, Select } from "@ui-kitten/components";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { setPolls } from "../api/firebase";
 import AppButton from "../components/AppButton";
 import AppPollOptionEdit from "../components/AppPollOptionEdit";
 import AppForm from "../components/forms/AppForm";
@@ -26,6 +27,12 @@ export default function PollEditScreen() {
       />
     );
   }
+
+  const handleSubmit = (values) => {
+    const receiver = [];
+    values.receiver.forEach((item) => receiver.push(areaName[item.row]));
+    await setPolls({ ...values, receiver: receiver });
+  };
 
   return (
     <AppForm

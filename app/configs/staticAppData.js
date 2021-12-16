@@ -44,7 +44,14 @@ const iconsList = {
   CanalAccident: "swim",
 };
 
+let user = {
+  uid: "ompatel9045@gmail.com",
+  firstName: "Henish",
+  lastName: "Patel",
+};
+
 export default {
   area: areas,
   emerIconList: iconsList,
+  user: user,
 };

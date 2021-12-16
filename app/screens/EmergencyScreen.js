@@ -26,7 +26,7 @@ import AppButton from "../components/AppButton";
 const iconsList = staticAppData.emerIconList;
 const emergencies = ["Fire", "Robbery", "Police", "Accident", "CanalAccident"];
 
-export default function EmergencyScreen({ onPress }) {
+export default function EmergencyScreen() {
   const { data, request } = useApiRef(getEmergencies);
   const [overlayVisible, setOverlayVisible] = useState(false);
 
@@ -84,7 +84,20 @@ export default function EmergencyScreen({ onPress }) {
   return (
     <Layout style={styles.container}>
       <View style={styles.outerSOS}>
-        <TouchableOpacity onPress={onPress} style={styles.innerSOS}>
+        <TouchableOpacity
+          onPress={() =>
+            Alert.alert("Alert", "Are you sure?", [
+              { text: "Ok", onPress: () => handleSubmit(true) },
+              {
+                text: "Cancle",
+                onPress: () => {
+                  return;
+                },
+              },
+            ])
+          }
+          style={styles.innerSOS}
+        >
           <Text style={styles.txtSOS}>SOS</Text>
         </TouchableOpacity>
       </View>
