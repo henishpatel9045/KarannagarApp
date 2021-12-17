@@ -28,7 +28,7 @@ export default function PollEditScreen() {
     );
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     const receiver = [];
     values.receiver.forEach((item) => receiver.push(areaName[item.row]));
     await setPolls({ ...values, receiver: receiver });

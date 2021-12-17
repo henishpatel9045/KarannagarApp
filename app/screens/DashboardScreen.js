@@ -235,106 +235,111 @@ export default function DashboardScreen({ navigation }) {
     />
   );
 
+  const Emergency = () => (
+    <FlatList
+      horizontal
+      contentContainerStyle={styles.scrollStyle}
+      data={emergencies.data}
+      keyExtractor={(item) => item.dateCreated.toString()}
+      renderItem={({ item }) => (
+        <EmergencyCard
+          title={item.title}
+          type={item.type}
+          sender={`${item.sender.firstName} ${
+            item.sender.lastName ? item.sender.lastName : ""
+          }`.trimEnd()}
+          dateTime={moment(item.dateCreated.toDate()).format(
+            "DD-MM-YYYY, hh:mm:ss"
+          )}
+        />
+      )}
+      refreshing={EmerRefreshing}
+      onRefresh={() => loademergency()}
+    />
+  );
+
+  const Announcement = () => (
+    <FlatList
+      data={announcements.data}
+      contentContainerStyle={styles.scrollStyle}
+      keyExtractor={(item) => item.dateCreated.toString()}
+      horizontal
+      renderItem={({ item }) => (
+        <AnnouncementCard
+          title={item.title}
+          sender={`${item.sender.firstName} ${
+            item.sender.lastName ? item.sender.lastName : ""
+          }`.trimEnd()}
+          receiver={item.receiver.join(", ")}
+          message={item.message}
+          dateTime={moment(item.dateCreated.toDate()).format(
+            "DD-MM-YYYY, hh:mm"
+          )}
+        />
+      )}
+      refreshing={AnnRefreshing}
+      onRefresh={() => loadAnnouncements()}
+    />
+  );
+
+  const Poll = () => (
+    <FlatList
+      data={polls.data}
+      keyExtractor={(item) => item.dateCreated.toString()}
+      renderItem={({ item }) => (
+        <PollCard
+          sender={`${item.sender.firstName} ${
+            item.sender.lastName ? item.sender.lastName : ""
+          }`.trimEnd()}
+          question={item.question}
+          receiver={item.receiver}
+          remainingTime={remainingTime(item.endTime.toDate())}
+        />
+      )}
+      horizontal
+      contentContainerStyle={[styles.scrollStyle, { paddingBottom: 35 }]}
+      refreshing={PollRefreshing}
+      onRefresh={() => loadPolls()}
+    />
+  );
+
+  const EditScreens = () => (
+    <SpeedDial
+      isOpen={open}
+      icon={{ name: "add", color: "#fff" }}
+      openIcon={{ name: "close", color: "#fff" }}
+      onOpen={() => setopen(!open)}
+      onClose={() => setopen(!open)}
+    >
+      <SpeedDial.Action
+        icon={{ name: "message", color: "#fff" }}
+        title="Create Announcement"
+        onPress={() => navigation.navigate("AddAnnouncement")}
+      />
+      <SpeedDial.Action
+        icon={{ name: "poll", color: "#fff" }}
+        title="Create Poll"
+        onPress={() => navigation.navigate("AddPoll")}
+      />
+    </SpeedDial>
+  );
+
   return (
     <View style={styles.container}>
-      <View style={[styles.section, { minHeight: 200 }]}>
+      <View style={[styles.section, { minHeight: 200, marginTop: 20 }]}>
         <Text style={styles.sectionHeader}>Emergencies</Text>
-        {lem ? (
-          <Loading />
-        ) : (
-          <FlatList
-            horizontal
-            contentContainerStyle={styles.scrollStyle}
-            data={emergencies.data}
-            keyExtractor={(item) => item.dateCreated.toString()}
-            renderItem={({ item }) => (
-              <EmergencyCard
-                title={item.title}
-                type={item.type}
-                sender={`${item.sender.firstName} ${
-                  item.sender.lastName ? item.sender.lastName : ""
-                }`.trimEnd()}
-                dateTime={moment(item.dateCreated.toDate()).format(
-                  "DD-MM-YYYY, hh:mm:ss"
-                )}
-              />
-            )}
-            refreshing={EmerRefreshing}
-            onRefresh={() => loademergency()}
-          />
-        )}
+        {lem ? <Loading /> : <Emergency />}
       </View>
       <View style={[styles.section, { minHeight: 200 }]}>
         <Text style={styles.sectionHeader}>Announcements</Text>
-        {lan ? (
-          <Loading />
-        ) : (
-          <FlatList
-            data={announcements.data}
-            keyExtractor={(item) => item.dateCreated.toString()}
-            horizontal
-            renderItem={({ item }) => (
-              <AnnouncementCard
-                title={item.title}
-                sender={`${item.sender.firstName} ${
-                  item.sender.lastName ? item.sender.lastName : ""
-                }`.trimEnd()}
-                receiver={item.receiver.join(", ")}
-                message={item.message}
-                dateTime={moment(item.dateCreated.toDate()).format(
-                  "DD-MM-YYYY, hh:mm"
-                )}
-              />
-            )}
-            refreshing={AnnRefreshing}
-            onRefresh={() => loadAnnouncements()}
-          />
-        )}
+        {lan ? <Loading /> : <Announcement />}
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionHeader}>Polls</Text>
-        {lpoll ? (
-          <Loading />
-        ) : (
-          <FlatList
-            data={polls.data}
-            keyExtractor={(item) => item.dateCreated.toString()}
-            renderItem={({ item }) => (
-              <PollCard
-                sender={`${item.sender.firstName} ${
-                  item.sender.lastName ? item.sender.lastName : ""
-                }`.trimEnd()}
-                question={item.question}
-                receiver={item.receiver}
-                remainingTime={remainingTime(item.endTime.toDate())}
-              />
-            )}
-            horizontal
-            contentContainerStyle={[styles.scrollStyle, { paddingBottom: 35 }]}
-            refreshing={PollRefreshing}
-            onRefresh={() => loadPolls()}
-          />
-        )}
+        {lpoll ? <Loading /> : <Poll />}
       </View>
-      <SpeedDial
-        isOpen={open}
-        icon={{ name: "add", color: "#fff" }}
-        openIcon={{ name: "close", color: "#fff" }}
-        onOpen={() => setopen(!open)}
-        onClose={() => setopen(!open)}
-      >
-        <SpeedDial.Action
-          icon={{ name: "message", color: "#fff" }}
-          title="Create Announcement"
-          onPress={() => navigation.navigate("AddAnnouncement")}
-        />
-        <SpeedDial.Action
-          icon={{ name: "poll", color: "#fff" }}
-          title="Create Poll"
-          onPress={() => navigation.navigate("AddPoll")}
-        />
-      </SpeedDial>
+      <EditScreens />
     </View>
   );
 }
@@ -350,19 +355,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     marginHorizontal: 15,
-    elevation: 500,
+    // elevation: 500,
   },
 
   section: {
     width: "100%",
     marginBottom: 0,
   },
-  cardHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-    alignItems: "baseline",
-  },
+  cardHeader: {},
   sender: {
     color: "white",
   },
@@ -374,11 +374,15 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
   },
   cardHeader: {
+    alignItems: "baseline",
     color: "white",
+    flexWrap: "wrap",
+    flexDirection: "row",
     fontSize: 20,
-    top: -5,
     fontWeight: "bold",
     fontFamily: "Roboto",
+    justifyContent: "space-between",
+    top: -5,
   },
-  scrollStyle: { elevation: 100, paddingVertical: 20 },
+  scrollStyle: { elevation: 100, paddingBottom: 20 },
 });

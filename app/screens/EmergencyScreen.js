@@ -22,6 +22,7 @@ import { FlatList } from "react-native-gesture-handler";
 import staticAppData from "../configs/staticAppData";
 import { Overlay } from "react-native-elements";
 import AppButton from "../components/AppButton";
+import useLocation from "../hooks/useLocation";
 
 const iconsList = staticAppData.emerIconList;
 const emergencies = ["Fire", "Robbery", "Police", "Accident", "CanalAccident"];
@@ -29,6 +30,8 @@ const emergencies = ["Fire", "Robbery", "Police", "Accident", "CanalAccident"];
 export default function EmergencyScreen() {
   const { data, request } = useApiRef(getEmergencies);
   const [overlayVisible, setOverlayVisible] = useState(false);
+
+  const location = useLocation();
 
   useEffect(() => {
     request();

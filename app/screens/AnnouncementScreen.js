@@ -26,7 +26,7 @@ export default function AnnouncementScreen() {
         <FlatList
           data={data.data}
           style={{ flex: 1, width: "100%" }}
-          keyExtractor={(item) => item.aid.toString()}
+          keyExtractor={(item) => item.dateCreated}
           renderItem={({ item }) => {
             if (item.type === "card")
               return (

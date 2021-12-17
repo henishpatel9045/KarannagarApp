@@ -212,7 +212,11 @@ export default function AnnouncementEditScreen() {
       receiverFinal.push(areaName[element.row]);
     });
     setUploadLoading(true);
-    await setAnnouncements({ ...values, receiver: receiverFinal });
+    await setAnnouncements({
+      ...values,
+      receiver: receiverFinal,
+      type: choices[choice.row],
+    });
   };
 
   const handleClear = () => {
