@@ -149,7 +149,9 @@ export default function DevAccountScreen({ navigation }) {
         image={require("../../assets/dp.jpg")}
         title={"Henish Patel"}
         subTitle={"ompatel9045@gmail.com"}
-        onPress={() => console.log()}
+        onPress={() => {
+          return;
+        }}
       />
       <View style={{ height: 20 }} />
       <FlatList

@@ -17,7 +17,9 @@ export default function EmergencyMessage({
       <View style={styles.container}>
         <TouchableHighlight
           underlayColor="rgba(255, 255, 255, 0.5)"
-          onPress={() => console.log()}
+          onPress={() => {
+            return;
+          }}
           style={styles.emergencyMessageIndicator}
         >
           <Pack name={iconName} size={25} color={"white"} />
@@ -28,7 +30,9 @@ export default function EmergencyMessage({
         </View>
         <TouchableHighlight
           underlayColor="rgba(255, 255, 255, 0.5)"
-          onPress={() => console.log()}
+          onPress={() => {
+            return;
+          }}
           style={styles.call}
         >
           <MaterialCommunityIcons name="phone" color={"white"} size={25} />
@@ -36,7 +40,9 @@ export default function EmergencyMessage({
         <TouchableHighlight
           underlayColor="rgba(255, 255, 255, 0.5)"
           style={styles.location}
-          onPress={() => console.log()}
+          onPress={() => {
+            return;
+          }}
         >
           <MaterialCommunityIcons name="directions" color={"white"} size={25} />
         </TouchableHighlight>

@@ -13,7 +13,9 @@ const ListCardComponent = ({ title, iconName, sender, dateTime, onPress }) => (
     <View style={styles.itemContainer}>
       <TouchableHighlight
         underlayColor="rgba(255, 255, 255, 0.5)"
-        onPress={() => console.log()}
+        onPress={() => {
+          return;
+        }}
         style={styles.emergencyMessageIndicator}
       >
         <MaterialCommunityIcons name={iconName} size={25} color={"white"} />
@@ -26,7 +28,9 @@ const ListCardComponent = ({ title, iconName, sender, dateTime, onPress }) => (
       <TouchableHighlight
         underlayColor="rgba(255, 255, 255, 0.5)"
         style={styles.deleteIcon}
-        onPress={() => console.log()}
+        onPress={() => {
+          return;
+        }}
       >
         <MaterialCommunityIcons name="trash-can" color={"white"} size={25} />
       </TouchableHighlight>
@@ -52,7 +56,9 @@ export default function EmergencieDeleteScreen({ route }) {
               dateTime={moment(item.dateCreated.toDate()).format(
                 "DD/MM/YYYY, hh:mm:ss"
               )}
-              onPress={() => console.log()}
+              onPress={() => {
+                return;
+              }}
             />
           </>
         )}

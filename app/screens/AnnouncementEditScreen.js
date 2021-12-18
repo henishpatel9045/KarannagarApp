@@ -98,7 +98,7 @@ export default function AnnouncementEditScreen() {
         url: "",
       }}
       onSubmit={(values) => {
-        console.log(values);
+        return;
       }}
       style={styles.form}
     >
@@ -159,7 +159,7 @@ export default function AnnouncementEditScreen() {
         message: "",
       }}
       onSubmit={(values) => {
-        console.log(values);
+        return;
       }}
       style={styles.form}
     >
@@ -220,7 +220,7 @@ export default function AnnouncementEditScreen() {
   };
 
   const handleClear = () => {
-    console.log();
+    return;
   };
 
   return (

@@ -75,7 +75,6 @@ const getEmergencies = async () => {
     const emergencies = await getDocs(collection(db, "emergencies"));
 
     emergencies.forEach((snapshot) => {
-      console.log(snapshot);
       emergenciesList.push({ ...snapshot.data(), docId: snapshot.id });
     });
 
@@ -121,7 +120,6 @@ const setAnnouncements = async (announcement) => {
       dateCreated: Timestamp.fromDate(new Date()),
       sender: user,
     });
-    console.log("Announcement successully written with id: ", docRef.id);
   } catch (error) {
     console.log(error);
   }
@@ -133,7 +131,6 @@ const setEmergencies = async (emergencie) => {
       dateCreated: Timestamp.fromDate(new Date()),
       sender: user,
     });
-    console.log("Emergency successully written with id: ", docRef.id);
   } catch (error) {
     console.log(error);
   }
@@ -145,7 +142,6 @@ const setPolls = async (poll) => {
       dateCreated: Timestamp.fromDate(new Date()),
       sender: user,
     });
-    console.log("Poll successully written with id: ", docRef.id);
   } catch (error) {
     console.log(error);
   }

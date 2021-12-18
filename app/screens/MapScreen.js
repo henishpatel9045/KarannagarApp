@@ -15,8 +15,6 @@ export default function MapScreen() {
     });
   }, []);
 
-  console.log(coords);
-
   return (
     <MapView
       style={{ flex: 1 }}

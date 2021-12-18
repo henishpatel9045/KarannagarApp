@@ -146,7 +146,9 @@ export default function AccountScreen({ navigation }) {
         image={require("../assets/dp.jpg")}
         title={"Henish Patel"}
         subTitle={"ompatel9045@gmail.com"}
-        onPress={() => console.log()}
+        onPress={() => {
+          return;
+        }}
       />
       <View style={{ height: 20 }} />
       <FlatList
@@ -169,7 +171,9 @@ export default function AccountScreen({ navigation }) {
       <IconListItem
         name={"logout"}
         title={"LogOut"}
-        onPress={() => console.log()}
+        onPress={() => {
+          return;
+        }}
         logOut
       />
     </View>

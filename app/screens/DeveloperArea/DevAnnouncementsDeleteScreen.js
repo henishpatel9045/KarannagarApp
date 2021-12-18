@@ -32,7 +32,6 @@ const ListCardComponent = ({ message, sender, receiver, date, onPress }) => (
 
 export default function AnnouncementsDeleteScreen({ route }) {
   const messages = route.params.data;
-  console.log(messages[0]);
   return (
     <View style={styles.container}>
       <FlatList
@@ -45,7 +44,9 @@ export default function AnnouncementsDeleteScreen({ route }) {
             sender={item.sender.firstName + " " + item.sender.lastName}
             receiver={item.receiver.join(", ")}
             date={moment(item.dateCreated.toDate()).format("DD/MM/YYYY, hh:mm")}
-            onPress={() => console.log()}
+            onPress={() => {
+              return;
+            }}
           />
         )}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}

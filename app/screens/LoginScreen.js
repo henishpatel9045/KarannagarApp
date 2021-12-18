@@ -50,7 +50,9 @@ export default function LoginScreen({ navigation }) {
         name={"facebook"}
         style={styles.google}
         title="Facebook LogIn"
-        onPress={() => console.log()}
+        onPress={() => {
+          return;
+        }}
       />
     </Screen>
   );

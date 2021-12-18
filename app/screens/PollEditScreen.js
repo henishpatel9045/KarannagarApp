@@ -38,7 +38,9 @@ export default function PollEditScreen() {
     <AppForm
       values={{ receiver: [], question: "", options: [] }}
       style={styles.container}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={(values) => {
+        return;
+      }}
     >
       <AppSelece
         data={areaName}

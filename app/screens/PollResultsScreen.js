@@ -8,7 +8,9 @@ export default function PollResultsScreen() {
       <PollResultCard
         title="What's your name?"
         subtitle="Henish"
-        onPress={() => console.log()}
+        onPress={() => {
+          return;
+        }}
         style={{ width: "90%" }}
       />
     </View>

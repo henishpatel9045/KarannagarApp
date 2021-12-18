@@ -47,7 +47,9 @@ export default function PollDeleteScreen({ route }) {
             date={moment(item.dateCreated.toDate()).format(
               "DD/MM/YYYY, hh:mm:ss"
             )}
-            onPress={() => console.log()}
+            onPress={() => {
+              return;
+            }}
           />
         )}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}

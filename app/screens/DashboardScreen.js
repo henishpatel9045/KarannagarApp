@@ -61,7 +61,9 @@ const PollCard = ({
           {question}
         </Text>
         <TouchableHighlight
-          onPress={() => console.log()}
+          onPress={() => {
+            return;
+          }}
           underlayColor={"rgba(255,255,255,0.5)"}
           style={{ padding: 5, borderRadius: 10 }}
         >
@@ -115,7 +117,11 @@ const AnnouncementCard = ({
         <Text numberOfLines={2} style={{ color: colors.secondary }}>
           {message}
         </Text>
-        <TouchableOpacity onPress={() => console.log()}>
+        <TouchableOpacity
+          onPress={() => {
+            return;
+          }}
+        >
           <Text style={{ fontSize: 12, color: "white", alignSelf: "flex-end" }}>
             Read More...
           </Text>
@@ -171,14 +177,18 @@ const EmergencyCard = ({
       <View style={{ flexDirection: "row" }}>
         <TouchableHighlight
           underlayColor={"rgba(255,255,255,0.5)"}
-          onPress={() => console.log()}
+          onPress={() => {
+            return;
+          }}
           style={{ padding: 5, borderRadius: 10 }}
         >
           <MaterialCommunityIcons name="phone" size={30} color={"white"} />
         </TouchableHighlight>
         <TouchableHighlight
           underlayColor={"rgba(255,255,255,0.5)"}
-          onPress={() => console.log()}
+          onPress={() => {
+            return;
+          }}
           style={{ padding: 5, borderRadius: 10 }}
         >
           <MaterialCommunityIcons name="navigation" size={30} color={"white"} />
