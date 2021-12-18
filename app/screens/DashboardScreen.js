@@ -324,21 +324,44 @@ export default function DashboardScreen({ navigation }) {
     </SpeedDial>
   );
 
+  const Header = () => {
+    let time = new Date().toTimeString().split(":")[0];
+    time = parseInt(time);
+    return (
+      <View style={styles.header}>
+        <Text style={styles.greetingsHeader}>
+          Good{" "}
+          {time > 4 && time < 12
+            ? "Morning"
+            : time < 17
+            ? "Afternoon"
+            : time < 20
+            ? "Evening"
+            : "Night"}
+          ,
+        </Text>
+        <Text style={styles.userHeader}>Henish Patel</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <View style={[styles.section, { minHeight: 200, marginTop: 20 }]}>
-        <Text style={styles.sectionHeader}>Emergencies</Text>
-        {lem ? <Loading /> : <Emergency />}
-      </View>
-      <View style={[styles.section, { minHeight: 200 }]}>
-        <Text style={styles.sectionHeader}>Announcements</Text>
-        {lan ? <Loading /> : <Announcement />}
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionHeader}>Polls</Text>
-        {lpoll ? <Loading /> : <Poll />}
-      </View>
+      <Header />
+      <ScrollView>
+        <View style={[styles.section, { minHeight: 200, marginTop: 20 }]}>
+          <Text style={styles.sectionHeader}>Emergencies</Text>
+          {lem ? <Loading /> : <Emergency />}
+        </View>
+        <View style={[styles.section, { minHeight: 200 }]}>
+          <Text style={styles.sectionHeader}>Announcements</Text>
+          {lan ? <Loading /> : <Announcement />}
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionHeader}>Polls</Text>
+          {lpoll ? <Loading /> : <Poll />}
+        </View>
+      </ScrollView>
       <EditScreens />
     </View>
   );
@@ -349,6 +372,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // backgroundColor: "#ededed",
     flex: 1,
+  },
+  header: {
+    backgroundColor: colors.primary,
+    borderBottomLeftRadius: 35,
+    borderBottomRightRadius: 35,
+    paddingHorizontal: 10,
+    paddingBottom: 25,
+    top: 0,
+    width: "100%",
+    elevation: 10,
+  },
+  greetingsHeader: {
+    alignSelf: "flex-start",
+    color: "white",
+    elevation: 2,
+    fontSize: 35,
+    fontWeight: "bold",
+  },
+  userHeader: {
+    fontSize: 20,
+    color: "white",
   },
   card: {
     width: 200,

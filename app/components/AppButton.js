@@ -49,7 +49,6 @@ export default function AppButton({
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-
     alignItems: "center",
     justifyContent: "center",
     elevation: 10,

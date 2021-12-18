@@ -34,6 +34,12 @@ const areas = [
   "Bheel Vas (Ravatjino Tekro)",
 ];
 
+const developerInfo = {
+  name: "Henish Patel",
+  username: "henish9045",
+  password: "2611",
+};
+
 const iconsList = {
   Robbery: "robber",
   Fire: "fire",
@@ -54,4 +60,5 @@ export default {
   area: areas,
   emerIconList: iconsList,
   user: user,
+  developerInfo: developerInfo,
 };

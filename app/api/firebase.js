@@ -73,12 +73,25 @@ const getEmergencies = async () => {
     emergencies.forEach((snapshot) => {
       emergenciesList.push(snapshot.data());
     });
-    if (!emergencies.ok()) {
-      return console.log("Emergency Api Failed to get the data");
-    }
-    response = { date: emergenciesList, error: false };
+
+    response = { data: emergenciesList, error: false };
   } catch (e) {
     response = { data: emergenciesList, error: e };
+  }
+  return response;
+};
+
+const getStaticInfo = async () => {
+  let devInfo = [];
+  let response = {};
+  try {
+    const info = await getDocs(collection(db, "staticAppInfo"));
+    info.forEach((snapshot) => {
+      devInfo.push(snapshot.data());
+    });
+    response = { data: devInfo, error: false };
+  } catch (e) {
+    response = { data: devInfo, error: e };
   }
   return response;
 };
@@ -138,6 +151,7 @@ export {
   getUsers,
   getAnnouncements,
   getEmergencies,
+  getStaticInfo,
   getPolls,
   setUsers,
   setAnnouncements,

@@ -21,7 +21,7 @@ export default function LoginScreen({ navigation }) {
       });
 
       if (result.type === "success") {
-        return result.accessToken;
+        return result;
       } else {
         return { cancelled: true };
       }

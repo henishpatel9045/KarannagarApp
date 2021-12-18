@@ -5,7 +5,6 @@ import AnnouncementScreen from "../screens/AnnouncementScreen";
 import EmergencyScreen from "../screens/EmergencyScreen";
 import { MaterialCommunityIcons, Entypo, Ionicons } from "@expo/vector-icons";
 import colors from "../configs/colors";
-import PollListScreen from "../screens/PollListScreen";
 import AccountStackNavigator from "./AccountStackNavigator";
 import DashboardNavigation from "./DashboardNavigation";
 import PollNavigation from "./PollNavigation";
@@ -14,7 +13,7 @@ export default function AppNavigation() {
   const Tab = createMaterialBottomTabNavigator();
 
   return (
-    <Tab.Navigator shifting>
+    <Tab.Navigator shifting barStyle={{}}>
       <Tab.Screen
         name="DashboardTab"
         component={DashboardNavigation}

@@ -19,12 +19,12 @@ export default function Input({
   ...otherProps
 }) {
   return (
-    <View style={{ width: width }}>
+    <View style={[{ width: width }, style]}>
       <View style={[styles.container, { borderRadius: radius ? radius : 200 }]}>
         {leftComponent}
         <TextInput
           maxLength={maxLength}
-          style={[style, styles.textBox]}
+          style={[styles.textBox]}
           secureTextEntry={secureTextEntry}
           placeholder={placeholder}
           onChangeText={onChangeText}
