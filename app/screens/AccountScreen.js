@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Image,
   StyleSheet,
@@ -9,6 +9,8 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
 import colors from "../configs/colors";
+import useApiRef from "../hooks/useApiRef";
+import { getAnnouncements, getEmergencies, getPolls } from "../api/firebase";
 
 const RoundComponent = ({ component, width, color }) => (
   <View
@@ -122,7 +124,25 @@ const menuList = [
 ];
 
 export default function AccountScreen({ navigation }) {
+  const {
+    data: announcements,
+    lan,
+    request: loadAnnouncements,
+  } = useApiRef(getAnnouncements);
+  const {
+    data: emergencies,
+    lem,
+    request: loadEmergencies,
+  } = useApiRef(getEmergencies);
+  const { data: polls, lpolls, request: loadPolls } = useApiRef(getPolls);
   const [data, setdata] = useState(menuList);
+  useEffect(() => {
+    loadAnnouncements();
+    loadEmergencies();
+    loadPolls();
+  }, []);
+  let mainData = [announcements, emergencies, polls];
+
   return (
     <View style={styles.container}>
       <ImageListItem
@@ -135,12 +155,14 @@ export default function AccountScreen({ navigation }) {
       <FlatList
         data={data}
         keyExtractor={(item) => item.title.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <IconListItem
             name={item.icon}
             title={item.title}
             subTitle={item.subTitle}
-            onPress={() => navigation.navigate(item.navName)}
+            onPress={() =>
+              navigation.navigate(item.navName, { ...mainData[index] })
+            }
             color={"white"}
             bgColor={item.color}
           />

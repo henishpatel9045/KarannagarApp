@@ -3,44 +3,10 @@ import { StyleSheet, TouchableHighlight, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../configs/colors";
+import staticAppData from "../configs/staticAppData";
+import moment from "moment";
 
-const data = [
-  {
-    id: 1,
-    iconName: "police-badge",
-    title: "Police",
-    sender: "Sarpanch",
-    dateTime: Date.now(),
-  },
-  {
-    id: 2,
-    iconName: "fire",
-    title: "Fire",
-    sender: "Sarpanch",
-    dateTime: 1456456554464,
-  },
-  {
-    id: 3,
-    iconName: "car",
-    title: "Accident",
-    sender: "Sarpanch",
-    dateTime: Date.now(),
-  },
-  {
-    id: 4,
-    iconName: "robber",
-    title: "Robbery",
-    sender: "Sarpanch",
-    dateTime: Date.now(),
-  },
-  {
-    id: 5,
-    iconName: "fire",
-    title: "Fire",
-    sender: "Sarpanch",
-    dateTime: Date.now(),
-  },
-];
+const iconList = staticAppData.emerIconList;
 
 const ListCardComponent = ({ title, iconName, sender, dateTime, onPress }) => (
   <>
@@ -69,20 +35,24 @@ const ListCardComponent = ({ title, iconName, sender, dateTime, onPress }) => (
   </>
 );
 
-export default function EmergencieDeleteScreen() {
+export default function EmergencieDeleteScreen({ route }) {
+  const data = route.params.data;
+
   return (
     <View style={styles.container}>
       <FlatList
         style={{ width: "95%" }}
         data={data}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.dateCreated.toString()}
         renderItem={({ item }) => (
           <>
             <ListCardComponent
               title={item.title}
-              sender={item.sender}
-              iconName={item.iconName}
-              dateTime={item.dateTime}
+              sender={item.sender.firstName + " " + item.sender.lastName}
+              iconName={iconList[item.title]}
+              dateTime={moment(item.dateCreated.toDate()).format(
+                "DD/MM/YYYY, hh:mm:ss"
+              )}
               onPress={() => console.log()}
             />
           </>

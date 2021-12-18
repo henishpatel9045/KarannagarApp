@@ -12,6 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AppNavigation from "./app/navigation/AppNavigation";
 import NetworkError from "./app/components/NetworkError";
 import DeveloperNavigation from "./app/navigation/DeveloperNavigation";
+import AccountStackNavigator from "./app/navigation/AccountStackNavigator";
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);
@@ -24,7 +25,7 @@ export default function App() {
       ) : (
         <Screen>
           <NavigationContainer>
-            <DeveloperNavigation />
+            <AppNavigation />
           </NavigationContainer>
         </Screen>
       )}

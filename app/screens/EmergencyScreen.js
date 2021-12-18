@@ -28,10 +28,8 @@ const iconsList = staticAppData.emerIconList;
 const emergencies = ["Fire", "Robbery", "Police", "Accident", "CanalAccident"];
 
 export default function EmergencyScreen() {
-  const { data, request } = useApiRef(getEmergencies);
+  const { data, loading, request } = useApiRef(getEmergencies);
   const [overlayVisible, setOverlayVisible] = useState(false);
-
-  const location = useLocation();
 
   useEffect(() => {
     request();

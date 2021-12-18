@@ -25,7 +25,7 @@ const getUsers = async () => {
   try {
     const users = await getDocs(collection(db, "users"));
     users.forEach((snapshot) => {
-      usersList.push(snapshot.data());
+      usersList.push({ ...snapshot.data(), docId: snapshot.id });
     });
     response = { data: usersList, error: false };
   } catch (e) {
@@ -40,7 +40,7 @@ const getPolls = async () => {
   try {
     const polls = await getDocs(collection(db, "polls"));
     polls.forEach((snapshot) => {
-      pollsList.push(snapshot.data());
+      pollsList.push({ ...snapshot.data(), docId: snapshot.id });
     });
     response = { data: pollsList, error: false };
   } catch (e) {
@@ -55,7 +55,7 @@ const getAnnouncements = async () => {
   try {
     const announcements = await getDocs(collection(db, "announcements"));
     announcements.forEach((snapshot) => {
-      anouncementsList.push(snapshot.data());
+      anouncementsList.push({ ...snapshot.data(), docId: snapshot.id });
     });
     response = { data: anouncementsList, error: false };
   } catch (e) {
@@ -71,7 +71,8 @@ const getEmergencies = async () => {
     const emergencies = await getDocs(collection(db, "emergencies"));
 
     emergencies.forEach((snapshot) => {
-      emergenciesList.push(snapshot.data());
+      console.log(snapshot);
+      emergenciesList.push({ ...snapshot.data(), docId: snapshot.id });
     });
 
     response = { data: emergenciesList, error: false };
@@ -87,7 +88,7 @@ const getStaticInfo = async () => {
   try {
     const info = await getDocs(collection(db, "staticAppInfo"));
     info.forEach((snapshot) => {
-      devInfo.push(snapshot.data());
+      devInfo.push({ ...snapshot.data(), docId: snapshot.id });
     });
     response = { data: devInfo, error: false };
   } catch (e) {

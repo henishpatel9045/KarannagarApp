@@ -4,30 +4,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../configs/colors";
 import { Divider } from "react-native-elements";
-
-const polls = [
-  {
-    id: 1,
-    question: "What's your name?",
-    dateTIme: Date.now().toLocaleString(),
-    sender: "Henish",
-    receiver: "Vadiparti",
-  },
-  {
-    id: 2,
-    question: "What do you want?",
-    dateTIme: Date.now().toLocaleString(),
-    sender: "Henish",
-    receiver: "All",
-  },
-  {
-    id: 3,
-    question: "What is your average height in your growing days?",
-    dateTIme: Date.now().toLocaleString(),
-    sender: "Henish",
-    receiver: "Khadki",
-  },
-];
+import moment from "moment";
 
 const ListCardComponent = ({ question, sender, receiver, date, onPress }) => (
   <View style={styles.card}>
@@ -53,19 +30,23 @@ const ListCardComponent = ({ question, sender, receiver, date, onPress }) => (
   </View>
 );
 
-export default function PollDeleteScreen() {
+export default function PollDeleteScreen({ route }) {
+  const polls = route.params.data;
+
   return (
     <View style={styles.container}>
       <FlatList
         style={{ width: "95%" }}
         data={polls}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.dateCreated.toString()}
         renderItem={({ item }) => (
           <ListCardComponent
             question={item.question}
-            sender={item.sender}
-            receiver={item.reciever}
-            date={item.dateTIme}
+            sender={item.sender.firstName + " " + item.sender.lastName}
+            receiver={item.receiver}
+            date={moment(item.dateCreated.toDate()).format(
+              "DD/MM/YYYY, hh:mm:ss"
+            )}
             onPress={() => console.log()}
           />
         )}

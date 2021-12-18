@@ -30,7 +30,8 @@ export default function PollListScreen({ navigation }) {
             {info.question}
           </Text>
           <Text style={styles.senderDetail}>
-            {info.sender.firstName} {info.sender.lastName} : {info.receiver}
+            {info.sender.firstName} {info.sender.lastName} :{" "}
+            {info.receiver.join(", ")}
           </Text>
           <Text style={styles.remTime}>
             Voting ends on{" "}
@@ -41,8 +42,7 @@ export default function PollListScreen({ navigation }) {
           underlayColor={"rgba(255,255,255,0.5)"}
           onPress={() =>
             navigation.navigate("PollResponse", {
-              data: info,
-              pollScreen: true,
+              ...info,
             })
           }
           style={styles.right}
@@ -71,7 +71,6 @@ export default function PollListScreen({ navigation }) {
           style={styles.list}
           keyExtractor={(item) => item.dateCreated.seconds.toString()}
           renderItem={({ item }) => {
-            console.log(item.options);
             return renderItem(item);
           }}
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}

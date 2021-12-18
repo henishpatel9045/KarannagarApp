@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 35,
     borderBottomRightRadius: 35,
     paddingHorizontal: 10,
-    paddingBottom: 25,
+    paddingBottom: 35,
     top: 0,
     width: "100%",
     elevation: 10,

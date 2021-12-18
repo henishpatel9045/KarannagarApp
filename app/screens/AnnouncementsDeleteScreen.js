@@ -4,108 +4,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../configs/colors";
 import { Divider } from "react-native-elements";
-
-const messages = [
-  {
-    id: 1,
-    type: "card",
-    title: "WaterDepartment",
-    sender: "Sarpanch",
-    reciever: "Vadipati",
-    message: "Only for two hours",
-    dateTIme: new Date().toLocaleString(),
-    image: require("../assets/logn.jpg"),
-  },
-  {
-    id: 2,
-    type: "card",
-    title: "ElectricityRelated",
-    sender: "HenishPatel",
-    reciever: "Khadki",
-    message: "Light CutDown",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 3,
-    type: "card",
-    title: "Event",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "Need 25 mens on 12th December",
-    dateTIme: new Date().toLocaleString(),
-    image: require("../assets/logn.jpg"),
-  },
-  {
-    id: 7,
-    type: "link",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "Flipkart",
-    url: "https://www.flipkart.com/",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 4,
-    type: "card",
-    title: "WaterDepartment",
-    sender: "Sarpanch",
-    reciever: "Vadipati",
-    message: "Only for two hours",
-    dateTIme: new Date().toLocaleString(),
-    image: require("../assets/logn.jpg"),
-  },
-  {
-    id: 8,
-    sender: "SPG",
-    reciever: "Vadipati",
-    type: "text",
-    message: "Hey man just testing the app.",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 9,
-    type: "text",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "Its working fine.",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 10,
-    sender: "SPG",
-    reciever: "Vadipati",
-    type: "text",
-    message: "Now i have found a bug.",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 5,
-    type: "card",
-    title: "ElectricityRelated",
-    sender: "HenishPatel",
-    reciever: "Khadki",
-    message: "Light CutDown",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 11,
-    type: "text",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "હેનીશ પટેલ",
-    dateTIme: new Date().toLocaleString(),
-  },
-  {
-    id: 6,
-    type: "card",
-    title: "Event",
-    sender: "SPG",
-    reciever: "Vadipati",
-    message: "Need 25 mens on 12th December",
-    dateTIme: new Date().toLocaleString(),
-    image: require("../assets/logn.jpg"),
-  },
-];
+import moment from "moment";
 
 const ListCardComponent = ({ message, sender, receiver, date, onPress }) => (
   <View style={styles.card}>
@@ -131,19 +30,22 @@ const ListCardComponent = ({ message, sender, receiver, date, onPress }) => (
   </View>
 );
 
-export default function AnnouncementsDeleteScreen() {
+export default function AnnouncementsDeleteScreen({ route }) {
+  const messages = route.params.data;
   return (
     <View style={styles.container}>
       <FlatList
         style={{ width: "95%" }}
         data={messages}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.dateCreated.toString()}
         renderItem={({ item }) => (
           <ListCardComponent
             message={item.message}
-            sender={item.sender}
-            receiver={item.reciever}
-            date={item.dateTIme}
+            sender={item.sender.firstName + " " + item.sender.lastName}
+            receiver={item.receiver}
+            date={moment(item.dateCreated.toDate()).format(
+              "DD/MM/YYYY, hh:mm:ss"
+            )}
             onPress={() => console.log()}
           />
         )}

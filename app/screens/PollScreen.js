@@ -11,7 +11,7 @@ export default function PollScreen({ route }) {
   const [res, setRes] = useState("");
   const fadeAnim1 = useRef(new Animated.Value(1)).current;
   const fadeAnim2 = useRef(new Animated.Value(0)).current;
-  const data = route.data;
+  const data = route.params;
 
   const fadeIn = (ref) => {
     Animated.timing(ref, {
@@ -61,9 +61,11 @@ export default function PollScreen({ route }) {
         <Text category="h5" style={{ fontWeight: "bold" }}>
           Thanks For Your Response
         </Text>
-        <Text>Total People Responded: 214</Text>
-        <Text>For: Vadiparti</Text>
-        <Text>PollCreater: Sarpanch</Text>
+        <Text>Total People Responded: {data.userResponded.length}</Text>
+        <Text>For: {data.receiver.join(", ")}</Text>
+        <Text>
+          PollCreater: {data.sender.firstName} {data.sender.lastName}
+        </Text>
       </Animated.View>
     </Layout>
   );
