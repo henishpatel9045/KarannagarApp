@@ -27,7 +27,7 @@ const getUsers = async () => {
     users.forEach((snapshot) => {
       usersList.push({ ...snapshot.data(), docId: snapshot.id });
     });
-    response = { data: usersList, error: false };
+    response = { data: usersList, error: false, size: users.size };
   } catch (e) {
     response = { data: usersList, error: e };
   }
@@ -42,7 +42,7 @@ const getPolls = async () => {
     polls.forEach((snapshot) => {
       pollsList.push({ ...snapshot.data(), docId: snapshot.id });
     });
-    response = { data: pollsList, error: false };
+    response = { data: pollsList, error: false, size: polls.size };
   } catch (e) {
     response = { data: pollsList, error: e };
   }
@@ -57,7 +57,11 @@ const getAnnouncements = async () => {
     announcements.forEach((snapshot) => {
       anouncementsList.push({ ...snapshot.data(), docId: snapshot.id });
     });
-    response = { data: anouncementsList, error: false };
+    response = {
+      data: anouncementsList,
+      error: false,
+      size: announcements.size,
+    };
   } catch (e) {
     response = { data: anouncementsList, error: e };
   }
@@ -75,7 +79,7 @@ const getEmergencies = async () => {
       emergenciesList.push({ ...snapshot.data(), docId: snapshot.id });
     });
 
-    response = { data: emergenciesList, error: false };
+    response = { data: emergenciesList, error: false, size: emergencies.size };
   } catch (e) {
     response = { data: emergenciesList, error: e };
   }

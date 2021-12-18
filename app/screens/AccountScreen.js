@@ -103,21 +103,18 @@ const menuList = [
   {
     icon: "android-messages",
     title: "Announcements",
-    subTitle: 0,
     navName: "UserAnn",
     color: "#f09009",
   },
   {
     icon: "medical-bag",
     title: "Emergencies",
-    subTitle: 0,
     navName: "UserEmer",
     color: "tomato",
   },
   {
     icon: "poll",
     title: "Polls",
-    subTitle: 0,
     navName: "UserPolls",
     color: "#03c860",
   },
@@ -142,7 +139,7 @@ export default function AccountScreen({ navigation }) {
     loadPolls();
   }, []);
   let mainData = [announcements, emergencies, polls];
-
+  let totals = [announcements.size, emergencies.size, polls.size];
   return (
     <View style={styles.container}>
       <ImageListItem
@@ -159,7 +156,7 @@ export default function AccountScreen({ navigation }) {
           <IconListItem
             name={item.icon}
             title={item.title}
-            subTitle={item.subTitle}
+            subTitle={totals[index]}
             onPress={() =>
               navigation.navigate(item.navName, { ...mainData[index] })
             }

@@ -142,7 +142,7 @@ export default function DevAccountScreen({ navigation }) {
     loadPolls();
   }, []);
   let mainData = [announcements, emergencies, polls];
-
+  let totals = [announcements.size, emergencies.size, polls.size];
   return (
     <View style={styles.container}>
       <ImageListItem
@@ -159,7 +159,7 @@ export default function DevAccountScreen({ navigation }) {
           <IconListItem
             name={item.icon}
             title={item.title}
-            subTitle={item.subTitle}
+            subTitle={total[index]}
             onPress={() =>
               navigation.navigate(item.navName, { ...mainData[index] })
             }

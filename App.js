@@ -25,7 +25,7 @@ export default function App() {
       ) : (
         <Screen>
           <NavigationContainer>
-            <AppNavigation />
+            <AccountStackNavigator />
           </NavigationContainer>
         </Screen>
       )}
