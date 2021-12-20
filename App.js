@@ -1,22 +1,18 @@
 import "react-native-gesture-handler";
 import { ApplicationProvider } from "@ui-kitten/components";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as eva from "@eva-design/eva";
 import { LogBox } from "react-native";
 import Screen from "./app/components/Screen";
 import { useNetInfo } from "@react-native-community/netinfo";
-import * as Permissions from "expo-permissions";
-import * as Location from "expo-location";
 
-import { NavigationContainer } from "@react-navigation/native";
-import AppNavigation from "./app/navigation/AppNavigation";
 import NetworkError from "./app/components/NetworkError";
-import DeveloperNavigation from "./app/navigation/DeveloperNavigation";
-import AccountStackNavigator from "./app/navigation/AccountStackNavigator";
 import AuthNavigation from "./app/navigation/AuthNavigation";
-import GoogleLogInTest from "./app/test/GoogleLogInTest";
+import { NavigationContainer } from "@react-navigation/native";
+import AuthContext from "./app/auth/context";
 
 export default function App() {
+  const [user, setUser] = useState({});
   LogBox.ignoreLogs(["Setting a timer"]);
   const netInfo = useNetInfo();
 
@@ -25,9 +21,13 @@ export default function App() {
       {netInfo.isInternetReachable === false ? (
         <NetworkError />
       ) : (
-        <Screen>
-          <GoogleLogInTest />
-        </Screen>
+        <AuthContext.Provider value={{ user, setUser }}>
+          <Screen>
+            <NavigationContainer>
+              <AuthNavigation />
+            </NavigationContainer>
+          </Screen>
+        </AuthContext.Provider>
       )}
     </ApplicationProvider>
   );

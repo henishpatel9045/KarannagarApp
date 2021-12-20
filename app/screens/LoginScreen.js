@@ -1,40 +1,18 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Text, StyleSheet, Image, Dimensions } from "react-native";
-import React, { useState } from "react";
-import * as Yup from "yup";
-import * as Google from "expo-google-app-auth";
-
+import React from "react";
 import colors from "../configs/colors";
 import SocialMediaIcon from "../components/SocialMediaIcon";
 import Screen from "../components/Screen";
-import { TouchableHighlight } from "react-native-gesture-handler";
+import useGoogleLogIn from "../hooks/useGoogleLogIn";
 
 export default function LoginScreen({ navigation }) {
-  const signInWithGoogleAsync = async () => {
-    try {
-      const result = await Google.logInAsync({
-        androidClientId:
-          "451510403937-lkhkffu80dskj6ts9koa67pus9kvq9e7.apps.googleusercontent.com",
-        behavior: "web",
-        //   iosClientId: YOUR_CLIENT_ID_HERE,
-        scopes: ["profile", "email"],
-      });
-
-      if (result.type === "success") {
-        return result;
-      } else {
-        return { cancelled: true };
-      }
-    } catch (e) {
-      console.log(e);
-      return { error: true };
-    }
-  };
-
-  const handleLogIn = async () => {
-    const user = await signInWithGoogleAsync();
-    console.log(user);
-    navigation.navigate("Loading");
+  const { user, logIn } = useGoogleLogIn();
+  const handleLogin = () => {
+    logIn()
+      .then(() => {
+        return;
+      })
+      .then(() => console.log(user));
   };
 
   return (
@@ -50,13 +28,13 @@ export default function LoginScreen({ navigation }) {
         name={"google"}
         style={styles.google}
         title={"Google LogIn"}
-        onPress={handleLogIn}
+        onPress={handleLogin}
       />
       <SocialMediaIcon
         name={"facebook"}
         style={styles.google}
         title="Facebook LogIn"
-        onPress={handleLogIn}
+        onPress={handleLogin}
       />
     </Screen>
   );
