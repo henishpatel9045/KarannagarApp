@@ -9,6 +9,7 @@ import {
   setDoc,
   addDoc,
 } from "firebase/firestore";
+import { useState } from "react";
 import firebaseConfig from "../configs/firebaseConfig";
 import staticAppData from "../configs/staticAppData";
 
@@ -104,9 +105,9 @@ let user = staticAppData.user;
 
 const setUsers = async (user) => {
   try {
-    const response = await addDoc(collection(db, "users", user.uid), {
+    const response = await setDoc(doc(db, "users", user.email), {
       ...user,
-      dateCreated: Timestamp.fromDate(new Date().getTime()),
+      dateCreated: Timestamp.fromMillis(Date.now()),
     });
     return true;
   } catch (error) {
@@ -147,6 +148,17 @@ const setPolls = async (poll) => {
   }
 };
 
+const isUserRegistered = async (email) => {
+  let exists = false;
+  const users = await getDocs(collection(db, "users"));
+  users.forEach((user) => {
+    if (user.id === email) {
+      exists = true;
+    }
+  });
+  return exists;
+};
+
 export {
   getUserRef,
   getUsers,
@@ -158,4 +170,5 @@ export {
   setAnnouncements,
   setEmergencies,
   setPolls,
+  isUserRegistered,
 };

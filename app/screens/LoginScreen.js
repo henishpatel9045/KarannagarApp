@@ -5,18 +5,12 @@ import SocialMediaIcon from "../components/SocialMediaIcon";
 import Screen from "../components/Screen";
 import useGoogleLogIn from "../hooks/useGoogleLogIn";
 import AuthContext from "../auth/context";
+import useGetLogInUser from "../hooks/useGetLogInUser";
 
 export default function LoginScreen({ navigation }) {
   const authContext = useContext(AuthContext);
 
-  const { logIn, fetchUserInfo } = useGoogleLogIn();
-  const handleLogin = () => {
-    logIn().then((res) => {
-      fetchUserInfo(res.authentication.accessToken).then((res) =>
-        authContext.setUser(res)
-      );
-    });
-  };
+  const { authPopUp, error } = useGetLogInUser(authContext.setUser);
 
   return (
     <Screen style={styles.container}>
@@ -31,13 +25,13 @@ export default function LoginScreen({ navigation }) {
         name={"google"}
         style={styles.google}
         title={"Google LogIn"}
-        onPress={handleLogin}
+        onPress={authPopUp}
       />
       <SocialMediaIcon
         name={"facebook"}
         style={styles.google}
         title="Facebook LogIn"
-        onPress={handleLogin}
+        onPress={authPopUp}
       />
     </Screen>
   );

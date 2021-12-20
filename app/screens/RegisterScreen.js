@@ -1,4 +1,4 @@
-import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
+import { Select, SelectItem } from "@ui-kitten/components";
 import React, { useState } from "react";
 import {
   Text,
@@ -6,21 +6,20 @@ import {
   Image,
   StyleSheet,
   Dimensions,
-  Alert,
   StatusBar,
-  KeyboardAvoidingView,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import AppInput from "../components/forms/AppInput";
 import SocialMediaIcon from "../components/SocialMediaIcon";
 import colors from "../configs/colors";
 import staticAppData from "../configs/staticAppData";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Input from "../components/Input";
+import useRegister from "../hooks/useRegister";
 
 const areas = staticAppData.area;
 
 export default function RegisterScreen({ navigation }) {
+  const { user, LoginPopUp, exists } = useRegister();
   const [selectedArea, setselectedArea] = useState([]);
   const [mobileNumber, setMobileNumber] = useState("");
   const [errors, setErrors] = useState([false, false]);
@@ -31,8 +30,13 @@ export default function RegisterScreen({ navigation }) {
     setErrors([selectedArea.length === 0, mobileNumber.length != 10]);
   };
   const handleSubmit = () => {
-    let area = [];
-    selectedArea.forEach((item) => area.push(areas[item.row]));
+    checkError();
+    if (!errors[0] && !errors[1]) {
+      console.log("PopUp");
+      LoginPopUp();
+      let area = [];
+      selectedArea.forEach((item) => area.push(areas[item.row]));
+    }
   };
 
   return (
@@ -91,26 +95,8 @@ export default function RegisterScreen({ navigation }) {
           name={"google"}
           style={styles.google}
           title={"Register With Google"}
-          onPress={() => {
-            checkError();
-            // else {
-            //   registration();
-            // }
-          }}
+          onPress={handleSubmit}
         />
-        {/* <SocialMediaIcon
-          name={"facebook"}
-          style={styles.google}
-          title="Register With Facebook"
-          onPress={() => {
-            if (!selectedArea)
-              return Alert.alert("Alert", "Please select area first", [
-                {
-                  text: "Ok",
-                },
-              ]);
-          }}
-        /> */}
       </View>
       <TouchableOpacity
         style={styles.footer}

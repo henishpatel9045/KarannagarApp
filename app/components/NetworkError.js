@@ -9,13 +9,18 @@ export default function NetworkError() {
       <LottieView
         source={require("../assets/animations/noInternet.json")}
         autoPlay
-        style={{ zIndex: 2 }}
+        style={{
+          position: "absolute",
+          top: 50,
+          height: "80%",
+          width: "100%",
+        }}
         loop
       />
       <Text
         style={{
           color: "red",
-          position: "absolute",
+
           bottom: "20",
           alignSelf: "center",
           fontSize: 20,

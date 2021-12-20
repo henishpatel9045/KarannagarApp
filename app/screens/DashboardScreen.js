@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
@@ -15,6 +15,7 @@ import { SpeedDial } from "react-native-elements";
 import staticAppData from "../configs/staticAppData";
 import LottieView from "lottie-react-native";
 import AppButton from "../components/AppButton";
+import AuthContext from "../auth/context";
 
 const remainingTime = (time) => {
   const remainingTime = moment(time).diff(moment(Date.now()), "seconds");
@@ -209,6 +210,7 @@ const EmergencyCard = ({
 );
 
 export default function DashboardScreen({ navigation }) {
+  const authContext = useContext(AuthContext);
   const [open, setopen] = useState(false);
   const [EmerRefreshing, setEmerRefreshing] = useState(false);
   const [AnnRefreshing, setAnnRefreshing] = useState(false);
@@ -350,7 +352,7 @@ export default function DashboardScreen({ navigation }) {
             : "Night"}
           ,
         </Text>
-        <Text style={styles.userHeader}>Henish Patel</Text>
+        <Text style={styles.userHeader}>{authContext.user.name}</Text>
       </View>
     );
   };

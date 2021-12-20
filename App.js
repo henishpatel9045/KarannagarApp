@@ -10,11 +10,14 @@ import NetworkError from "./app/components/NetworkError";
 import AuthNavigation from "./app/navigation/AuthNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthContext from "./app/auth/context";
+import { isUserRegistered, setUsers } from "./app/api/firebase";
+import AppNavigation from "./app/navigation/AppNavigation";
 
 export default function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(false);
   LogBox.ignoreLogs(["Setting a timer", "Linking"]);
   const netInfo = useNetInfo();
+  if (user) console.log(user);
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
@@ -24,7 +27,11 @@ export default function App() {
         <AuthContext.Provider value={{ user, setUser }}>
           <Screen>
             <NavigationContainer>
-              <AuthNavigation />
+              {user && isUserRegistered(user.email) ? (
+                <AppNavigation />
+              ) : (
+                <AuthNavigation />
+              )}
             </NavigationContainer>
           </Screen>
         </AuthContext.Provider>
