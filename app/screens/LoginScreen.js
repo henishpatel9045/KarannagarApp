@@ -31,6 +31,12 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
+  const handleLogIn = async () => {
+    const user = await signInWithGoogleAsync();
+    console.log(user);
+    navigation.navigate("Loading");
+  };
+
   return (
     <Screen style={styles.container}>
       <Text style={styles.heading}>Login</Text>
@@ -44,15 +50,13 @@ export default function LoginScreen({ navigation }) {
         name={"google"}
         style={styles.google}
         title={"Google LogIn"}
-        onPress={() => navigation.navigate("Loading")}
+        onPress={handleLogIn}
       />
       <SocialMediaIcon
         name={"facebook"}
         style={styles.google}
         title="Facebook LogIn"
-        onPress={() => {
-          return;
-        }}
+        onPress={handleLogIn}
       />
     </Screen>
   );

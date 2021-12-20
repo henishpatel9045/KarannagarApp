@@ -13,6 +13,8 @@ import AppNavigation from "./app/navigation/AppNavigation";
 import NetworkError from "./app/components/NetworkError";
 import DeveloperNavigation from "./app/navigation/DeveloperNavigation";
 import AccountStackNavigator from "./app/navigation/AccountStackNavigator";
+import AuthNavigation from "./app/navigation/AuthNavigation";
+import GoogleLogInTest from "./app/test/GoogleLogInTest";
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);
@@ -24,9 +26,7 @@ export default function App() {
         <NetworkError />
       ) : (
         <Screen>
-          <NavigationContainer>
-            <AccountStackNavigator />
-          </NavigationContainer>
+          <GoogleLogInTest />
         </Screen>
       )}
     </ApplicationProvider>

@@ -21,9 +21,5 @@ const StackNavigator = () => (
 );
 
 export default function AuthNavigation() {
-  return (
-    <NavigationContainer>
-      <StackNavigator />
-    </NavigationContainer>
-  );
+  return <StackNavigator />;
 }
