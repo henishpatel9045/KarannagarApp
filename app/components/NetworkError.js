@@ -1,14 +1,29 @@
 import React from "react";
+import { View, Text } from "react-native";
 
 import LottieView from "lottie-react-native";
 
 export default function NetworkError() {
   return (
-    <LottieView
-      source={require("../assets/animations/noInternet.json")}
-      autoPlay
-      style={{ zIndex: 5 }}
-      loop
-    />
+    <View style={{ flex: 1 }}>
+      <LottieView
+        source={require("../assets/animations/noInternet.json")}
+        autoPlay
+        style={{ zIndex: 2 }}
+        loop
+      />
+      <Text
+        style={{
+          color: "red",
+          position: "absolute",
+          bottom: "20",
+          alignSelf: "center",
+          fontSize: 20,
+          zIndex: 3,
+        }}
+      >
+        No Internet Connection
+      </Text>
+    </View>
   );
 }
