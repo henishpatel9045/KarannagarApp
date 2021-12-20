@@ -13,7 +13,7 @@ import AuthContext from "./app/auth/context";
 
 export default function App() {
   const [user, setUser] = useState({});
-  LogBox.ignoreLogs(["Setting a timer"]);
+  LogBox.ignoreLogs(["Setting a timer", "Linking"]);
   const netInfo = useNetInfo();
 
   return (

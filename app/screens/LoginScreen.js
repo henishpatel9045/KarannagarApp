@@ -1,18 +1,21 @@
 import { Text, StyleSheet, Image, Dimensions } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import colors from "../configs/colors";
 import SocialMediaIcon from "../components/SocialMediaIcon";
 import Screen from "../components/Screen";
 import useGoogleLogIn from "../hooks/useGoogleLogIn";
+import AuthContext from "../auth/context";
 
 export default function LoginScreen({ navigation }) {
-  const { user, logIn } = useGoogleLogIn();
+  const authContext = useContext(AuthContext);
+
+  const { logIn, fetchUserInfo } = useGoogleLogIn();
   const handleLogin = () => {
-    logIn()
-      .then(() => {
-        return;
-      })
-      .then(() => console.log(user));
+    logIn().then((res) => {
+      fetchUserInfo(res.authentication.accessToken).then((res) =>
+        authContext.setUser(res)
+      );
+    });
   };
 
   return (

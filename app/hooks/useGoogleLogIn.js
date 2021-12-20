@@ -3,8 +3,6 @@ import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 
 export default () => {
-  const [accessToken, setaccessToken] = useState(null);
-  const [user, setUser] = useState({});
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
       "451510403937-d5ibi7lg91uig4iqflq9ccr6fpfihcbq.apps.googleusercontent.com",
@@ -15,11 +13,10 @@ export default () => {
   });
 
   const fetchUserInfo = async (token) => {
-    await fetch("https://www.googleapis.com/userinfo/v2/me", {
+    const data = await fetch("https://www.googleapis.com/userinfo/v2/me", {
       headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((user) => setUser(user));
+    }).then((res) => res.json());
+    return data;
   };
 
   const logIn = () => promptAsync();
@@ -30,14 +27,13 @@ export default () => {
       WebBrowser.coolDownAsync();
     };
   }, []);
-  useEffect(() => {
-    if (response?.type === "success") {
-      const { authentication } = response;
-      setaccessToken(authentication.accessToken);
-    }
-  }, [response]);
+  // useEffect(() => {
+  //   if (response?.type === "success") {
+  //     const { authentication } = response;
+  //   }
+  // }, [response]);
 
-  if (accessToken) fetchUserInfo(accessToken);
+  // if (accessToken) fetchUserInfo(accessToken);
 
-  return { user, logIn };
+  return { logIn, request, fetchUserInfo };
 };
