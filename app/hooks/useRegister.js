@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { isUserRegistered, setUsers } from "../api/firebase";
+import useStorage from "../auth/useStorage";
 import useGetLogInUser from "./useGetLogInUser";
 
 export default () => {
-  const [user, setUser] = useState();
+  const { setUser } = useStorage();
   const [exists, setexists] = useState(false);
-  const { authPopUp } = useGetLogInUser(setUser);
+  const { authPopUp, error } = useGetLogInUser(setUser);
   const LoginPopUp = () => authPopUp();
+
+  if (error) console.log(error);
 
   isUserRegistered(user?.email).then((res) => {
     setexists(res);
     if (user && res) {
-      console.log("User Already Exist", user);
+      console.log("User Already Exist");
     } else if (user) {
-      console.log("New User", user);
-      setUsers(user).then((res) => console.log(res));
+      console.log("New User");
+      setUser(user);
     }
   });
 

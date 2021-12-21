@@ -11,6 +11,7 @@ import { FlatList } from "react-native-gesture-handler";
 import colors from "../configs/colors";
 import useApiRef from "../hooks/useApiRef";
 import { getAnnouncements, getEmergencies, getPolls } from "../api/firebase";
+import useStorage from "../auth/useStorage";
 
 const RoundComponent = ({ component, width, color }) => (
   <View
@@ -121,6 +122,7 @@ const menuList = [
 ];
 
 export default function AccountScreen({ navigation }) {
+  const { deleteUser } = useStorage();
   const {
     data: announcements,
     lan,
@@ -172,7 +174,7 @@ export default function AccountScreen({ navigation }) {
         name={"logout"}
         title={"LogOut"}
         onPress={() => {
-          return;
+          deleteUser();
         }}
         logOut
       />

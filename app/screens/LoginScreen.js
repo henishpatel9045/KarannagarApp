@@ -1,16 +1,14 @@
 import { Text, StyleSheet, Image, Dimensions } from "react-native";
-import React, { useContext } from "react";
+import React from "react";
 import colors from "../configs/colors";
 import SocialMediaIcon from "../components/SocialMediaIcon";
 import Screen from "../components/Screen";
-import useGoogleLogIn from "../hooks/useGoogleLogIn";
-import AuthContext from "../auth/context";
 import useGetLogInUser from "../hooks/useGetLogInUser";
+import useStorage from "../auth/useStorage";
 
 export default function LoginScreen({ navigation }) {
-  const authContext = useContext(AuthContext);
-
-  const { authPopUp, error } = useGetLogInUser(authContext.setUser);
+  const { setUser, user } = useStorage();
+  const { authPopUp, error } = useGetLogInUser(setUser);
 
   return (
     <Screen style={styles.container}>

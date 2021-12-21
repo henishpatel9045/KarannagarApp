@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useStorage from "../auth/useStorage";
 import useGoogleLogIn from "./useGoogleLogIn";
 
 export default (setFunction) => {
@@ -8,9 +9,11 @@ export default (setFunction) => {
   const authPopUp = () => {
     logIn().then((res) => {
       if (res.error) setError(res.errorCode);
-      fetchUserInfo(res.authentication.accessToken).then((res) => {
-        setFunction(res);
-      });
+      else if (res.type === "success") {
+        fetchUserInfo(res.authentication.accessToken).then((res) => {
+          setFunction(res);
+        });
+      }
     });
   };
 
