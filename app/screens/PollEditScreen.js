@@ -14,10 +14,12 @@ import colors from "../configs/colors";
 import staticAppData from "../configs/staticAppData";
 
 const areaName = staticAppData.area;
+const initialValues = { receiver: [], question: "", options: [] };
 
 export default function PollEditScreen() {
   const [totalOptions, setoptions] = useState(0);
   const { currUser } = useContext(AuthContext);
+  const [iniValues, setIniValues] = useState(initialValues);
 
   let optionsComponent = [];
   for (let i = 0; i < totalOptions; i++) {
@@ -43,10 +45,11 @@ export default function PollEditScreen() {
 
   return (
     <AppForm
-      values={{ receiver: [], question: "", options: [] }}
+      values={iniValues}
       style={styles.container}
-      onSubmit={(values) => {
+      onSubmit={(values, { resetForm }) => {
         handleSubmit(values);
+        setIniValues(initialValues);
       }}
     >
       <AppSelece

@@ -2,7 +2,6 @@ import moment from "moment";
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { getAnnouncements } from "../api/firebase";
-import AppButton from "../components/AppButton";
 import AppCard from "../components/AppCard";
 import AppLink from "../components/AppLink";
 import AppText from "../components/AppText";
@@ -51,10 +50,11 @@ export default function AnnouncementScreen() {
                         alignSelf: "flex-start",
                         color: colors.dark,
                         marginRight: 15,
+                        width: "60%",
                       }}
+                      numberOfLines={1}
                     >
-                      {item.sender.firstName + " " + item.sender.lastName} :{" "}
-                      {item.receiver}
+                      {item.sender.name} : {item.receiver}
                     </Text>
                     <Text
                       style={{
@@ -88,8 +88,9 @@ export default function AnnouncementScreen() {
                         color: colors.dark,
                         marginRight: 15,
                       }}
+                      numberOfLines={1}
                     >
-                      {item.sender.firstName} : {item.reciever}
+                      {item.sender.name} : {item.reciever}
                     </Text>
                     <Text
                       style={{
@@ -113,8 +114,9 @@ export default function AnnouncementScreen() {
                         alignSelf: "flex-start",
                         color: colors.dark,
                       }}
+                      numberOfLines={1}
                     >
-                      {item.sender.firstName} : {item.reciever}
+                      {item.sender.name} : {item.reciever}
                     </Text>
                     <Text
                       style={{
