@@ -14,7 +14,6 @@ import * as Linking from "expo-linking";
 import colors from "../configs/colors";
 import IconDetail from "../components/IconDetail";
 import EmergencyMessage from "../components/EmergencyMessage";
-import { ErrorMessage } from "formik";
 import useApiRef from "../hooks/useApiRef";
 import { getEmergencies } from "../api/firebase";
 import moment from "moment";
@@ -75,7 +74,7 @@ export default function EmergencyScreen() {
         Pack={MaterialCommunityIcons}
         iconName={iconsList[info.title]}
         title={info.title}
-        sender={`${info.sender.firstName} ${info.sender.lastName}`}
+        sender={info.sender.name}
         dateTime={moment(info.dateCreated.seconds).format("DD-MM, hh:mm:ss")}
         location={info.location}
         pnno={info.sender.phoneNo}

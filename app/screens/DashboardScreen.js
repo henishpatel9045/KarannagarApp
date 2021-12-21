@@ -257,9 +257,7 @@ export default function DashboardScreen({ navigation }) {
         <EmergencyCard
           title={item.title}
           type={item.type}
-          sender={`${item.sender.firstName} ${
-            item.sender.lastName ? item.sender.lastName : ""
-          }`.trimEnd()}
+          sender={item.sender.name}
           dateTime={moment(item.dateCreated.toDate()).format(
             "DD-MM-YYYY, hh:mm:ss"
           )}
@@ -279,9 +277,7 @@ export default function DashboardScreen({ navigation }) {
       renderItem={({ item }) => (
         <AnnouncementCard
           title={item.title}
-          sender={`${item.sender.firstName} ${
-            item.sender.lastName ? item.sender.lastName : ""
-          }`.trimEnd()}
+          sender={item.sender.name}
           receiver={item.receiver.join(", ")}
           message={item.message}
           dateTime={moment(item.dateCreated.toDate()).format(
@@ -300,12 +296,9 @@ export default function DashboardScreen({ navigation }) {
       keyExtractor={(item) => item.dateCreated.toString()}
       renderItem={({ item }) => (
         <PollCard
-          sender={`${item.sender.firstName} ${
-            item.sender.lastName ? item.sender.lastName : ""
-          }`.trimEnd()}
+          sender={item.sender.name}
           question={item.question}
           receiver={item.receiver}
-          remainingTime={remainingTime(item.endTime.toDate())}
         />
       )}
       horizontal
@@ -369,10 +362,10 @@ export default function DashboardScreen({ navigation }) {
           <Text style={styles.sectionHeader}>Announcements</Text>
           {lan ? <Loading /> : <Announcement />}
         </View>
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <Text style={styles.sectionHeader}>Polls</Text>
           {lpoll ? <Loading /> : <Poll />}
-        </View>
+        </View> */}
       </ScrollView>
       <EditScreens />
     </View>
