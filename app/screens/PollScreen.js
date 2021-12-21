@@ -63,9 +63,7 @@ export default function PollScreen({ route }) {
         </Text>
         <Text>Total People Responded: {data.userResponded.length}</Text>
         <Text>For: {data.receiver.join(", ")}</Text>
-        <Text>
-          PollCreater: {data.sender.firstName} {data.sender.lastName}
-        </Text>
+        <Text>PollCreater: {data.sender.name}</Text>
       </Animated.View>
     </Layout>
   );

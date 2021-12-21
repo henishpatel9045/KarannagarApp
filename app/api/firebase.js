@@ -101,8 +101,6 @@ const getStaticInfo = async () => {
   return response;
 };
 
-let user = staticAppData.user;
-
 const setUsers = async (user) => {
   try {
     const response = await setDoc(doc(db, "users", user.email), {
@@ -118,8 +116,7 @@ const setAnnouncements = async (announcement) => {
   try {
     const docRef = await addDoc(collection(db, "announcements"), {
       ...announcement,
-      dateCreated: Timestamp.fromDate(new Date()),
-      sender: user,
+      dateCreated: Timestamp.fromMillis(Date.now()),
     });
   } catch (error) {
     console.log(error);
@@ -129,8 +126,7 @@ const setEmergencies = async (emergencie) => {
   try {
     const docRef = await addDoc(collection(db, "emergencies"), {
       ...emergencie,
-      dateCreated: Timestamp.fromDate(new Date()),
-      sender: user,
+      dateCreated: Timestamp.fromMillis(Date.now()),
     });
   } catch (error) {
     console.log(error);
@@ -140,8 +136,7 @@ const setPolls = async (poll) => {
   try {
     const docRef = await addDoc(collection(db, "polls"), {
       ...poll,
-      dateCreated: Timestamp.fromDate(new Date()),
-      sender: user,
+      dateCreated: Timestamp.fromMillis(Date.now()),
     });
   } catch (error) {
     console.log(error);
@@ -158,6 +153,8 @@ const isUserRegistered = async (email) => {
   });
   return exists;
 };
+
+const userAnnouncements = () => {};
 
 export {
   getUserRef,

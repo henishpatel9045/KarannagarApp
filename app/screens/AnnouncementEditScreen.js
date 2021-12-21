@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import {
   Text,
@@ -17,11 +17,13 @@ import AppFormButton from "../components/forms/AppFormButton";
 import staticAppData from "../configs/staticAppData";
 import { setAnnouncements } from "../api/firebase";
 import LottieView from "lottie-react-native";
+import AuthContext from "../auth/context";
 
 const choices = ["card", "link", "text"];
 const areaName = staticAppData.area;
 
 export default function AnnouncementEditScreen() {
+  const { currUser } = useContext(AuthContext);
   const [choice, setchoice] = useState([]);
   const [uploadLoading, setUploadLoading] = useState(false);
   const Card = () => (
@@ -98,7 +100,7 @@ export default function AnnouncementEditScreen() {
         url: "",
       }}
       onSubmit={(values) => {
-        return;
+        handleSubmit(values);
       }}
       style={styles.form}
     >
@@ -159,7 +161,7 @@ export default function AnnouncementEditScreen() {
         message: "",
       }}
       onSubmit={(values) => {
-        return;
+        handleSubmit(values);
       }}
       style={styles.form}
     >
@@ -214,6 +216,7 @@ export default function AnnouncementEditScreen() {
     setUploadLoading(true);
     await setAnnouncements({
       ...values,
+      sender: { uid: currUser.email, name: currUser.name },
       receiver: receiverFinal,
       type: choices[choice.row],
     });

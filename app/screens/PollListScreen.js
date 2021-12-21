@@ -33,10 +33,10 @@ export default function PollListScreen({ navigation }) {
             {info.sender.firstName} {info.sender.lastName} :{" "}
             {info.receiver.join(", ")}
           </Text>
-          <Text style={styles.remTime}>
+          {/* <Text style={styles.remTime}>
             Voting ends on{" "}
             {moment(info.endTime.seconds).format("DD-MM-YYYY, hh:mm:ss")}
-          </Text>
+          </Text> */}
         </View>
         <TouchableHighlight
           underlayColor={"rgba(255,255,255,0.5)"}

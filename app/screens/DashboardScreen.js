@@ -72,7 +72,7 @@ const PollCard = ({
         </TouchableHighlight>
       </View>
     </View>
-    <Text
+    {/* <Text
       style={{
         fontSize: 12,
         marginTop: 5,
@@ -81,7 +81,7 @@ const PollCard = ({
       }}
     >
       Remaining Time: {remainingTime}
-    </Text>
+    </Text> */}
   </View>
 );
 

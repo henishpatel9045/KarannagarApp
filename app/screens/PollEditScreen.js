@@ -1,7 +1,9 @@
 import { Input, Layout, Select } from "@ui-kitten/components";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { setPolls } from "../api/firebase";
+import AuthContext from "../auth/context";
+import useGetCurrUser from "../auth/useGetCurrUser";
 import AppButton from "../components/AppButton";
 import AppPollOptionEdit from "../components/AppPollOptionEdit";
 import AppForm from "../components/forms/AppForm";
@@ -15,6 +17,7 @@ const areaName = staticAppData.area;
 
 export default function PollEditScreen() {
   const [totalOptions, setoptions] = useState(0);
+  const { currUser } = useContext(AuthContext);
 
   let optionsComponent = [];
   for (let i = 0; i < totalOptions; i++) {
@@ -31,7 +34,11 @@ export default function PollEditScreen() {
   const handleSubmit = async (values) => {
     const receiver = [];
     values.receiver.forEach((item) => receiver.push(areaName[item.row]));
-    await setPolls({ ...values, receiver: receiver });
+    await setPolls({
+      ...values,
+      sender: { uid: currUser.email, name: currUser.name },
+      receiver: receiver,
+    });
   };
 
   return (
@@ -39,7 +46,7 @@ export default function PollEditScreen() {
       values={{ receiver: [], question: "", options: [] }}
       style={styles.container}
       onSubmit={(values) => {
-        return;
+        handleSubmit(values);
       }}
     >
       <AppSelece
