@@ -10,10 +10,8 @@ import NetworkError from "./app/components/NetworkError";
 import AuthNavigation from "./app/navigation/AuthNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthContext from "./app/auth/context";
-import { isUserRegistered, setUsers } from "./app/api/firebase";
+import { isUserRegistered } from "./app/api/firebase";
 import AppNavigation from "./app/navigation/AppNavigation";
-import useStorage from "./app/auth/useStorage";
-import * as SecureStore from "expo-secure-store";
 import useGetCurrUser from "./app/auth/useGetCurrUser";
 
 export default function App() {
@@ -21,14 +19,13 @@ export default function App() {
   const netInfo = useNetInfo();
   const [currUser, setcurrUser] = useState(false);
   useGetCurrUser("current_user", setcurrUser);
-  const { setUser, deleteUser } = useStorage();
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       {netInfo.isInternetReachable === false ? (
         <NetworkError />
       ) : (
-        <AuthContext.Provider value={{ currUser }}>
+        <AuthContext.Provider value={{ currUser, setcurrUser }}>
           <Screen>
             <NavigationContainer>
               {currUser && isUserRegistered(currUser.email) ? (

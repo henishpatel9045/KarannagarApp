@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Image,
   StyleSheet,
@@ -12,6 +12,7 @@ import colors from "../configs/colors";
 import useApiRef from "../hooks/useApiRef";
 import { getAnnouncements, getEmergencies, getPolls } from "../api/firebase";
 import useStorage from "../auth/useStorage";
+import AuthContext from "../auth/context";
 
 const RoundComponent = ({ component, width, color }) => (
   <View
@@ -122,6 +123,7 @@ const menuList = [
 ];
 
 export default function AccountScreen({ navigation }) {
+  const { setcurrUser } = useContext(AuthContext);
   const { deleteUser } = useStorage();
   const {
     data: announcements,
@@ -175,6 +177,7 @@ export default function AccountScreen({ navigation }) {
         title={"LogOut"}
         onPress={() => {
           deleteUser();
+          setcurrUser(false);
         }}
         logOut
       />
