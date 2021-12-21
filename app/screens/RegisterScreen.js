@@ -19,7 +19,7 @@ import useRegister from "../hooks/useRegister";
 const areas = staticAppData.area;
 
 export default function RegisterScreen({ navigation }) {
-  const { user, LoginPopUp, exists } = useRegister();
+  const { LoginPopUp } = useRegister();
   const [selectedArea, setselectedArea] = useState([]);
   const [mobileNumber, setMobileNumber] = useState("");
   const [errors, setErrors] = useState([false, false]);

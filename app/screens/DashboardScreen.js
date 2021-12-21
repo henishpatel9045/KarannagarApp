@@ -352,7 +352,7 @@ export default function DashboardScreen({ navigation }) {
             : "Night"}
           ,
         </Text>
-        <Text style={styles.userHeader}>{authContext.user.name}</Text>
+        <Text style={styles.userHeader}>{authContext.currUser.name}</Text>
       </View>
     );
   };

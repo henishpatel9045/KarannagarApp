@@ -19,21 +19,19 @@ import useGetCurrUser from "./app/auth/useGetCurrUser";
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer", "Linking"]);
   const netInfo = useNetInfo();
-  const { user } = useGetCurrUser("current_user");
-
+  const [currUser, setcurrUser] = useState(false);
+  useGetCurrUser("current_user", setcurrUser);
   const { setUser, deleteUser } = useStorage();
-
-  console.log(user);
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       {netInfo.isInternetReachable === false ? (
         <NetworkError />
       ) : (
-        <AuthContext.Provider value={{ user }}>
+        <AuthContext.Provider value={{ currUser }}>
           <Screen>
             <NavigationContainer>
-              {user && isUserRegistered(user.email) ? (
+              {currUser && isUserRegistered(currUser.email) ? (
                 <AppNavigation />
               ) : (
                 <AuthNavigation />

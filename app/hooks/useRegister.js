@@ -6,7 +6,8 @@ import useGetLogInUser from "./useGetLogInUser";
 export default () => {
   const { setUser } = useStorage();
   const [exists, setexists] = useState(false);
-  const { authPopUp, error } = useGetLogInUser(setUser);
+  const [user, setunUser] = useState(false);
+  const { authPopUp, error } = useGetLogInUser(setunUser);
   const LoginPopUp = () => authPopUp();
 
   if (error) console.log(error);
@@ -21,5 +22,5 @@ export default () => {
     }
   });
 
-  return { user, LoginPopUp, exists };
+  return { LoginPopUp, exists };
 };
