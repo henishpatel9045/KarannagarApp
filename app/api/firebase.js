@@ -8,12 +8,15 @@ import {
   getFirestore,
   setDoc,
   addDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { useState } from "react";
 import firebaseConfig from "../configs/firebaseConfig";
 import staticAppData from "../configs/staticAppData";
 
 const db = getFirestore(initializeApp(firebaseConfig));
+
+// GET Methods
 
 const getUserRef = async (ref) => {
   const snapshot = await getDoc(ref);
@@ -100,6 +103,50 @@ const getStaticInfo = async () => {
   }
   return response;
 };
+const getUserGenerations = async (email) => {
+  let userAnnouncements = [];
+  let userEmergency = [];
+  let userPolls = [];
+  try {
+    const data1 = await getDocs(collection(db, "announcements"));
+    data1.forEach((snapshot) => {
+      if (snapshot.data().sender.uid === email) {
+        userAnnouncements.push({ data: snapshot.data(), id: snapshot.id });
+      }
+    });
+    const data2 = await getDocs(collection(db, "emergencies"));
+    data2.forEach((snapshot) => {
+      if (snapshot.data().sender.uid === email) {
+        userEmergency.push({ data: snapshot.data(), id: snapshot.id });
+      }
+    });
+    const data3 = await getDocs(collection(db, "polls"));
+    data3.forEach((snapshot) => {
+      if (snapshot.data().sender.uid === email) {
+        userPolls.push({ data: snapshot.data(), id: snapshot.id });
+      }
+    });
+    return {
+      data: {
+        announcements: userAnnouncements,
+        emergencies: userEmergency,
+        polls: userPolls,
+      },
+      error: false,
+    };
+  } catch (error) {
+    return {
+      data: {
+        announcements: userAnnouncements,
+        emergencies: userEmergency,
+        polls: userPolls,
+      },
+      error: error,
+    };
+  }
+};
+
+// SET Methods
 
 const setUsers = async (user) => {
   try {
@@ -154,7 +201,17 @@ const isUserRegistered = async (email) => {
   return exists;
 };
 
-const userAnnouncements = () => {};
+// DELETE Methods
+
+const deleteUser = async (id) => {
+  try {
+    await deleteDoc(doc(db, "users", id));
+    return true;
+  } catch (error) {
+    console.log("Error while deleting user. ", error);
+    return error;
+  }
+};
 
 export {
   getUserRef,
@@ -163,9 +220,11 @@ export {
   getEmergencies,
   getStaticInfo,
   getPolls,
+  getUserGenerations,
   setUsers,
   setAnnouncements,
   setEmergencies,
   setPolls,
   isUserRegistered,
+  deleteUser,
 };

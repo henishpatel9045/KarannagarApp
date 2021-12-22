@@ -32,23 +32,26 @@ const ListCardComponent = ({ question, sender, receiver, date, onPress }) => (
 
 export default function PollDeleteScreen({ route }) {
   const polls = route.params.data;
+  const handleDelete = (id) => {
+    return;
+  };
 
   return (
     <View style={styles.container}>
       <FlatList
         style={{ width: "95%" }}
         data={polls}
-        keyExtractor={(item) => item.dateCreated.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <ListCardComponent
-            question={item.question}
-            sender={item.sender.firstName + " " + item.sender.lastName}
-            receiver={item.receiver}
-            date={moment(item.dateCreated.toDate()).format(
+            question={item.data.question}
+            sender={item.data.sender.name}
+            receiver={item.data.receiver}
+            date={moment(item.data.dateCreated.toDate()).format(
               "DD/MM/YYYY, hh:mm:ss"
             )}
             onPress={() => {
-              return;
+              handleDelete(item.id);
             }}
           />
         )}

@@ -10,7 +10,7 @@ import NetworkError from "./app/components/NetworkError";
 import AuthNavigation from "./app/navigation/AuthNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthContext from "./app/auth/context";
-import { isUserRegistered } from "./app/api/firebase";
+import { deleteUser, isUserRegistered } from "./app/api/firebase";
 import AppNavigation from "./app/navigation/AppNavigation";
 import useGetCurrUser from "./app/auth/useGetCurrUser";
 
@@ -19,6 +19,7 @@ export default function App() {
   const netInfo = useNetInfo();
   const [currUser, setcurrUser] = useState(false);
   useGetCurrUser("current_user", setcurrUser);
+  deleteUser("imp9045@gmail.com");
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>

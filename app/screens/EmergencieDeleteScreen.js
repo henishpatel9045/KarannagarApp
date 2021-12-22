@@ -47,14 +47,14 @@ export default function EmergencieDeleteScreen({ route }) {
       <FlatList
         style={{ width: "95%" }}
         data={data}
-        keyExtractor={(item) => item.dateCreated.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <>
             <ListCardComponent
-              title={item.title}
-              sender={item.sender.firstName + " " + item.sender.lastName}
-              iconName={iconList[item.title]}
-              dateTime={moment(item.dateCreated.toDate()).format(
+              title={item.data.title}
+              sender={item.data.sender.name}
+              iconName={iconList[item.data.title]}
+              dateTime={moment(item.data.dateCreated.toDate()).format(
                 "DD/MM/YYYY, hh:mm:ss"
               )}
               onPress={() => {

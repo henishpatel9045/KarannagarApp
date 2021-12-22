@@ -30,8 +30,7 @@ export default function PollListScreen({ navigation }) {
             {info.question}
           </Text>
           <Text style={styles.senderDetail}>
-            {info.sender.firstName} {info.sender.lastName} :{" "}
-            {info.receiver.join(", ")}
+            {info.sender.name} : {info.receiver.join(", ")}
           </Text>
           {/* <Text style={styles.remTime}>
             Voting ends on{" "}

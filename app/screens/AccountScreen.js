@@ -10,7 +10,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
 import colors from "../configs/colors";
 import useApiRef from "../hooks/useApiRef";
-import { getAnnouncements, getEmergencies, getPolls } from "../api/firebase";
+import { getUserGenerations } from "../api/firebase";
 import useStorage from "../auth/useStorage";
 import AuthContext from "../auth/context";
 
@@ -83,7 +83,7 @@ const ImageListItem = ({ image, title, subTitle, onPress, bgColor }) => (
   <TouchableHighlight onPress={onPress} underlayColor={"white"}>
     <View style={[styles.listItem]}>
       <RoundComponent
-        component={<Image source={image} style={styles.roundImage} />}
+        component={<Image source={{ uri: image }} style={styles.roundImage} />}
         width={70}
       />
 
@@ -123,33 +123,30 @@ const menuList = [
 ];
 
 export default function AccountScreen({ navigation }) {
-  const { setcurrUser } = useContext(AuthContext);
+  const { currUser, setcurrUser } = useContext(AuthContext);
   const { deleteUser } = useStorage();
-  const {
-    data: announcements,
-    lan,
-    request: loadAnnouncements,
-  } = useApiRef(getAnnouncements);
-  const {
-    data: emergencies,
-    lem,
-    request: loadEmergencies,
-  } = useApiRef(getEmergencies);
-  const { data: polls, lpolls, request: loadPolls } = useApiRef(getPolls);
+  const [userServerData, setuserServerData] = useState();
+
+  getUserGenerations(currUser.email).then((res) => setuserServerData(res.data));
+
   const [data, setdata] = useState(menuList);
-  useEffect(() => {
-    loadAnnouncements();
-    loadEmergencies();
-    loadPolls();
-  }, []);
-  let mainData = [announcements, emergencies, polls];
-  let totals = [announcements.size, emergencies.size, polls.size];
+  const mainData = [
+    userServerData?.announcements,
+    userServerData?.emergencies,
+    userServerData?.polls,
+  ];
+  let totals = [
+    userServerData?.announcements.length,
+    userServerData?.emergencies.length,
+    userServerData?.polls.length,
+  ];
+
   return (
     <View style={styles.container}>
       <ImageListItem
-        image={require("../assets/dp.jpg")}
-        title={"Henish Patel"}
-        subTitle={"ompatel9045@gmail.com"}
+        image={currUser.picture}
+        title={currUser.name}
+        subTitle={currUser.email}
         onPress={() => {
           return;
         }}
@@ -158,18 +155,20 @@ export default function AccountScreen({ navigation }) {
       <FlatList
         data={data}
         keyExtractor={(item) => item.title.toString()}
-        renderItem={({ item, index }) => (
-          <IconListItem
-            name={item.icon}
-            title={item.title}
-            subTitle={totals[index]}
-            onPress={() =>
-              navigation.navigate(item.navName, { ...mainData[index] })
-            }
-            color={"white"}
-            bgColor={item.color}
-          />
-        )}
+        renderItem={({ item, index }) => {
+          return (
+            <IconListItem
+              name={item.icon}
+              title={item.title}
+              subTitle={totals[index]}
+              onPress={() =>
+                navigation.navigate(item.navName, { data: mainData[index] })
+              }
+              color={"white"}
+              bgColor={item.color}
+            />
+          );
+        }}
       />
       <View style={{ height: 20 }} />
       <IconListItem
