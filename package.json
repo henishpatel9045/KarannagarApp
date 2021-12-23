@@ -18,6 +18,7 @@
     "@ui-kitten/components": "^5.1.1",
     "enhanced-fluid-bottom-navigation-bar": "^0.2.4",
     "expo": "~43.0.2",
+    "expo-app-loading": "~1.2.1",
     "expo-application": "^4.0.1",
     "expo-auth-session": "~3.4.2",
     "expo-cli": "5",

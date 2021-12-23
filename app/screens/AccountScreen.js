@@ -176,7 +176,7 @@ export default function AccountScreen({ navigation }) {
         title={"LogOut"}
         onPress={() => {
           deleteUser();
-          setcurrUser(false);
+          setcurrUser(null);
         }}
         logOut
       />

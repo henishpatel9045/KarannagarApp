@@ -13,13 +13,17 @@ import AuthContext from "./app/auth/context";
 import { deleteUser, isUserRegistered } from "./app/api/firebase";
 import AppNavigation from "./app/navigation/AppNavigation";
 import useGetCurrUser from "./app/auth/useGetCurrUser";
+import AppLoading from "expo-app-loading";
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer", "Linking"]);
   const netInfo = useNetInfo();
   const [currUser, setcurrUser] = useState(false);
   useGetCurrUser("current_user", setcurrUser);
-  deleteUser("imp9045@gmail.com");
+
+  if (currUser === false) {
+    return <AppLoading />;
+  }
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>

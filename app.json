@@ -18,8 +18,10 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.henishpatel.karannagarapp",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./app/assets/logo.png",
+        "foregroundImage": "./app/assets/icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
