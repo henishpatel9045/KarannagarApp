@@ -3,6 +3,7 @@ import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 
 export default () => {
+  const [loading, setloading] = useState(false);
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
       "451510403937-d5ibi7lg91uig4iqflq9ccr6fpfihcbq.apps.googleusercontent.com",
@@ -13,9 +14,12 @@ export default () => {
   });
 
   const fetchUserInfo = async (token) => {
+    setloading(true);
     const data = await fetch("https://www.googleapis.com/userinfo/v2/me", {
       headers: { Authorization: `Bearer ${token}` },
     }).then((res) => res.json());
+    setloading(false);
+
     return data;
   };
 
@@ -35,5 +39,5 @@ export default () => {
 
   // if (accessToken) fetchUserInfo(accessToken);
 
-  return { logIn, request, fetchUserInfo };
+  return { logIn, request, fetchUserInfo, loading };
 };

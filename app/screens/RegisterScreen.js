@@ -15,11 +15,12 @@ import staticAppData from "../configs/staticAppData";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Input from "../components/Input";
 import useRegister from "../hooks/useRegister";
+import LottieView from "lottie-react-native";
 
 const areas = staticAppData.area;
 
 export default function RegisterScreen({ navigation }) {
-  const { LoginPopUp } = useRegister();
+  const { LoginPopUp, error, loading } = useRegister();
   const [selectedArea, setselectedArea] = useState([]);
   const [mobileNumber, setMobileNumber] = useState("");
   const [errors, setErrors] = useState([false, false]);
@@ -33,78 +34,90 @@ export default function RegisterScreen({ navigation }) {
     checkError();
     if (!errors[0] && !errors[1]) {
       console.log("PopUp");
-      LoginPopUp();
       let area = [];
       selectedArea.forEach((item) => area.push(areas[item.row]));
+      LoginPopUp(area, mobileNumber);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Register</Text>
-      <Image
-        source={require("../assets/register.png")}
-        resizeMode="cover"
-        style={styles.imagebg}
-        width={100}
-        height={100}
-      />
-      <Select
-        selectedIndex={selectedArea}
-        value={displayOptions.join(", ")}
-        placeholder={"Select Area"}
-        multiSelect={true}
-        style={styles.areaSelector}
-        onSelect={(index) => {
-          setselectedArea(index);
-        }}
-        size={"large"}
-      >
-        {areas.map((item) => (
-          <SelectItem title={item} key={item} style={{ zIndex: 5 }} />
-        ))}
-      </Select>
-      {errors[0] && (
-        <Text style={{ color: "red", top: -5 }}>
-          Please select at least one area.
-        </Text>
-      )}
-      <Input
-        maxLength={10}
-        placeholder={"Mobile Number"}
-        name={"mobileNo"}
-        onChangeText={setMobileNumber}
-        keyboardType="number-pad"
-        leftComponent={
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <MaterialCommunityIcons
-              name="phone"
-              size={25}
-              color={colors.dark}
-            />
-            <Text style={{ color: colors.dark }}>+91</Text>
-          </View>
-        }
-        width={"80%"}
-      />
-      {errors[1] && (
-        <Text style={{ color: "red" }}>Please enter your Mobile Number.</Text>
-      )}
-      <View style={{ zIndex: -2, marginTop: 20 }}>
-        <SocialMediaIcon
-          name={"google"}
-          style={styles.google}
-          title={"Register With Google"}
-          onPress={handleSubmit}
+    <>
+      {loading ? (
+        <LottieView
+          source={require("../assets/animations/loadingSpinner.json")}
+          autoPlay
+          loop
         />
-      </View>
-      <TouchableOpacity
-        style={styles.footer}
-        onPress={() => navigation.navigate("Login")}
-      >
-        <Text style={styles.txt}>Already a User? LogIn</Text>
-      </TouchableOpacity>
-    </View>
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.heading}>Register</Text>
+          <Image
+            source={require("../assets/register.png")}
+            resizeMode="cover"
+            style={styles.imagebg}
+            width={100}
+            height={100}
+          />
+          <Select
+            selectedIndex={selectedArea}
+            value={displayOptions.join(", ")}
+            placeholder={"Select Area"}
+            multiSelect={true}
+            style={styles.areaSelector}
+            onSelect={(index) => {
+              setselectedArea(index);
+            }}
+            size={"large"}
+          >
+            {areas.map((item) => (
+              <SelectItem title={item} key={item} style={{ zIndex: 5 }} />
+            ))}
+          </Select>
+          {errors[0] && (
+            <Text style={{ color: "red", top: -5 }}>
+              Please select at least one area.
+            </Text>
+          )}
+          <Input
+            maxLength={10}
+            placeholder={"Mobile Number"}
+            name={"mobileNo"}
+            onChangeText={setMobileNumber}
+            keyboardType="number-pad"
+            leftComponent={
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <MaterialCommunityIcons
+                  name="phone"
+                  size={25}
+                  color={colors.dark}
+                />
+                <Text style={{ color: colors.dark }}>+91</Text>
+              </View>
+            }
+            width={"80%"}
+          />
+          {errors[1] && (
+            <Text style={{ color: "red" }}>
+              Please enter your Mobile Number.
+            </Text>
+          )}
+          <View style={{ zIndex: -2, marginTop: 20 }}>
+            <SocialMediaIcon
+              name={"google"}
+              style={styles.google}
+              title={"Register With Google"}
+              onPress={handleSubmit}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.footer}
+            onPress={() => navigation.navigate("Login")}
+          >
+            <Text style={styles.txt}>Already a User? LogIn</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </>
   );
 }
 

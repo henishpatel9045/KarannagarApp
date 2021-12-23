@@ -1,26 +1,36 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { isUserRegistered, setUsers } from "../api/firebase";
 import useStorage from "../auth/useStorage";
-import useGetLogInUser from "./useGetLogInUser";
+import useGoogleLogIn from "./useGoogleLogIn";
+import AuthContext from "../auth/context";
 
 export default () => {
   const { setUser } = useStorage();
-  const [exists, setexists] = useState(false);
-  const [user, setunUser] = useState(false);
-  const { authPopUp, error } = useGetLogInUser(setunUser);
-  const LoginPopUp = () => authPopUp();
+  const { setcurrUser } = useContext(AuthContext);
+  const { logIn, fetchUserInfo } = useGoogleLogIn();
+  const [error, seterror] = useState(false);
+  const [loading, setloading] = useState(false);
+
+  const LoginPopUp = async (area, number) => {
+    setloading(true);
+    await logIn().then((res) => {
+      if (res.error) console.log(res.errorCode);
+      else if (res.type === "success") {
+        fetchUserInfo(res.authentication.accessToken).then((user) => {
+          isUserRegistered(user.email).then((exists) => {
+            if (!exists) {
+              setUsers({ ...user, area: area, phoneNo: number });
+              setUser({ ...user, area: area, phoneNo: number });
+              setcurrUser({ ...user, area: area, phoneNo: number });
+            } else seterror("User already exist.");
+          });
+        });
+      }
+    });
+    setloading(false);
+  };
 
   if (error) console.log(error);
 
-  isUserRegistered(user?.email).then((res) => {
-    setexists(res);
-    if (user && res) {
-      console.log("User Already Exist");
-    } else if (user) {
-      console.log("New User");
-      setUser(user);
-    }
-  });
-
-  return { LoginPopUp, exists };
+  return { LoginPopUp, error, loading };
 };
