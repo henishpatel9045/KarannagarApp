@@ -212,6 +212,33 @@ const deleteUser = async (id) => {
     return error;
   }
 };
+const deleteAnnouncements = async (id) => {
+  try {
+    await deleteDoc(doc(db, "announcements", id));
+    return true;
+  } catch (error) {
+    console.log("Error while deleting announcements. ", error);
+    return error;
+  }
+};
+const deleteEmergency = async (id) => {
+  try {
+    await deleteDoc(doc(db, "emergencies", id));
+    return true;
+  } catch (error) {
+    console.log("Error while deleting emergencies. ", error);
+    return error;
+  }
+};
+const deletePoll = async (id) => {
+  try {
+    await deleteDoc(doc(db, "polls", id));
+    return true;
+  } catch (error) {
+    console.log("Error while deleting poll. ", error);
+    return error;
+  }
+};
 
 export {
   getUserRef,
@@ -227,4 +254,7 @@ export {
   setPolls,
   isUserRegistered,
   deleteUser,
+  deleteAnnouncements,
+  deleteEmergency,
+  deletePoll,
 };
