@@ -9,6 +9,7 @@ import {
   setDoc,
   addDoc,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { useState } from "react";
 import firebaseConfig from "../configs/firebaseConfig";
@@ -57,18 +58,27 @@ const getAnnouncements = async () => {
   let anouncementsList = [];
   let response = {};
   try {
-    const announcements = await getDocs(collection(db, "announcements"));
-    announcements.forEach((snapshot) => {
-      anouncementsList.push({ ...snapshot.data(), docId: snapshot.id });
+    onSnapshot(collection(db, "announcements"), (announcements) => {
+      anouncementsList.length = 0;
+      announcements.forEach((snapshot) => {
+        if (snapshot.exists()) {
+          anouncementsList.push({ ...snapshot?.data(), docId: snapshot.id });
+          anouncementsList.sort((a, b) => {
+            console.log(a.dateCreated.toMillis - b.dateCreated.toMillis);
+            return b.dateCreated.toMillis() - a.dateCreated.toMillis();
+          });
+        }
+      });
     });
+
     response = {
       data: anouncementsList,
       error: false,
-      size: announcements.size,
     };
   } catch (e) {
     response = { data: anouncementsList, error: e };
   }
+  console.log(response);
   return response;
 };
 
@@ -76,13 +86,20 @@ const getEmergencies = async () => {
   let emergenciesList = [];
   let response = {};
   try {
-    const emergencies = await getDocs(collection(db, "emergencies"));
-
-    emergencies.forEach((snapshot) => {
-      emergenciesList.push({ ...snapshot.data(), docId: snapshot.id });
+    onSnapshot(collection(db, "emergencies"), (emergencies) => {
+      emergenciesList.length = 0;
+      emergencies.forEach((snapshot) => {
+        if (snapshot.exists()) {
+          emergenciesList.push({ ...snapshot?.data(), docId: snapshot.id });
+          emergenciesList.sort((a, b) => {
+            console.log(a.dateCreated.toMillis - b.dateCreated.toMillis);
+            return b.dateCreated.toMillis() - a.dateCreated.toMillis();
+          });
+        }
+      });
     });
 
-    response = { data: emergenciesList, error: false, size: emergencies.size };
+    response = { data: emergenciesList, error: false };
   } catch (e) {
     response = { data: emergenciesList, error: e };
   }
