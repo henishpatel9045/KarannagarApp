@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { View, Text } from "react-native";
 import AnnouncementEditScreen from "../screens/AnnouncementEditScreen";
 import DashboardScreen from "../screens/DashboardScreen";
 import PollEditScreen from "../screens/PollEditScreen";

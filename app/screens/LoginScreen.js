@@ -19,7 +19,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <>
-      {loading ? (
+      {user ? (
         <LottieView
           source={require("../assets/animations/loadingSpinner.json")}
           autoPlay

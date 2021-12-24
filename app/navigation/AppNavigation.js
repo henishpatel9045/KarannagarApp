@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import AnnouncementScreen from "../screens/AnnouncementScreen";
 import EmergencyScreen from "../screens/EmergencyScreen";
@@ -8,7 +8,6 @@ import colors from "../configs/colors";
 import AccountStackNavigator from "./AccountStackNavigator";
 import DashboardNavigation from "./DashboardNavigation";
 import PollNavigation from "./PollNavigation";
-import AppContext from "../context/AppContext";
 
 export default function AppNavigation() {
   const Tab = createMaterialBottomTabNavigator();

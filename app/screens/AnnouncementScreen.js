@@ -72,10 +72,11 @@ export default function AnnouncementScreen() {
             alignSelf: "flex-start",
             color: colors.dark,
             marginRight: 15,
+            width: "60%",
           }}
           numberOfLines={1}
         >
-          {item.sender.name} : {item.reciever}
+          {item.sender.name} : {item.receiver.join(", ")}
         </Text>
         <Text
           style={{
@@ -84,7 +85,7 @@ export default function AnnouncementScreen() {
             marginRight: 15,
           }}
         >
-          {item.dateCreated.nanoseconds}
+          {moment(item.dateCreated.seconds).format("DD-MM-YYYY, hh:mm")}
         </Text>
       </View>
     </>
@@ -98,18 +99,21 @@ export default function AnnouncementScreen() {
           style={{
             alignSelf: "flex-start",
             color: colors.dark,
+            marginRight: 15,
+            width: "60%",
           }}
           numberOfLines={1}
         >
-          {item.sender.name} : {item.reciever}
+          {item.sender.name} : {item.receiver}
         </Text>
         <Text
           style={{
             alignSelf: "flex-end",
             color: colors.dark,
+            marginRight: 15,
           }}
         >
-          {item.dateCreated.nanoseconds}
+          {moment(item.dateCreated.seconds).format("DD-MM-YYYY, hh:mm")}
         </Text>
       </View>
     </>
