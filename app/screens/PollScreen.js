@@ -61,7 +61,10 @@ export default function PollScreen({ route }) {
         <Text category="h5" style={{ fontWeight: "bold" }}>
           Thanks For Your Response
         </Text>
-        <Text>Total People Responded: {data.userResponded.length}</Text>
+        <Text>
+          Total People Responded:{" "}
+          {data.userResponded ? data.userResponded.length : 0}
+        </Text>
         <Text>For: {data.receiver.join(", ")}</Text>
         <Text>PollCreater: {data.sender.name}</Text>
       </Animated.View>

@@ -10,7 +10,13 @@ import NetworkError from "./app/components/NetworkError";
 import AuthNavigation from "./app/navigation/AuthNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthContext from "./app/auth/context";
-import { deleteUser, isUserRegistered } from "./app/api/firebase";
+import {
+  deleteUser,
+  getAnnouncements,
+  getEmergencies,
+  getPolls,
+  isUserRegistered,
+} from "./app/api/firebase";
 import AppNavigation from "./app/navigation/AppNavigation";
 import useGetCurrUser from "./app/auth/useGetCurrUser";
 import AppLoading from "expo-app-loading";
@@ -21,6 +27,27 @@ export default function App() {
   const [currUser, setcurrUser] = useState(false);
   useGetCurrUser("current_user", setcurrUser);
 
+  const {
+    data: announcements,
+    loading: lan,
+    request: loadAnnouncements,
+  } = useApiRef(getAnnouncements);
+  const {
+    data: emergencies,
+    loading: lem,
+    request: loademergency,
+  } = useApiRef(getEmergencies);
+  const {
+    data: polls,
+    loading: lpoll,
+    request: loadPolls,
+  } = useApiRef(getPolls);
+  useEffect(() => {
+    loademergency();
+    loadAnnouncements();
+    loadPolls();
+  }, []);
+
   if (currUser === false) {
     return <AppLoading />;
   }
@@ -30,7 +57,21 @@ export default function App() {
       {netInfo.isInternetReachable === false ? (
         <NetworkError />
       ) : (
-        <AuthContext.Provider value={{ currUser, setcurrUser }}>
+        <AuthContext.Provider
+          value={{
+            currUser,
+            setcurrUser,
+            announcements,
+            emergencies,
+            polls,
+            loadAnnouncements,
+            loademergency,
+            loadPolls,
+            lan,
+            lem,
+            lpoll,
+          }}
+        >
           <Screen>
             <NavigationContainer>
               {currUser && isUserRegistered(currUser.email) ? (

@@ -162,7 +162,9 @@ export default function AccountScreen({ navigation }) {
               title={item.title}
               subTitle={totals[index]}
               onPress={() =>
-                navigation.navigate(item.navName, { data: mainData[index] })
+                navigation.navigate(item.navName, {
+                  data: mainData[index],
+                })
               }
               color={"white"}
               bgColor={item.color}

@@ -17,18 +17,7 @@ import LottieView from "lottie-react-native";
 import AppButton from "../components/AppButton";
 import AuthContext from "../auth/context";
 
-const remainingTime = (time) => {
-  const remainingTime = moment(time).diff(moment(Date.now()), "seconds");
-  // if (remainingTime <= 0) return "00:00:00";
-  return moment(remainingTime).format("hh:mm:ss");
-};
-const PollCard = ({
-  question,
-  sender,
-  receiver,
-  remainingTime,
-  totalResponse,
-}) => (
+const PollCard = ({ question, sender, receiver }) => (
   <View
     style={[
       styles.card,
@@ -216,28 +205,6 @@ export default function DashboardScreen({ navigation }) {
   const [AnnRefreshing, setAnnRefreshing] = useState(false);
   const [PollRefreshing, setPollRefreshing] = useState(false);
 
-  const {
-    data: announcements,
-    loading: lan,
-    request: loadAnnouncements,
-  } = useApiRef(getAnnouncements);
-  const {
-    data: emergencies,
-    loading: lem,
-    request: loademergency,
-  } = useApiRef(getEmergencies);
-  const {
-    data: polls,
-    loading: lpoll,
-    request: loadPolls,
-  } = useApiRef(getPolls);
-
-  useEffect(() => {
-    loademergency();
-    loadAnnouncements();
-    loadPolls();
-  }, []);
-
   const Loading = () => (
     <LottieView
       source={require("../assets/animations/loadingCircle.json")}
@@ -251,8 +218,8 @@ export default function DashboardScreen({ navigation }) {
     <FlatList
       horizontal
       contentContainerStyle={styles.scrollStyle}
-      data={emergencies.data}
-      keyExtractor={(item) => item.dateCreated.toString()}
+      data={authContext.emergencies.data}
+      keyExtractor={(item) => item.docId.toString()}
       renderItem={({ item }) => (
         <EmergencyCard
           title={item.title}
@@ -270,9 +237,9 @@ export default function DashboardScreen({ navigation }) {
 
   const Announcement = () => (
     <FlatList
-      data={announcements.data}
+      data={authContext.announcements.data}
       contentContainerStyle={styles.scrollStyle}
-      keyExtractor={(item) => item.dateCreated.toString()}
+      keyExtractor={(item) => item.docId.toString()}
       horizontal
       renderItem={({ item }) => (
         <AnnouncementCard
@@ -292,8 +259,8 @@ export default function DashboardScreen({ navigation }) {
 
   const Poll = () => (
     <FlatList
-      data={polls.data}
-      keyExtractor={(item) => item.dateCreated.toString()}
+      data={authContext.polls.data}
+      keyExtractor={(item) => item.docId.toString()}
       renderItem={({ item }) => (
         <PollCard
           sender={item.sender.name}
@@ -353,19 +320,19 @@ export default function DashboardScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Header />
-      <ScrollView>
+      <ScrollView style={{ width: "100%" }}>
         <View style={[styles.section, { minHeight: 200, marginTop: 20 }]}>
           <Text style={styles.sectionHeader}>Emergencies</Text>
-          {lem ? <Loading /> : <Emergency />}
+          {authContext.lem ? <Loading /> : <Emergency />}
         </View>
         <View style={[styles.section, { minHeight: 200 }]}>
           <Text style={styles.sectionHeader}>Announcements</Text>
-          {lan ? <Loading /> : <Announcement />}
+          {authContext.lan ? <Loading /> : <Announcement />}
         </View>
-        {/* <View style={styles.section}>
+        <View style={styles.section}>
           <Text style={styles.sectionHeader}>Polls</Text>
-          {lpoll ? <Loading /> : <Poll />}
-        </View> */}
+          {authContext.lpoll ? <Loading /> : <Poll />}
+        </View>
       </ScrollView>
       <EditScreens />
     </View>

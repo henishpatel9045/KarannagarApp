@@ -8,6 +8,7 @@ import colors from "../configs/colors";
 import AccountStackNavigator from "./AccountStackNavigator";
 import DashboardNavigation from "./DashboardNavigation";
 import PollNavigation from "./PollNavigation";
+import AppContext from "../context/AppContext";
 
 export default function AppNavigation() {
   const Tab = createMaterialBottomTabNavigator();

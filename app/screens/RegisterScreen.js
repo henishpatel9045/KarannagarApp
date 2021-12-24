@@ -33,7 +33,6 @@ export default function RegisterScreen({ navigation }) {
   const handleSubmit = () => {
     checkError();
     if (!errors[0] && !errors[1]) {
-      console.log("PopUp");
       let area = [];
       selectedArea.forEach((item) => area.push(areas[item.row]));
       LoginPopUp(area, mobileNumber);

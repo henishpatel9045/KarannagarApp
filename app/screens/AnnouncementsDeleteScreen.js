@@ -1,10 +1,17 @@
 import React from "react";
-import { StyleSheet, TouchableHighlight, Text, View } from "react-native";
+import {
+  StyleSheet,
+  TouchableHighlight,
+  Text,
+  View,
+  Alert,
+} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../configs/colors";
 import { Divider } from "react-native-elements";
 import moment from "moment";
+import { deleteAnnouncements } from "../api/firebase";
 
 const ListCardComponent = ({ message, sender, receiver, date, onPress }) => (
   <View style={styles.card}>
@@ -32,7 +39,19 @@ const ListCardComponent = ({ message, sender, receiver, date, onPress }) => (
 
 export default function AnnouncementsDeleteScreen({ route }) {
   const messages = route.params.data;
-  console.log(messages);
+
+  const handleDelete = (id) => {
+    Alert.alert("Delete Announcement!!!", "Are you sure?", [
+      {
+        text: "YES",
+        onPress: () => {
+          deleteAnnouncements(id);
+        },
+      },
+      { text: "NO" },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -48,7 +67,7 @@ export default function AnnouncementsDeleteScreen({ route }) {
               "DD/MM/YYYY, hh:mm:ss"
             )}
             onPress={() => {
-              return;
+              handleDelete(item.id);
             }}
           />
         )}

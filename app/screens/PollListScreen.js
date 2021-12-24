@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { getPolls } from "../api/firebase";
 import useApiRef from "../hooks/useApiRef";
@@ -7,14 +7,11 @@ import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import LoadingSceen from "./LoadingSceen";
 import moment from "moment";
 import colors from "../configs/colors";
+import AuthContext from "../auth/context";
 
 export default function PollListScreen({ navigation }) {
-  const { data, loading, request } = useApiRef(getPolls);
+  const { lpolls: loading, polls: data } = useContext(AuthContext);
   const [refreshing, setrefreshing] = useState(false);
-
-  useEffect(() => {
-    request();
-  }, []);
 
   const remainingTime = (time) => {
     const remainingTime = moment(time).diff(moment(Date.now()), "seconds");

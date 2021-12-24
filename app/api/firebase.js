@@ -64,7 +64,6 @@ const getAnnouncements = async () => {
         if (snapshot.exists()) {
           anouncementsList.push({ ...snapshot?.data(), docId: snapshot.id });
           anouncementsList.sort((a, b) => {
-            console.log(a.dateCreated.toMillis - b.dateCreated.toMillis);
             return b.dateCreated.toMillis() - a.dateCreated.toMillis();
           });
         }
@@ -78,7 +77,6 @@ const getAnnouncements = async () => {
   } catch (e) {
     response = { data: anouncementsList, error: e };
   }
-  console.log(response);
   return response;
 };
 
@@ -92,7 +90,6 @@ const getEmergencies = async () => {
         if (snapshot.exists()) {
           emergenciesList.push({ ...snapshot?.data(), docId: snapshot.id });
           emergenciesList.sort((a, b) => {
-            console.log(a.dateCreated.toMillis - b.dateCreated.toMillis);
             return b.dateCreated.toMillis() - a.dateCreated.toMillis();
           });
         }
