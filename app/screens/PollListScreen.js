@@ -8,10 +8,12 @@ import LoadingSceen from "./LoadingSceen";
 import moment from "moment";
 import colors from "../configs/colors";
 import AuthContext from "../auth/context";
+import LottieView from "lottie-react-native";
 
 export default function PollListScreen({ navigation }) {
   const { lpolls: loading, polls: data } = useContext(AuthContext);
   const [refreshing, setrefreshing] = useState(false);
+  const is_developing = true;
 
   const remainingTime = (time) => {
     const remainingTime = moment(time).diff(moment(Date.now()), "seconds");
@@ -59,7 +61,13 @@ export default function PollListScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {loading ? (
+      {is_developing ? (
+        <LottieView
+          source={require("../assets/animations/underConstruction.json")}
+          autoPlay
+          loop
+        />
+      ) : loading ? (
         <LoadingSceen />
       ) : (
         <FlatList

@@ -20,7 +20,6 @@ export default function NetworkError() {
       <Text
         style={{
           color: "red",
-
           bottom: "20",
           alignSelf: "center",
           fontSize: 20,

@@ -4,6 +4,7 @@ import { Animated, StyleSheet, View } from "react-native";
 import { Text } from "@ui-kitten/components";
 import AppButton from "../components/AppButton";
 import colors from "../configs/colors";
+import { setPolls } from "../api/firebase";
 
 const options = ["Henish", "Sarjil", "Om", "Divya", "Devin"];
 

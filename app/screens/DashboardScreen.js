@@ -329,10 +329,10 @@ export default function DashboardScreen({ navigation }) {
           <Text style={styles.sectionHeader}>Announcements</Text>
           {authContext.lan ? <Loading /> : <Announcement />}
         </View>
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <Text style={styles.sectionHeader}>Polls</Text>
           {authContext.lpoll ? <Loading /> : <Poll />}
-        </View>
+        </View> */}
       </ScrollView>
       <EditScreens />
     </View>
