@@ -40,8 +40,6 @@ export default function EmergencyScreen() {
     console.log(item);
   };
 
-  console.log(emergencies);
-
   const CallOverLay = () => (
     <Overlay
       isVisible={overlayVisible}
